@@ -43,7 +43,6 @@
             const windowsArea = document.getElementById('windows-area');
             const menuLinks = document.querySelectorAll('.sidebar-menu a');
 
-            // [수정] D-Day 스티커 HTML에서 하트 아이콘(<i> 태그) 완전 삭제
             const dDayStickerHTML = `
                 <div class="d-day-sticker" id="d-day-counter-popup">
                     <span class="d-day-text">D + 0</span>
@@ -112,8 +111,13 @@
 
             function runWindowFocus() {
                 const windows = document.querySelectorAll('.window-box');
-                let highestZIndex = windows.length;
+                let highestZIndex = 2; // 초기 z-index 기준값
+
                 windows.forEach(window => {
+                    // CSS에 정의된 초기 z-index를 존중
+                    const initialZ = window.style.zIndex ? parseInt(window.style.zIndex) : 0;
+                    if(initialZ > highestZIndex) highestZIndex = initialZ;
+
                     window.addEventListener('mousedown', () => {
                         highestZIndex++;
                         window.style.zIndex = highestZIndex;
