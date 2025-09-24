@@ -6,10 +6,8 @@ body {
     background-color: #f0eefc;
     min-height: 100vh;
     display: flex; justify-content: center; align-items: center;
-    padding: 30px;
-    background-image: linear-gradient(rgba(230, 230, 250, 0.7) 1px, transparent 1px), linear-gradient(90deg, rgba(230, 230, 250, 0.7) 1px, transparent 1px);
-    background-size: 20px 20px;
 }
+.page-wrapper { position: relative; }
 
 /* --- 전체 데스크탑 배경 --- */
 .desktop-background {
@@ -17,26 +15,16 @@ body {
     background-color: #fafaff;
     border-radius: 8px;
     box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
-    display: flex; position: relative;
+    display: flex;
     overflow: hidden;
 }
 
 /* --- 왼쪽 사이드바 --- */
 .left-sidebar { width: 250px; background-color: #f0f0f8; border-right: 1px solid #e0e0f0; padding: 20px; display: flex; flex-direction: column; }
 .profile-widget { text-align: center; padding-bottom: 20px; border-bottom: 1px solid #ddd; margin-bottom: 20px; }
-.profile-img { width: 120px; height: 120px; border-radius: 8px; border: 3px solid #fff; box-shadow: 0 2px 5px rgba(0,0,0,0.1); margin-bottom: 15px; object-fit: cover; }
-.profile-name {
-    /* [수정] 폰트 변경 및 크기 대폭 축소 */
-    font-family: 'Poppins', sans-serif;
-    font-size: 1.3em;
-    font-weight: 700;
-    margin-bottom: 10px;
-    color: #555;
-}
+.profile-img { width: 130px; height: 130px; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); margin-bottom: 15px; object-fit: cover; }
+.profile-name { font-family: 'Poppins', sans-serif; font-size: 1.3em; font-weight: 700; margin-bottom: 10px; color: #555; }
 .profile-desc { font-size: 0.75em; color: #888; line-height: 1.6; }
-.d-day-widget { text-align: center; padding-bottom: 20px; margin-bottom: 20px; border-bottom: 1px solid #ddd; }
-.d-day-title { font-size: 0.8em; color: #aaa; letter-spacing: 1px; margin-bottom: 5px; text-transform: uppercase; }
-.d-day-count { font-family: 'Poppins', sans-serif; font-size: 2em; font-weight: 700; color: #8a2be2; }
 .sidebar-menu { flex-grow: 1; }
 .sidebar-menu a { display: flex; align-items: center; padding: 12px 15px; margin-bottom: 10px; text-decoration: none; border-radius: 8px; font-weight: 500; color: #555; background-color: #e9e9f4; border: 1px solid #dcdcf0; transition: all 0.2s ease; }
 .sidebar-menu a:hover { transform: translateY(-2px); box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
@@ -55,30 +43,14 @@ body {
 
 /* --- 개별 창 위치 및 크기 설정 --- */
 .calendar-window { top: 20px; left: 20px; width: 260px; z-index: 2; }
-/* [수정] 갤러리 창 오른쪽으로 더 이동 */
-.gallery-window { top: 240px; left: 220px; width: 480px; height: 380px; z-index: 1; }
+.gallery-window { top: 240px; left: 210px; width: 500px; height: 380px; z-index: 1; }
 
-/* --- [수정] D-Day 스티커 스타일 --- */
-.d-day-sticker {
-    position: absolute;
-    top: 15px;
-    right: 15px;
-    background-color: #fff;
-    color: #8a2be2;
-    padding: 8px 15px;
-    border-radius: 8px;
-    font-family: 'Poppins', sans-serif;
-    font-weight: 700;
-    font-size: 0.9em;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    z-index: 20;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    border: 2px solid #e0e0ff;
-    transform: rotate(2deg); /* 살짝 기울여서 스티커 느낌 */
-}
-.d-day-sticker i { font-size: 1.1em; }
+/* --- D-Day '외곽선' 스티커 --- */
+.d-day-sticker { position: absolute; top: 15px; right: 15px; z-index: 20; display: flex; align-items: center; gap: 4px; transform: rotate(3deg); transition: transform 0.2s ease; cursor: pointer; }
+.d-day-sticker:hover { transform: rotate(-2deg) scale(1.05); }
+.d-day-sticker i, .d-day-sticker .d-day-text { font-family: 'Poppins', sans-serif; font-weight: 700; font-size: 1.2em; text-shadow: -2px -2px 0 #fff, 2px -2px 0 #fff, -2px 2px 0 #fff, 2px 2px 0 #fff, -3px 0 0 #fff, 3px 0 0 #fff, 0 -3px 0 #fff, 0 3px 0 #fff; }
+.d-day-sticker i { color: #c487de; font-size: 1.1em; }
+.d-day-sticker .d-day-text { color: #8a2be2; }
 
 /* --- 달력 스타일 --- */
 .calendar-content { text-align: center; }
@@ -101,13 +73,5 @@ body {
 .gallery-item img { width: 100%; height: 100px; object-fit: cover; margin-bottom: 5px; }
 .gallery-item p { font-size: 0.9em; color: #555; }
 
-/* --- [추가] 데스크탑 커서 아이콘 --- */
-.desktop-cursor {
-    position: absolute;
-    bottom: 15px;
-    right: 20px;
-    font-size: 1.8em;
-    color: #ffffff;
-    text-shadow: 0 0 5px rgba(0,0,0,0.3);
-    z-index: 20;
-}
+/* --- 데스크탑 커서 아이콘 --- */
+.desktop-cursor { position: absolute; bottom: -15px; right: -10px; font-size: 2.5em; color: #ffffff; text-shadow: -1.5px 0 #000, 0 1.5px #000, 1.5px 0 #000, 0 -1.5px #000; z-index: 20; }
