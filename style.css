@@ -54,6 +54,14 @@ body {
 .window-buttons i:hover { color: #8a2be2; }
 .window-content { padding: 15px; }
 
+/* ▼▼▼▼▼ [새로 추가] 달력/포스트 목록 창 버튼 제거 ▼▼▼▼▼ */
+.calendar-window .window-buttons,
+.gallery-window .window-buttons {
+    display: none;
+}
+/* ▲▲▲▲▲ 여기까지 새로 추가 ▲▲▲▲▲ */
+
+
 /* --- 개별 창 위치 및 크기 설정 --- */
 .calendar-window { top: 20px; left: 20px; width: 260px; z-index: 1; }
 .gallery-window { 
@@ -64,17 +72,15 @@ body {
     z-index: 2; 
 }
 
-/* ▼▼▼▼▼ [수정됨] 포스트 뷰어 창 오른쪽 여백 수정 ▼▼▼▼▼ */
 .post-viewer-window {
     top: 20px;
     left: 20px;
-    right: 0; /* 오른쪽 여백을 줄여서 창 너비 확보 */
+    right: 20px; /* ▼▼▼▼▼ [수정됨] 오른쪽 여백을 20px로 다시 설정 ▼▼▼▼▼ */
     bottom: 20px;
     width: auto;
     height: auto;
     z-index: 10;
 }
-/* ▲▲▲▲▲ 여기까지 수정됨 ▲▲▲▲▲ */
 
 .post-viewer-content {
     height: calc(100% - 28px);
