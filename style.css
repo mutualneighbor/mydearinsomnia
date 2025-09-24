@@ -1,98 +1,114 @@
-/* 기본 폰트와 배경 설정 */
+/* --- 기본 설정 --- */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
 body {
-    /* 사용할 폰트 지정: 나눔명조가 없으면 기본 명조체, 그것도 없으면 serif 계열 아무거나 */
-    font-family: 'Nanum Myeongjo', serif;
-    background-color: #1a1a1d; /* 아주 어두운 배경색 */
-    color: #e0e0e0; /* 기본 글자색 (밝은 회색) */
-    margin: 0;
-    padding: 0;
+    font-family: 'Noto Sans KR', sans-serif;
+    background-color: #2c2c34; /* 어두운 차콜 배경 */
+    color: #333; /* 기본 글자색 (어두운 회색) */
+    padding: 40px;
+}
+
+/* --- 레이아웃 --- */
+.container {
+    max-width: 1200px;
+    margin: 0 auto; /* 중앙 정렬 */
     display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh; /* 화면 전체 높이를 차지하도록 */
+    gap: 30px; /* 사이드바와 메인 콘텐츠 사이 간격 */
 }
 
-/* 전체 컨텐츠를 감싸는 래퍼 스타일 */
-.main-wrapper {
-    display: flex; /* 내부 요소들을 가로로 배치 */
-    gap: 20px; /* 요소들 사이의 간격 */
-    width: 900px; /* 전체 넓이 고정 */
-    background-color: rgba(0, 0, 0, 0.3); /* 살짝 투명한 검정 배경 */
-    padding: 20px;
-    border-radius: 10px;
-    border: 1px solid #4a2d6b; /* 보라색 테두리 */
-    box-shadow: 0 0 20px rgba(138, 43, 226, 0.5); /* 보라색 네온사인 같은 그림자 효과 */
+.sidebar {
+    width: 280px;
+    flex-shrink: 0; /* 사이드바 너비 고정 */
 }
 
-/* 왼쪽과 오른쪽 컨텐츠 영역 */
-.left-content {
-    width: 25%; /* 왼쪽 영역이 차지할 너비 */
-}
-.right-content {
-    width: 75%; /* 오른쪽 영역이 차지할 너비 */
-}
-
-/* --- 위젯 공통 스타일 --- */
-.widget-box {
-    background-color: rgba(44, 44, 52, 0.6); /* 위젯 배경 (반투명) */
-    border: 1px solid #6a4c95; /* 위젯 테두리 */
-    border-radius: 8px;
-    padding: 15px;
-    text-align: center;
-    margin-bottom: 20px; /* 위젯 간의 아래쪽 여백 */
-}
-
-/* 프로필 이미지 */
-.profile-img {
-    width: 120px;
-    height: 120px;
-    border-radius: 50%; /* 이미지 원형으로 만들기 */
-    border: 3px solid #b39ddb; /* 연한 보라색 테두리 */
-}
-
-/* D-Day 텍스트 스타일 */
-.d-day {
-    color: #d1c4e9;
-    font-size: 1.2em;
-    font-weight: bold;
-    /* 텍스트에 보라색 그림자를 주어 빛나는 효과 */
-    text-shadow: 0 0 8px #9575cd;
-}
-
-/* 메뉴 리스트 스타일 초기화 */
-.menu-box ul {
-    list-style-type: none; /* 목록 앞의 점 제거 */
-    padding: 0;
-    margin: 0;
-}
-
-/* 메뉴 링크 스타일 */
-.menu-box a {
-    display: block;
-    padding: 10px;
-    text-decoration: none; /* 링크 밑줄 제거 */
-    color: #e0e0e0;
-    transition: all 0.3s; /* 부드러운 전환 효과 */
-}
-
-/* 메뉴에 마우스를 올렸을 때 효과 */
-.menu-box a:hover {
-    background-color: #6a4c95;
-    color: #fff;
-    letter-spacing: 2px; /* 글자 간격 넓히기 */
-}
-
-/* 오른쪽 메인 이미지 */
-.main-display-box img {
+.main-content {
     width: 100%;
-    border-radius: 5px;
 }
 
-/* 하단 저작권 텍스트 */
-.footer {
+/* --- 사이드바 위젯 --- */
+.widget {
+    background-color: #ffffff; /* 흰색 배경 */
+    padding: 20px;
+    margin-bottom: 20px;
+    border: 1px solid #ddd;
+}
+
+.widget-title {
+    font-size: 1em;
+    font-weight: 700;
+    color: #333;
+    padding-bottom: 10px;
+    margin-bottom: 15px;
+    border-bottom: 2px solid #9b59b6; /* 보라색 포인트 라인 */
+}
+
+/* 프로필 위젯 */
+.profile-content {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+.profile-content img {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+}
+.profile-text h4 {
+    font-weight: 700;
+    margin-bottom: 5px;
+}
+.profile-text p {
+    font-size: 0.9em;
+    color: #666;
+}
+
+/* 메뉴 위젯 */
+.menu a {
+    display: block;
+    padding: 10px 5px;
+    text-decoration: none;
+    color: #555;
+    font-weight: 500;
+    transition: all 0.2s ease;
+}
+.menu a:hover {
+    background-color: #f8f3fc; /* 연한 보라색 배경 */
+    color: #9b59b6; /* 보라색 텍스트 */
+}
+
+/* 사이드바 하단 푸터 */
+.sidebar-footer {
     text-align: center;
-    margin-top: 20px;
     font-size: 0.8em;
     color: #777;
 }
 
+/* --- 메인 콘텐츠 (갤러리) --- */
+.gallery-grid {
+    display: grid;
+    /* 화면 크기에 따라 2~3열로 자동 변경 */
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 20px;
+}
+
+.card {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    overflow: hidden; /* 이미지가 카드를 삐져나가지 않도록 */
+}
+
+.card img {
+    width: 100%;
+    height: auto;
+    display: block; /* 이미지 아래 작은 여백 제거 */
+}
+
+.card-caption {
+    padding: 15px;
+    font-weight: 500;
+    color: #444;
+}
