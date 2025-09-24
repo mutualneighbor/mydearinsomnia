@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@700&family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 </head>
 <body>
@@ -21,11 +21,6 @@
                     레오나 킹스칼라 x 네아 플로리안<br>
                     TWST 레오나 킹스칼라 오픈 비이입 드림
                 </p>
-            </div>
-            
-            <div class="d-day-widget">
-                <div class="d-day-title">Our History</div>
-                <div class="d-day-count" id="d-day-counter">D + 0</div>
             </div>
 
             <nav class="sidebar-menu">
@@ -41,13 +36,15 @@
         </aside>
 
         <div class="windows-area">
+            <div class="d-day-popup" id="d-day-counter">
+                <span>D + 0</span>
+            </div>
+            
             <div class="window-box calendar-window">
                 <div class="window-header">
                     <span class="window-title" id="calendar-year">YYYY</span>
                     <div class="window-buttons">
-                        <i class="fa-solid fa-minus"></i>
-                        <i class="fa-regular fa-square"></i>
-                        <i class="fa-solid fa-xmark"></i>
+                        <i class="fa-solid fa-minus"></i> <i class="fa-regular fa-square"></i> <i class="fa-solid fa-xmark"></i>
                     </div>
                 </div>
                 <div class="window-content calendar-content">
@@ -67,9 +64,7 @@
                 <div class="window-header">
                     <span class="window-title">GALLERY</span>
                     <div class="window-buttons">
-                        <i class="fa-solid fa-minus"></i>
-                        <i class="fa-regular fa-square"></i>
-                        <i class="fa-solid fa-xmark"></i>
+                        <i class="fa-solid fa-minus"></i> <i class="fa-regular fa-square"></i> <i class="fa-solid fa-xmark"></i>
                     </div>
                 </div>
                 <div class="window-content gallery-content">
@@ -84,16 +79,26 @@
     <script>
         // 자바스크립트 코드
         document.addEventListener('DOMContentLoaded', function() {
+    // --- [추가] 창 클릭 시 맨 앞으로 가져오는 기능 ---
+    const windows = document.querySelectorAll('.window-box');
+    let highestZIndex = 2; // 달력의 초기 z-index
+
+    windows.forEach(window => {
+        window.addEventListener('mousedown', () => {
+            highestZIndex++;
+            window.style.zIndex = highestZIndex;
+        });
+    });
+
     // --- D-Day 계산 ---
     const dDayCounter = document.getElementById('d-day-counter');
     const startDate = new Date('2025-06-23');
     const todayForDday = new Date();
-    // 날짜만 비교하기 위해 시간은 0으로 설정
     startDate.setHours(0,0,0,0);
     todayForDday.setHours(0,0,0,0);
     const diffTime = Math.abs(todayForDday - startDate);
     const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-    dDayCounter.textContent = `D + ${diffDays}`;
+    dDayCounter.querySelector('span').textContent = `D + ${diffDays}`;
 
     // --- 달력 기능 ---
     const monthYearElement = document.getElementById('calendar-year');
@@ -119,41 +124,28 @@
         datesGridElement.innerHTML = '';
 
         for (let i = firstDayOfMonth; i > 0; i--) {
-            const dateElement = document.createElement('div');
-            dateElement.classList.add('prev-month');
-            dateElement.textContent = lastDateOfPrevMonth - i + 1;
-            datesGridElement.appendChild(dateElement);
+            datesGridElement.innerHTML += `<div class="prev-month">${lastDateOfPrevMonth - i + 1}</div>`;
         }
 
         for (let i = 1; i <= lastDateOfMonth; i++) {
-            const dateElement = document.createElement('div');
-            dateElement.textContent = i;
-            
+            let classes = '';
             const today = new Date();
             if (year === today.getFullYear() && month === today.getMonth() && i === today.getDate()) {
-                dateElement.classList.add('today');
+                classes += ' today';
             }
-            
-            // [추가] 생일 확인
-            // 네아 생일: 3월 21일 (month는 0부터 시작하므로 2)
-            if (month === 2 && i === 21) {
-                dateElement.classList.add('birthday');
+            if ((month === 2 && i === 21) || (month === 6 && i === 27)) {
+                classes += ' birthday';
             }
-            // 레오나 생일: 7월 27일
-            if (month === 6 && i === 27) {
-                dateElement.classList.add('birthday');
+            // [추가] 기념일(6월 23일) 표시
+            if (month === 5 && i === 23) {
+                classes += ' anniversary';
             }
-
-            datesGridElement.appendChild(dateElement);
+            datesGridElement.innerHTML += `<div class="${classes}">${i}</div>`;
         }
         
         const totalCells = datesGridElement.children.length;
-        const remainingCells = 42 - totalCells;
-        for (let i = 1; i <= remainingCells; i++) {
-            const dateElement = document.createElement('div');
-            dateElement.classList.add('next-month');
-            dateElement.textContent = i;
-            datesGridElement.appendChild(dateElement);
+        for (let i = 1; i <= 42 - totalCells; i++) {
+            datesGridElement.innerHTML += `<div class="next-month">${i}</div>`;
         }
     }
 
