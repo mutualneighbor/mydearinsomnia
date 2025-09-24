@@ -6,7 +6,7 @@ body {
     background-color: #f0eefc;
     min-height: 100vh;
     display: flex; justify-content: center; align-items: center;
-    padding: 30px; /* ▼▼▼▼▼ [추가됨] 페이지 전체에 상하좌우 여백 추가 ▼▼▼▼▼ */
+    padding: 30px;
 }
 .page-wrapper { position: relative; }
 
@@ -150,7 +150,7 @@ body {
 /* --- 갤러리 그리드 스타일 --- */
 .gallery-grid-container {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    grid-template-columns: repeat(3, 1fr); /* ◀◀◀ 이 부분을 수정했습니다 */
     gap: 15px;
     align-items: start;
 }
