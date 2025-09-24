@@ -1,95 +1,130 @@
-/* --- 기본 설정 및 폰트 --- */
-* { margin: 0; padding: 0; box-sizing: border-box; }
-body {
-    font-family: 'Inter', "Pretendard", sans-serif;
-    color: #444;
-    background-color: #f0eefc;
-    min-height: 100vh;
-    display: flex; justify-content: center; align-items: center;
-}
-.page-wrapper { position: relative; }
+document.addEventListener('DOMContentLoaded', function() {
+    const windowsArea = document.getElementById('windows-area');
+    const menuLinks = document.querySelectorAll('.sidebar-menu a');
 
-/* --- 전체 데스크탑 배경 --- */
-.desktop-background {
-    width: 1000px; height: 650px;
-    background-color: #fafaff;
-    border-radius: 8px;
-    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
-    display: flex;
-    overflow: hidden;
-}
+    // [수정] D-Day 스티커 HTML에서 하트 아이콘 제거
+    const dDayStickerHTML = `
+        <div class="d-day-sticker" id="d-day-counter-popup">
+            <span class="d-day-text">D + 0</span>
+        </div>`;
+    
+    const calendarWindowHTML = `
+        <div class="window-box calendar-window">
+            <div class="window-header">
+                <span class="window-title" id="calendar-year">YYYY</span>
+                <div class="window-buttons">
+                    <i class="fa-solid fa-minus"></i> <i class="fa-regular fa-square"></i> <i class="fa-solid fa-xmark"></i>
+                </div>
+            </div>
+            <div class="window-content calendar-content">
+                <div class="month-nav">
+                    <span id="prev-month" class="arrow-btn">&lt;</span>
+                    <span id="month-name">Month</span>
+                    <span id="next-month" class="arrow-btn">&gt;</span>
+                </div>
+                <div class="days-of-week">
+                    <span>Sun</span><span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span>
+                </div>
+                <div class="dates-grid" id="dates-grid"></div>
+            </div>
+        </div>`;
+        
+    const postWindowHTML = `
+        <div class="window-box gallery-window">
+            <div class="window-header">
+                <span class="window-title">Post</span>
+                <div class="window-buttons">
+                    <i class="fa-solid fa-minus"></i> <i class="fa-regular fa-square"></i> <i class="fa-solid fa-xmark"></i>
+                </div>
+            </div>
+            <div class="window-content gallery-content">
+                <div class="gallery-item">
+                    <img src="https://via.placeholder.com/150x200/d7e0ff" alt="이미지 1">
+                    <p>9월 문답</p>
+                </div>
+            </div>
+        </div>`;
 
-/* --- 왼쪽 사이드바 --- */
-.left-sidebar { width: 250px; background-color: #f0f0f8; border-right: 1px solid #e0e0f0; padding: 20px; display: flex; flex-direction: column; }
-.profile-widget { text-align: center; padding-bottom: 20px; border-bottom: 1px solid #ddd; margin-bottom: 20px; }
-/* [수정] 프로필 이미지 크기 확대 및 그림자 제거 (강제 적용) */
-.profile-img { 
-    width: 150px; /* 크기 확대 */
-    height: 150px; /* 크기 확대 */
-    border-radius: 8px; 
-    box-shadow: none !important; /* 그림자 확실하게 제거 (다른 스타일 충돌 방지) */
-    outline: none; /* 혹시 모를 아웃라인 제거 */
-    border: none; /* 혹시 모를 테두리 제거 */
-    margin-bottom: 15px; 
-    object-fit: cover; 
-}
-.profile-name { font-family: 'Poppins', sans-serif; font-size: 1.3em; font-weight: 700; margin-bottom: 10px; color: #555; }
-.profile-desc { font-size: 0.75em; color: #888; line-height: 1.6; }
-.sidebar-menu { flex-grow: 1; }
-.sidebar-menu a { display: flex; align-items: center; padding: 12px 15px; margin-bottom: 10px; text-decoration: none; border-radius: 8px; font-weight: 500; color: #555; background-color: #e9e9f4; border: 1px solid #dcdcf0; transition: all 0.2s ease; }
-.sidebar-menu a:hover { transform: translateY(-2px); box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
-.sidebar-menu a.active { background-color: #8a2be2; color: #fff; font-weight: 700; border-color: #701ebd; }
-.sidebar-menu a i { width: 30px; }
+    function showHomePage() {
+        windowsArea.innerHTML = dDayStickerHTML + calendarWindowHTML + postWindowHTML;
+        runDday();
+        runCalendar();
+        runWindowFocus();
+    }
 
-/* --- 창(Window) 영역 --- */
-.windows-area { position: relative; flex-grow: 1; padding: 20px; }
-.window-box { position: absolute; background-color: #ffffff; border: 1px solid #d0d0f0; box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1); border-radius: 6px; overflow: hidden; transition: box-shadow 0.2s, transform 0.2s; }
-.window-header { display: flex; justify-content: space-between; align-items: center; background-color: #e0e0ff; padding: 5px 10px; border-bottom: 1px solid #d0d0f0; cursor: grab; }
-.window-title { font-weight: 700; font-size: 0.9em; color: #555; font-family: 'Poppins', sans-serif; }
-.window-buttons { display: flex; align-items: center; gap: 12px; font-size: 0.9em; color: #666; }
-.window-buttons i { cursor: pointer; transition: color 0.2s; }
-.window-buttons i:hover { color: #8a2be2; }
-.window-content { padding: 15px; }
+    function clearPage() {
+        windowsArea.innerHTML = '';
+    }
 
-/* --- 개별 창 위치 및 크기 설정 --- */
-.calendar-window { top: 20px; left: 20px; width: 260px; z-index: 2; }
-.gallery-window { top: 240px; left: 210px; width: 500px; height: 380px; z-index: 1; }
+    menuLinks.forEach(link => {
+        link.addEventListener('click', function(e) {
+            e.preventDefault();
+            menuLinks.forEach(l => l.classList.remove('active'));
+            this.classList.add('active');
+            if (this.id === 'menu-home') {
+                showHomePage();
+            } else {
+                clearPage();
+            }
+        });
+    });
 
-/* --- D-Day '외곽선' 스티커 --- */
-.d-day-sticker { 
-    position: absolute; top: 15px; right: 15px; z-index: 20; 
-    display: flex; align-items: center; gap: 0px; 
-    transform: rotate(3deg); transition: transform 0.2s ease; cursor: pointer; 
-}
-.d-day-sticker:hover { transform: rotate(-2deg) scale(1.05); }
-.d-day-sticker .d-day-text { 
-    font-family: 'Poppins', sans-serif; 
-    font-weight: 700; 
-    font-size: 1.2em; 
-    text-shadow: -2px -2px 0 #fff, 2px -2px 0 #fff, -2px 2px 0 #fff, 2px 2px 0 #fff, -3px 0 0 #fff, 3px 0 0 #fff, 0 -3px 0 #fff, 0 3px 0 #fff; 
-    color: #8a2be2; 
-}
+    function runWindowFocus() {
+        const windows = document.querySelectorAll('.window-box');
+        let highestZIndex = windows.length;
+        windows.forEach(window => {
+            window.addEventListener('mousedown', () => {
+                highestZIndex++;
+                window.style.zIndex = highestZIndex;
+            });
+        });
+    }
 
-/* --- 달력 스타일 --- */
-.calendar-content { text-align: center; }
-.month-nav { display: flex; justify-content: space-between; align-items: center; font-size: 1.1em; color: #8a2be2; margin-bottom: 10px; }
-#month-name { font-family: 'Poppins', sans-serif; font-size: 1.4em; font-weight: 700; }
-.arrow-btn { cursor: pointer; padding: 5px 10px; border-radius: 4px; transition: background-color 0.2s; }
-.arrow-btn:hover { background-color: #f0f0ff; }
-.days-of-week { display: grid; grid-template-columns: repeat(7, 1fr); font-size: 0.8em; margin-bottom: 5px; color: #888; font-weight: 500; }
-.dates-grid { display: grid; grid-template-columns: repeat(7, 1fr); font-size: 0.9em; row-gap: 5px; }
-.dates-grid div { padding: 5px 0; border-radius: 4px; transition: background-color 0.2s; position: relative; }
-.dates-grid div.prev-month, .dates-grid div.next-month { color: #ccc; }
-.dates-grid div.today { background-color: #8a2be2; color: #fff; font-weight: 700; }
-.dates-grid div.birthday::after { content: ''; position: absolute; bottom: 2px; left: 50%; transform: translateX(-50%); width: 4px; height: 4px; background-color: #ff6b81; border-radius: 50%; }
-.dates-grid div.anniversary::after { content: ''; position: absolute; bottom: 2px; left: 50%; transform: translateX(-50%); width: 4px; height: 4px; background-color: #4a90e2; border-radius: 50%; }
-.dates-grid div:not(.today):not(.prev-month):not(.next-month):hover { background-color: #f0f0ff; cursor: pointer; }
+    function runDday() {
+        const dDayCounterPopup = document.getElementById('d-day-counter-popup').querySelector('.d-day-text');
+        const startDate = new Date('2025-06-23');
+        const todayForDday = new Date();
+        startDate.setHours(0,0,0,0);
+        todayForDday.setHours(0,0,0,0);
+        const diffTime = Math.abs(todayForDday - startDate);
+        const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+        dDayCounterPopup.textContent = `D + ${diffDays}`;
+    }
 
-/* --- 갤러리 스타일 --- */
-.gallery-content { display: grid; grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); gap: 10px; }
-.gallery-item { text-align: center; border: 1px solid #eee; padding: 5px; }
-.gallery-item img { width: 100%; height: 100px; object-fit: cover; margin-bottom: 5px; }
-.gallery-item p { font-size: 0.9em; color: #555; }
+    function runCalendar() {
+        const monthYearElement = document.getElementById('calendar-year');
+        const monthNameElement = document.getElementById('month-name');
+        const datesGridElement = document.getElementById('dates-grid');
+        const prevMonthButton = document.getElementById('prev-month');
+        const nextMonthButton = document.getElementById('next-month');
+        const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+        let currentDate = new Date();
 
-/* --- 데스크탑 커서 아이콘 --- */
-.desktop-cursor { position: absolute; bottom: -15px; right: -10px; font-size: 2.5em; color: #ffffff; text-shadow: -1.5px 0 #000, 0 1.5px #000, 1.5px 0 #000, 0 -1.5px #000; z-index: 20; }
+        function renderCalendar() {
+            const year = currentDate.getFullYear();
+            const month = currentDate.getMonth();
+            monthYearElement.textContent = year;
+            monthNameElement.textContent = monthNames[month];
+            const firstDayOfMonth = new Date(year, month, 1).getDay();
+            const lastDateOfMonth = new Date(year, month + 1, 0).getDate();
+            const lastDateOfPrevMonth = new Date(year, month, 0).getDate();
+            datesGridElement.innerHTML = '';
+            for (let i = firstDayOfMonth; i > 0; i--) { datesGridElement.innerHTML += `<div class="prev-month">${lastDateOfPrevMonth - i + 1}</div>`; }
+            for (let i = 1; i <= lastDateOfMonth; i++) {
+                let classes = '';
+                const today = new Date();
+                if (year === today.getFullYear() && month === today.getMonth() && i === today.getDate()) { classes += ' today'; }
+                if ((month === 2 && i === 21) || (month === 6 && i === 27)) { classes += ' birthday'; }
+                if (month === 5 && i === 23) { classes += ' anniversary'; }
+                datesGridElement.innerHTML += `<div class="${classes}">${i}</div>`;
+            }
+            const totalCells = datesGridElement.children.length;
+            for (let i = 1; i <= 42 - totalCells; i++) { datesGridElement.innerHTML += `<div class="next-month">${i}</div>`; }
+        }
+        prevMonthButton.addEventListener('click', () => { currentDate.setMonth(currentDate.getMonth() - 1); renderCalendar(); });
+        nextMonthButton.addEventListener('click', () => { currentDate.setMonth(currentDate.getMonth() + 1); renderCalendar(); });
+        renderCalendar();
+    }
+    
+    showHomePage();
+});
