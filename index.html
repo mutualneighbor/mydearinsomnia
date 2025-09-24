@@ -7,156 +7,37 @@
     <link rel="stylesheet" href="style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@700&family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@700&family=Inter:wght@400;500;700&family=Gaegu:wght@700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <script src="script.js" defer></script>
 </head>
 <body>
 
-    <div class="desktop-background">
-        <aside class="left-sidebar">
-            <div class="profile-widget">
-                <img class="profile-img" src="profile-image.png" alt="프로필 이미지">
-                <h4 class="profile-name">My Dear Insomnia</h4>
-                <p class="profile-desc">
-                    레오나 킹스칼라 x 네아 플로리안<br>
-                    TWST 레오나 킹스칼라 오픈 비이입 드림
-                </p>
-            </div>
-            
-            <div class="d-day-widget">
-                <div class="d-day-title">Our History</div>
-                <div class="d-day-count" id="d-day-counter-sidebar">D + 0</div>
-            </div>
+    <div class="page-wrapper">
+        <div class="desktop-background">
+            <aside class="left-sidebar">
+                <div class="profile-widget">
+                    <img class="profile-img" src="profile-image.png" alt="프로필 이미지">
+                    <h4 class="profile-name">My Dear Insomnia</h4>
+                    <p class="profile-desc">
+                        레오나 킹스칼라 x 네아 플로리안<br>
+                        TWST 레오나 킹스칼라 오픈 비이입 드림
+                    </p>
+                </div>
+                
+                <nav class="sidebar-menu">
+                    <a href="#" id="menu-home" class="active"><i class="fa-solid fa-house"></i> HOME</a>
+                    <a href="#" id="menu-gallery"><i class="fa-solid fa-image"></i> GALLERY</a>
+                    <a href="#" id="menu-character"><i class="fa-solid fa-user"></i> CHARACTER</a>
+                    <a href="#" id="menu-story"><i class="fa-solid fa-book"></i> STORY</a>
+                </nav>
+            </aside>
 
-            <nav class="sidebar-menu">
-                <a href="#" class="active"><i class="fa-solid fa-circle-info"></i> ABOUT</a>
-                <a href="#"><i class="fa-solid fa-image"></i> GALLERY</a>
-                <a href="#"><i class="fa-solid fa-book"></i> LOG</a>
-                <a href="#"><i class="fa-solid fa-envelope"></i> GUEST</a>
-            </nav>
-        </aside>
-
-        <div class="windows-area">
-            <div class="d-day-sticker" id="d-day-counter-popup">
-                <i class="fa-solid fa-heart"></i>
-                <span>D + 0</span>
-            </div>
-            
-            <div class="window-box calendar-window">
-                <div class="window-header">
-                    <span class="window-title" id="calendar-year">YYYY</span>
-                    <div class="window-buttons">
-                        <i class="fa-solid fa-minus"></i> <i class="fa-regular fa-square"></i> <i class="fa-solid fa-xmark"></i>
-                    </div>
+            <div class="windows-area" id="windows-area">
                 </div>
-                <div class="window-content calendar-content">
-                    <div class="month-nav">
-                        <span id="prev-month" class="arrow-btn">&lt;</span>
-                        <span id="month-name">Month</span>
-                        <span id="next-month" class="arrow-btn">&gt;</span>
-                    </div>
-                    <div class="days-of-week">
-                        <span>Sun</span><span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span>
-                    </div>
-                    <div class="dates-grid" id="dates-grid"></div>
-                </div>
-            </div>
-
-            <div class="window-box gallery-window">
-                <div class="window-header">
-                    <span class="window-title">GALLERY</span>
-                    <div class="window-buttons">
-                        <i class="fa-solid fa-minus"></i> <i class="fa-regular fa-square"></i> <i class="fa-solid fa-xmark"></i>
-                    </div>
-                </div>
-                <div class="window-content gallery-content">
-                    <div class="gallery-item"><img src="https://via.placeholder.com/150x200/d7e0ff" alt="이미지 1"><p>Post 01</p></div>
-                    <div class="gallery-item"><img src="https://via.placeholder.com/150x200/c7d3ff" alt="이미지 2"><p>Post 02</p></div>
-                </div>
-            </div>
         </div>
         <i class="fa-solid fa-arrow-pointer desktop-cursor"></i>
     </div>
-    <script>
-        // 자바스크립트 코드
-        document.addEventListener('DOMContentLoaded', function() {
-    // --- 창 클릭 시 맨 앞으로 가져오는 기능 ---
-    const windows = document.querySelectorAll('.window-box');
-    let highestZIndex = 2;
-    windows.forEach(window => {
-        window.addEventListener('mousedown', () => {
-            highestZIndex++;
-            window.style.zIndex = highestZIndex;
-        });
-    });
-
-    // --- D-Day 계산 ---
-    // [수정] 사이드바와 팝업 두 곳에 모두 표시
-    const dDayCounterSidebar = document.getElementById('d-day-counter-sidebar');
-    const dDayCounterPopup = document.getElementById('d-day-counter-popup').querySelector('span');
-    const startDate = new Date('2025-06-23');
-    const todayForDday = new Date();
-    startDate.setHours(0,0,0,0);
-    todayForDday.setHours(0,0,0,0);
-    const diffTime = Math.abs(todayForDday - startDate);
-    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-    const dDayText = `D + ${diffDays}`;
-    dDayCounterSidebar.textContent = dDayText;
-    dDayCounterPopup.textContent = dDayText;
-
-
-    // --- 달력 기능 ---
-    const monthYearElement = document.getElementById('calendar-year');
-    const monthNameElement = document.getElementById('month-name');
-    const datesGridElement = document.getElementById('dates-grid');
-    const prevMonthButton = document.getElementById('prev-month');
-    const nextMonthButton = document.getElementById('next-month');
-    const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-    let currentDate = new Date();
-
-    function renderCalendar() {
-        const year = currentDate.getFullYear();
-        const month = currentDate.getMonth();
-        monthYearElement.textContent = year;
-        monthNameElement.textContent = monthNames[month];
-        const firstDayOfMonth = new Date(year, month, 1).getDay();
-        const lastDateOfMonth = new Date(year, month + 1, 0).getDate();
-        const lastDateOfPrevMonth = new Date(year, month, 0).getDate();
-        datesGridElement.innerHTML = '';
-        for (let i = firstDayOfMonth; i > 0; i--) {
-            datesGridElement.innerHTML += `<div class="prev-month">${lastDateOfPrevMonth - i + 1}</div>`;
-        }
-        for (let i = 1; i <= lastDateOfMonth; i++) {
-            let classes = '';
-            const today = new Date();
-            if (year === today.getFullYear() && month === today.getMonth() && i === today.getDate()) {
-                classes += ' today';
-            }
-            if ((month === 2 && i === 21) || (month === 6 && i === 27)) {
-                classes += ' birthday';
-            }
-            if (month === 5 && i === 23) {
-                classes += ' anniversary';
-            }
-            datesGridElement.innerHTML += `<div class="${classes}">${i}</div>`;
-        }
-        const totalCells = datesGridElement.children.length;
-        for (let i = 1; i <= 42 - totalCells; i++) {
-            datesGridElement.innerHTML += `<div class="next-month">${i}</div>`;
-        }
-    }
-
-    prevMonthButton.addEventListener('click', () => {
-        currentDate.setMonth(currentDate.getMonth() - 1);
-        renderCalendar();
-    });
-    nextMonthButton.addEventListener('click', () => {
-        currentDate.setMonth(currentDate.getMonth() + 1);
-        renderCalendar();
-    });
-    renderCalendar();
-});
-
-    </script>
+    
 </body>
 </html>
