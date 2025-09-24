@@ -33,7 +33,7 @@
                     </div>
                     <div class="menu-item-wrapper">
                         <a href="#" id="menu-character"><i class="fa-solid fa-user"></i> CHARACTER</a>
-                        <div class="submenu" id="character-submenu">
+                        <div class="submenu">
                             <a href="#">Leona Kingscholar</a>
                             <a href="#">Nea Florian</a>
                         </div>
@@ -166,22 +166,17 @@
                                 <i class="fa-solid fa-xmark" id="gallery-close-btn"></i>
                             </div>
                         </div>
-                        <div class="window-content post-viewer-content" id="gallery-content-wrapper">
-                            </div>
+                        <div class="window-content post-viewer-content" id="gallery-content-wrapper"></div>
                     </div>
                 `;
                 windowsArea.innerHTML = galleryWindowHTML;
-                
                 document.getElementById('gallery-close-btn').addEventListener('click', showGalleryGrid);
-
                 loadGalleryImages();
             }
 
-            // ▼▼▼▼▼ [수정됨] 갤러리 함수 로직 전체 개선 ▼▼▼▼▼
             function loadGalleryImages() {
                 const galleryContentWrapper = document.getElementById('gallery-content-wrapper');
                 if (!galleryContentWrapper) return;
-
                 fetch('gallery.json')
                     .then(response => response.json())
                     .then(images => {
@@ -189,7 +184,6 @@
                         showGalleryGrid();
                     })
                     .catch(error => {
-                        console.error('갤러리 목록을 불러오는 중 오류 발생:', error);
                         galleryContentWrapper.innerHTML = '<p>이미지를 불러올 수 없습니다.</p>';
                     });
             }
@@ -198,17 +192,14 @@
                 const galleryContentWrapper = document.getElementById('gallery-content-wrapper');
                 const closeBtn = document.getElementById('gallery-close-btn');
                 if (!galleryContentWrapper || !closeBtn) return;
-                
-                closeBtn.style.display = 'none'; // 그리드에서는 닫기 버튼 숨기기
+                closeBtn.style.display = 'none';
                 galleryContentWrapper.style.padding = '20px';
-                
                 let htmlContent = '<div class="gallery-grid-container">';
                 galleryImages.forEach((image, index) => {
                     htmlContent += `<img src="${image.url}" alt="${image.alt}" style="cursor: pointer;" data-index="${index}">`;
                 });
                 htmlContent += '</div>';
                 galleryContentWrapper.innerHTML = htmlContent;
-
                 galleryContentWrapper.querySelector('.gallery-grid-container').addEventListener('click', (e) => {
                     if (e.target.tagName === 'IMG') {
                         const index = parseInt(e.target.dataset.index, 10);
@@ -221,22 +212,12 @@
                 const galleryContentWrapper = document.getElementById('gallery-content-wrapper');
                 const closeBtn = document.getElementById('gallery-close-btn');
                 if (!galleryContentWrapper || !closeBtn) return;
-
-                closeBtn.style.display = 'block'; // 뷰어에서는 닫기 버튼 보이기
+                closeBtn.style.display = 'block';
                 galleryContentWrapper.style.padding = '0';
-
-                const viewerHTML = `
-                    <div class="image-viewer-wrapper">
-                        <img id="viewer-image-element" class="viewer-image">
-                        <div class="nav-button prev" id="viewer-prev-btn"><i class="fa-solid fa-chevron-left"></i></div>
-                        <div class="nav-button next" id="viewer-next-btn"><i class="fa-solid fa-chevron-right"></i></div>
-                    </div>
-                `;
+                const viewerHTML = `<div class="image-viewer-wrapper"><img id="viewer-image-element" class="viewer-image"><div class="nav-button prev" id="viewer-prev-btn"><i class="fa-solid fa-chevron-left"></i></div><div class="nav-button next" id="viewer-next-btn"><i class="fa-solid fa-chevron-right"></i></div></div>`;
                 galleryContentWrapper.innerHTML = viewerHTML;
-                
                 document.getElementById('viewer-prev-btn').addEventListener('click', () => navigateGallery(-1));
                 document.getElementById('viewer-next-btn').addEventListener('click', () => navigateGallery(1));
-
                 updateImageViewer(index);
             }
 
@@ -245,12 +226,9 @@
                 const imageEl = document.getElementById('viewer-image-element');
                 const prevBtn = document.getElementById('viewer-prev-btn');
                 const nextBtn = document.getElementById('viewer-next-btn');
-                
                 if (!imageEl || !prevBtn || !nextBtn) return;
-
                 imageEl.src = galleryImages[index].url;
                 imageEl.alt = galleryImages[index].alt;
-
                 prevBtn.classList.toggle('hidden', index === 0);
                 nextBtn.classList.toggle('hidden', index === galleryImages.length - 1);
             }
@@ -261,7 +239,54 @@
                     updateImageViewer(newIndex);
                 }
             }
-            // ▲▲▲▲▲ [수정됨] 갤러리 함수 로직 전체 개선 ▲▲▲▲▲
+            
+            // ▼▼▼▼▼ [추가됨] 캐릭터 페이지 및 창 최대화 기능 ▼▼▼▼▼
+            function showCharacterPage() {
+                clearPage();
+                const characterWindowsHTML = `
+                    <div class="window-box character-window" id="leona-window">
+                        <div class="window-header">
+                            <span class="window-title">Leona Kingscholar</span>
+                            <div class="window-buttons">
+                                <i class="fa-regular fa-square maximize-btn"></i>
+                            </div>
+                        </div>
+                        <div class="window-content">
+                            <img src="leona-profile.jpg" class="character-profile-img" alt="Leona Kingscholar Profile">
+                        </div>
+                    </div>
+                    <div class="window-box character-window" id="nea-window">
+                        <div class="window-header">
+                            <span class="window-title">Nea Florian</span>
+                            <div class="window-buttons">
+                                <i class="fa-regular fa-square maximize-btn"></i>
+                            </div>
+                        </div>
+                        <div class="window-content">
+                            </div>
+                    </div>
+                `;
+                windowsArea.innerHTML = characterWindowsHTML;
+                runWindowFocus();
+            }
+
+            function toggleMaximize(windowEl) {
+                if (!windowEl) return;
+                const button = windowEl.querySelector('.maximize-btn');
+                
+                if (windowEl.classList.contains('maximized')) {
+                    // 복원
+                    windowEl.classList.remove('maximized');
+                    button.classList.remove('fa-window-restore');
+                    button.classList.add('fa-square');
+                } else {
+                    // 최대화
+                    windowEl.classList.add('maximized');
+                    button.classList.remove('fa-square');
+                    button.classList.add('fa-window-restore');
+                }
+            }
+            // ▲▲▲▲▲ [추가됨] 캐릭터 페이지 및 창 최대화 기능 ▲▲▲▲▲
 
             window.showHomePage = showHomePage;
             window.showPost = showPost;
@@ -275,34 +300,36 @@
                     e.preventDefault();
                     if (!this.id) return;
 
-                    const characterSubmenu = document.getElementById('character-submenu');
-
                     menuLinks.forEach(l => l.classList.remove('active'));
                     this.classList.add('active');
 
-                    if (this.id === 'menu-character') {
-                        characterSubmenu.classList.toggle('open');
-                        clearPage();
+                    // CHARACTER 메뉴를 클릭하면 하위메뉴가 열리던 기존 로직 제거
+                    if (this.id === 'menu-home') {
+                        showHomePage();
+                    } else if (this.id === 'menu-gallery') {
+                        showGalleryPage();
+                    } else if (this.id === 'menu-character') {
+                        showCharacterPage();
                     } else {
-                        characterSubmenu.classList.remove('open');
-                        if (this.id === 'menu-home') {
-                            showHomePage();
-                        } else if (this.id === 'menu-gallery') {
-                            showGalleryPage();
-                        } else {
-                            clearPage();
-                        }
+                        clearPage();
                     }
                 });
             });
 
+            // 창 제어 버튼(최대화 등)을 위한 이벤트 리스너
+            windowsArea.addEventListener('click', function(e) {
+                if (e.target.classList.contains('maximize-btn')) {
+                    const windowEl = e.target.closest('.window-box');
+                    toggleMaximize(windowEl);
+                }
+            });
+
             function runWindowFocus() {
                 const windows = document.querySelectorAll('.window-box');
-                let highestZIndex = 2;
+                let highestZIndex = windows.length > 0 ? Math.max(...Array.from(windows).map(w => parseInt(w.style.zIndex || 0))) : 0;
                 windows.forEach(window => {
-                    const initialZ = window.style.zIndex ? parseInt(window.style.zIndex) : 0;
-                    if(initialZ > highestZIndex) highestZIndex = initialZ;
                     window.addEventListener('mousedown', () => {
+                        if (window.classList.contains('maximized')) return;
                         highestZIndex++;
                         window.style.zIndex = highestZIndex;
                     });
@@ -315,10 +342,8 @@
                 const startDate = new Date('2025-06-23');
                 const now = new Date();
                 const todayForDday = new Date(now.toLocaleString("en-US", {timeZone: "Asia/Seoul"}));
-
                 startDate.setHours(0,0,0,0);
                 todayForDday.setHours(0,0,0,0);
-
                 const diffTime = todayForDday - startDate;
                 const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
                 dDayText.textContent = `D + ${diffDays + 1}`;
@@ -327,14 +352,12 @@
             function runCalendar() {
                 const monthYearElement = document.getElementById('calendar-year');
                 if(!monthYearElement) return;
-
                 const monthNameElement = document.getElementById('month-name');
                 const datesGridElement = document.getElementById('dates-grid');
                 const prevMonthButton = document.getElementById('prev-month');
                 const nextMonthButton = document.getElementById('next-month');
                 const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
                 let currentDate = new Date();
-
                 function renderCalendar() {
                     const year = currentDate.getFullYear();
                     const month = currentDate.getMonth();
