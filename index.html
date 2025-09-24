@@ -8,7 +8,6 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@700&family=Inter:wght@400;500;700&family=Gaegu:wght@700&display=swap" rel="stylesheet">
-    
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 </head>
 <body>
@@ -44,9 +43,9 @@
             const windowsArea = document.getElementById('windows-area');
             const menuLinks = document.querySelectorAll('.sidebar-menu a');
 
+            // [수정] D-Day 스티커 HTML에서 하트 아이콘(<i> 태그) 완전 삭제
             const dDayStickerHTML = `
                 <div class="d-day-sticker" id="d-day-counter-popup">
-                    <i class="fa-solid fa-heart"></i>
                     <span class="d-day-text">D + 0</span>
                 </div>`;
             
