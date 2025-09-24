@@ -6,8 +6,6 @@
     <title>My Dear Insomnia</title>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 </head>
@@ -16,29 +14,28 @@
     <div class="desktop-background">
         <h1 class="desktop-title">TEST 3</h1> 
         <aside class="left-sidebar">
-            <div class="sidebar-header">
-                <h3>_ My Page _</h3>
+            <div class="profile-widget">
+                <img class="profile-img" src="https://via.placeholder.com/80" alt="프로필 이미지">
+                <h4 class="profile-name">L.K. & D.</h4>
+                <p class="profile-desc">Our little space for insomnia.</p>
             </div>
+
             <nav class="sidebar-menu">
-                <a href="#"><span class="menu-num">01</span> ABOUT</a>
-                <a href="#"><span class="menu-num">02</span> GALLERY</a>
-                <a href="#"><span class="menu-num">03</span> LOG</a>
-                <a href="#"><span class="menu-num">04</span> GUEST</a>
+                <a href="#" class="active"><i class="fa-solid fa-circle-info"></i> ABOUT</a>
+                <a href="#"><i class="fa-solid fa-image"></i> GALLERY</a>
+                <a href="#"><i class="fa-solid fa-book"></i> LOG</a>
+                <a href="#"><i class="fa-solid fa-envelope"></i> GUEST</a>
             </nav>
+
             <div class="sidebar-footer">
                 <input type="text" placeholder="#search">
-                <div class="icon-group">
-                    <button><i class="fa-solid fa-magnifying-glass"></i></button>
-                    <button><i class="fa-solid fa-gear"></i></button>
-                    <button><i class="fa-solid fa-bell"></i></button>
-                </div>
             </div>
         </aside>
 
         <div class="windows-area">
             <div class="window-box calendar-window">
                 <div class="window-header">
-                    <span class="window-title">Mar</span>
+                    <span class="window-title" id="calendar-month-year">YYYY . MM</span>
                     <div class="window-buttons">
                         <i class="fa-solid fa-minus"></i>
                         <i class="fa-regular fa-square"></i>
@@ -46,23 +43,21 @@
                     </div>
                 </div>
                 <div class="window-content calendar-content">
-                    <div class="month-nav"><span>&lt;</span> March <span>&gt;</span></div>
-                    <div class="days-of-week"><span>Su</span><span>Mo</span><span>Tu</span><span>We</span><span>Th</span><span>Fr</span><span>Sa</span></div>
-                    <div class="dates-grid">
-                        <span></span><span></span><span></span><span></span><span></span><span>1</span><span>2</span>
-                        <span>3</span><span>4</span><span>5</span><span>6</span><span>7</span><span>8</span><span>9</span>
-                        <span>10</span><span>11</span><span>12</span><span>13</span><span>14</span><span>15</span><span>16</span>
-                        <span>17</span><span>18</span><span>19</span><span>20</span><span>21</span><span>22</span><span>23</span>
-                        <span>24</span><span>25</span><span>26</span><span>27</span><span>28</span><span>29</span><span>30</span>
-                        <span>31</span><span></span><span></span><span></span><span></span><span></span><span></span>
+                    <div class="month-nav">
+                        <span id="prev-month">&lt;</span>
+                        <span id="next-month">&gt;</span>
                     </div>
+                    <div class="days-of-week">
+                        <span>Sun</span><span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span>
+                    </div>
+                    <div class="dates-grid" id="dates-grid"></div>
                 </div>
             </div>
 
             <div class="window-box gallery-window">
                 <div class="window-header">
                     <span class="window-title">GALLERY</span>
-                     <div class="window-buttons">
+                    <div class="window-buttons">
                         <i class="fa-solid fa-minus"></i>
                         <i class="fa-regular fa-square"></i>
                         <i class="fa-solid fa-xmark"></i>
@@ -73,11 +68,13 @@
                     <div class="gallery-item"><img src="https://via.placeholder.com/150x200/c7d3ff" alt="이미지 2"><p>ACLA</p></div>
                     <div class="gallery-item"><img src="https://via.placeholder.com/150x200/e0eaff" alt="이미지 3"><p>ACLA</p></div>
                     <div class="gallery-item"><img src="https://via.placeholder.com/150x200/b0c3ff" alt="이미지 4"><p>ACLA</p></div>
-                    <div class="gallery-item"><img src="https://via.placeholder.com/150x200/a0b0ff" alt="이미지 5"><p>ACLA</p></div>
-                    <div class="gallery-item"><img src="https://via.placeholder.com/150x200/c0d0ff" alt="이미지 6"><p>ACLA</p></div>
                 </div>
             </div>
         </div>
     </div>
+
+    <script>
+        // 스크립트 코드가 들어갈 자리
+    </script>
 </body>
 </html>
