@@ -6,7 +6,7 @@
     <title>My Dear Insomnia</title>
     <link rel="stylesheet" href="style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic" crossorigin>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@700&family=Inter:wght@400;500;700&family=Gaegu:wght@700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 </head>
@@ -77,19 +77,46 @@
                             <i class="fa-solid fa-minus"></i> <i class="fa-regular fa-square"></i> <i class="fa-solid fa-xmark"></i>
                         </div>
                     </div>
-                    <div class="window-content gallery-content">
-                        <div class="gallery-item">
-                            <img src="https://via.placeholder.com/150x200/d7e0ff" alt="이미지 1">
-                            <p>9월 문답</p>
+                    <div class="window-content gallery-content" id="post-list-container">
                         </div>
-                    </div>
                 </div>`;
+
+            // 포스트 목록을 불러와서 화면에 표시하는 함수
+            function loadPosts() {
+                const postContainer = document.getElementById('post-list-container');
+                if (!postContainer) return;
+
+                fetch('posts.json') // 1. posts.json 파일을 불러옵니다.
+                    .then(response => response.json()) // 2. 불러온 파일을 JSON 형태로 변환합니다.
+                    .then(posts => { // 3. 변환된 데이터(posts 배열)를 사용합니다.
+                        let htmlContent = '';
+                        posts.forEach(post => {
+                            // 4. 각 포스트 정보를 사용해 HTML 문자열을 만듭니다.
+                            // a 태그로 감싸서 클릭 가능하게 하고, 새 탭에서 열리도록 target="_blank" 추가
+                            htmlContent += `
+                                <a href="${post.url}" target="_blank" style="text-decoration: none;">
+                                    <div class="gallery-item">
+                                        <img src="${post.thumbnail}" alt="${post.title}">
+                                        <p>${post.title}</p>
+                                    </div>
+                                </a>
+                            `;
+                        });
+                        // 5. 생성된 HTML을 컨테이너에 삽입합니다.
+                        postContainer.innerHTML = htmlContent;
+                    })
+                    .catch(error => {
+                        console.error('포스트 목록을 불러오는 중 오류 발생:', error);
+                        postContainer.innerHTML = '<p>포스트를 불러올 수 없습니다.</p>';
+                    });
+            }
 
             function showHomePage() {
                 windowsArea.innerHTML = dDayStickerHTML + calendarWindowHTML + postWindowHTML;
                 runDday();
                 runCalendar();
                 runWindowFocus();
+                loadPosts(); // 홈 페이지가 보일 때 loadPosts 함수를 실행하도록 추가!
             }
 
             function clearPage() {
@@ -111,13 +138,10 @@
 
             function runWindowFocus() {
                 const windows = document.querySelectorAll('.window-box');
-                let highestZIndex = 2; // 초기 z-index 기준값
-
+                let highestZIndex = 2;
                 windows.forEach(window => {
-                    // CSS에 정의된 초기 z-index를 존중
                     const initialZ = window.style.zIndex ? parseInt(window.style.zIndex) : 0;
                     if(initialZ > highestZIndex) highestZIndex = initialZ;
-
                     window.addEventListener('mousedown', () => {
                         highestZIndex++;
                         window.style.zIndex = highestZIndex;
