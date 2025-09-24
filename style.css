@@ -1,135 +1,216 @@
-* { margin: 0; padding: 0; box-sizing: border-box; }
-
+/* --- 기본 설정 및 폰트 --- */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
 body {
     font-family: 'Noto Sans KR', sans-serif;
-    /* 중요: 배경 이미지를 여기에 설정하세요 */
-    background-image: url('https://via.placeholder.com/1920x1080/cccccc/ffffff?text=BACKGROUND+IMAGE');
-    background-size: cover;
-    background-position: center;
-    background-attachment: fixed; /* 스크롤해도 배경은 고정 */
+    color: #333;
+    background-color: #e0e0ff; /* 연한 보라색 배경 */
+    min-height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
-    min-height: 100vh;
     padding: 30px;
+    /* 배경 격자무늬 추가 (옵션) */
+    background-image: linear-gradient(#e6e6fa 1px, transparent 1px),
+                      linear-gradient(90deg, #e6e6fa 1px, transparent 1px);
+    background-size: 20px 20px;
 }
 
-.main-wrapper {
-    width: 900px;
-    height: 600px;
-    background-color: rgba(255, 255, 255, 0.85); /* 반투명 흰색 배경 */
-    backdrop-filter: blur(10px); /* 뒷 배경 블러 효과 */
-    border-radius: 15px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+/* --- 전체 데스크탑 배경 --- */
+.desktop-background {
+    width: 1000px; /* 전체 컨테이너 너비 */
+    height: 650px; /* 전체 컨테이너 높이 */
+    background-color: #f7f7ff; /* 데스크탑 화면 같은 아주 연한 배경 */
+    border-radius: 8px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
     display: flex;
-    overflow: hidden; /* 둥근 모서리 밖으로 내용이 나가지 않도록 */
+    position: relative; /* 자식 요소 절대 위치 지정을 위해 */
+    overflow: hidden; /* 창이 삐져나가지 않도록 */
 }
 
-/* --- 1. 왼쪽 사이드바 --- */
-.sidebar {
-    width: 200px;
-    background-color: rgba(240, 240, 240, 0.7);
+.desktop-title {
+    position: absolute;
+    top: 20px;
+    left: 280px; /* 사이드바 옆으로 위치 조정 */
+    font-family: 'Roboto Mono', monospace; /* 예시 폰트와 유사하게 */
+    font-size: 2.5em;
+    color: #b0a0e0; /* 연한 보라색 */
+    text-shadow: 1px 1px 0 #fff;
+    z-index: 10;
+}
+
+/* --- 왼쪽 사이드바 --- */
+.left-sidebar {
+    width: 250px;
+    background-color: #f0f0f0; /* 밝은 회색 사이드바 배경 */
+    border-right: 1px solid #e0e0e0;
     padding: 20px;
     display: flex;
     flex-direction: column;
-    align-items: center;
-    border-right: 1px solid rgba(0, 0, 0, 0.1);
 }
 
-.profile { text-align: center; }
-.profile img {
-    width: 100px;
-    height: 100px;
-    border-radius: 50%;
-    border: 4px solid #fff;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+.sidebar-header h3 {
+    font-family: 'Roboto Mono', monospace;
+    font-size: 1.2em;
+    color: #8a2be2; /* 보라색 제목 */
+    margin-bottom: 30px;
+    text-align: center;
 }
-.profile h3 { margin-top: 10px; font-size: 1.1em; color: #333; }
 
-.menu { margin-top: 30px; width: 100%; }
-.menu a {
-    display: flex;
-    align-items: center;
-    padding: 12px 15px;
-    margin-bottom: 8px;
-    text-decoration: none;
+.sidebar-menu { flex-grow: 1; }
+.sidebar-menu a {
+    display: block;
+    padding: 10px 0;
     color: #555;
-    font-weight: 500;
-    border-radius: 8px;
-    transition: all 0.2s ease;
-}
-.menu a i {
-    margin-right: 10px;
-    color: #9b59b6; /* 아이콘 색상을 보라색으로 */
-    width: 20px; text-align: center;
-}
-.menu a:hover {
-    background-color: #9b59b6; /* 호버 시 배경 보라색 */
-    color: #fff;
-}
-.menu a:hover i { color: #fff; } /* 호버 시 아이콘 흰색 */
-
-.sidebar-footer { margin-top: auto; color: #888; }
-.sidebar-footer i { margin: 0 8px; font-size: 1.2em; cursor: pointer; }
-
-/* --- 2. 오른쪽 메인 콘텐츠 --- */
-.content-area { flex-grow: 1; padding: 15px; display: flex; flex-direction: column; }
-.content-header {
-    display: flex;
-    align-items: center;
-    margin-bottom: 15px;
+    text-decoration: none;
+    font-size: 0.95em;
     border-bottom: 1px solid #eee;
-    padding-bottom: 10px;
+    transition: background-color 0.2s;
+    font-family: 'Roboto Mono', monospace;
+}
+.sidebar-menu a:hover { background-color: #f0f0ff; color: #8a2be2; }
+.menu-num {
+    display: inline-block;
+    width: 25px;
+    color: #b0a0e0;
 }
 
-.window-buttons { display: flex; }
+.sidebar-footer {
+    text-align: center;
+    margin-top: 20px;
+    padding-top: 20px;
+    border-top: 1px solid #eee;
+}
+.sidebar-footer input {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin-bottom: 10px;
+    font-family: 'Roboto Mono', monospace;
+}
+.icon-group button {
+    background: none;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    padding: 6px 10px;
+    margin: 0 3px;
+    cursor: pointer;
+    color: #8a2be2;
+    transition: background-color 0.2s;
+}
+.icon-group button:hover { background-color: #e0e0ff; }
+
+/* --- 창(Window) 영역 --- */
+.windows-area {
+    position: relative;
+    flex-grow: 1;
+    padding: 20px; /* 바탕화면과 창 사이 여백 */
+}
+
+.window-box {
+    position: absolute; /* 절대 위치로 창을 배치 */
+    background-color: #ffffff;
+    border: 1px solid #d0d0f0; /* 연한 보라색 테두리 */
+    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 6px;
+    overflow: hidden;
+    z-index: 1; /* 기본 z-index */
+}
+
+/* 각 창의 헤더 (창 상단 바) */
+.window-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #e0e0ff; /* 창 헤더 보라색 */
+    padding: 5px 10px;
+    border-bottom: 1px solid #d0d0f0;
+    cursor: grab; /* 드래그 가능한 것처럼 보이기 */
+}
+.window-title {
+    font-family: 'Roboto Mono', monospace;
+    font-size: 0.9em;
+    color: #666;
+}
 .window-buttons span {
+    display: inline-block;
     width: 12px; height: 12px;
     border-radius: 50%;
-    background-color: #ddd;
-    margin-right: 6px;
+    margin-left: 5px;
+    cursor: pointer;
+    border: 1px solid #bbb;
 }
-.window-buttons span:nth-child(1) { background-color: #ff5f57; }
-.window-buttons span:nth-child(2) { background-color: #ffbd2e; }
-.window-buttons span:nth-child(3) { background-color: #28c940; }
+.window-buttons .min { background-color: #ffcc00; }
+.window-buttons .max { background-color: #00cc00; }
+.window-buttons .close { background-color: #ff3333; }
 
-.header-title {
-    margin: 0 auto;
-    background-color: #9b59b6;
-    color: #fff;
-    font-size: 0.8em;
-    font-weight: 700;
-    padding: 4px 12px;
-    border-radius: 15px;
+.window-content { padding: 15px; }
+
+
+/* --- 개별 창 위치 및 크기 설정 --- */
+.calendar-window {
+    top: 20px;
+    left: 20px;
+    width: 250px;
+    height: 280px;
+    z-index: 2; /* 갤러리 창 위에 오도록 */
+}
+.gallery-window {
+    top: 100px;
+    left: 200px;
+    width: 500px;
+    height: 400px;
+    z-index: 1;
 }
 
-.content-body { flex-grow: 1; }
-.main-visual img { width: 100%; border-radius: 8px; }
-
-.widgets-container { display: flex; gap: 15px; margin-top: 15px; }
-.widget {
-    flex: 1;
-    background-color: #f9f9f9;
-    border: 1px solid #eee;
-    border-radius: 8px;
-    padding: 15px;
-}
-.widget h4 {
-    font-size: 0.9em;
-    padding-bottom: 8px;
-    border-bottom: 2px solid #9b59b6;
+/* --- 달력 스타일 --- */
+.calendar-content { text-align: center; }
+.month-nav {
+    font-family: 'Roboto Mono', monospace;
+    font-size: 1.1em;
+    color: #8a2be2;
     margin-bottom: 10px;
 }
-.latest-posts ul { list-style: none; }
-.latest-posts li {
-    padding: 5px 0;
-    font-size: 0.9em;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+.month-nav span { cursor: pointer; margin: 0 5px; }
+.days-of-week {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    font-size: 0.8em;
+    margin-bottom: 5px;
+    color: #666;
 }
+.days-of-week span:first-child { color: #ff3333; } /* 일요일 빨간색 */
+.days-of-week span:last-child { color: #8a2be2; } /* 토요일 보라색 */
+.dates-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    font-size: 0.9em;
+    line-height: 1.8;
+}
+.dates-grid span {
+    padding: 3px;
+    border-radius: 3px;
+}
+.dates-grid span:hover { background-color: #f0f0ff; } /* 날짜 호버 효과 */
+.dates-grid span:nth-child(7n+1) { color: #ff3333; } /* 일요일 */
+.dates-grid span:nth-child(7n) { color: #8a2be2; } /* 토요일 */
 
-.profile-widget { display: flex; align-items: center; gap: 10px; }
-.profile-widget img { width: 50px; height: 50px; border-radius: 50%; }
-.profile-info strong { display: block; font-size: 0.9em; }
-.profile-info span { font-size: 0.8em; color: #777; }
+/* --- 갤러리 스타일 --- */
+.gallery-content {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* 3열 그리드 */
+    gap: 10px;
+}
+.gallery-item { text-align: center; border: 1px solid #eee; padding: 5px; }
+.gallery-item img {
+    width: 100%;
+    height: 100px; /* 이미지 높이 고정 */
+    object-fit: cover; /* 이미지가 잘리지 않고 채워지도록 */
+    display: block;
+    margin-bottom: 5px;
+}
+.gallery-item p { font-size: 0.8em; color: #555; }
