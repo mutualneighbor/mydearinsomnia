@@ -1,0 +1,117 @@
+/* --- 웹 브라우저 스크롤바 디자인 (디테일 추가) --- */
+::-webkit-scrollbar {
+    width: 8px;
+}
+::-webkit-scrollbar-track {
+    background: #1a1a1a;
+}
+::-webkit-scrollbar-thumb {
+    background: #8e44ad;
+    border-radius: 4px;
+}
+
+/* --- 기본 설정 --- */
+body {
+    background-color: #0d0d12; /* 더 깊은 검정색 배경 */
+    color: #f0f0f0; /* 기본 글자색 (밝은 흰색) */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    font-family: 'Noto Sans KR', sans-serif;
+}
+
+/* --- 레이아웃 --- */
+.main-wrapper {
+    display: flex;
+    gap: 25px;
+    width: 950px;
+    background-color: rgba(13, 13, 18, 0.7); /* 반투명 블랙, 유리 같은 느낌 */
+    padding: 25px;
+    border-radius: 10px;
+    border: 1px solid #8e44ad; /* 마법적인 보라색 테두리 */
+    backdrop-filter: blur(8px); /* 블러 효과 강화 */
+    box-shadow: 0 0 30px rgba(142, 68, 173, 0.6); /* 보라색 마법 오라 효과 */
+}
+
+.left-content, .right-content {
+    width: 50%; /* 좌우 비율을 조정하고 싶으면 이 값을 바꾸세요 */
+}
+
+/* --- 위젯 공통 스타일 --- */
+.widget-box {
+    background-color: rgba(26, 26, 29, 0.5);
+    border: 1px solid #5d3d77;
+    border-radius: 5px;
+    padding: 20px;
+    text-align: center;
+    margin-bottom: 25px;
+    transition: all 0.3s ease;
+}
+
+.widget-box:hover {
+    border-color: #c792ea;
+    box-shadow: 0 0 15px rgba(199, 146, 234, 0.3);
+}
+
+/* --- 왼쪽 사이드바 --- */
+.profile-img {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    border: 3px solid #f0f0f0; /* 깔끔한 흰색 테두리 */
+}
+
+.profile-box h3 {
+    font-family: 'Oranienbaum', serif; /* 트위스테 분위기의 영문 폰트 */
+    font-size: 1.5em;
+    color: #ffffff;
+    margin: 10px 0 5px 0;
+}
+
+.d-day {
+    color: #c792ea; /* 날짜에 보라색 포인트 */
+    font-size: 1.2em;
+    font-weight: bold;
+    text-shadow: 0 0 8px rgba(199, 146, 234, 0.7);
+}
+
+/* 메뉴 링크 */
+.menu-box a {
+    display: block;
+    padding: 12px;
+    text-decoration: none;
+    color: #e0e0e0;
+    font-family: 'Oranienbaum', serif;
+    font-size: 1.2em;
+    transition: all 0.3s ease;
+}
+
+.menu-box a:hover {
+    background-color: rgba(142, 68, 173, 0.2);
+    color: #ffffff;
+    text-shadow: 0 0 10px #ffffff;
+}
+
+/* --- 오른쪽 메인 콘텐츠 --- */
+.catchphrase {
+    font-family: 'Oranienbaum', serif;
+    font-size: 2.8em;
+    color: #ffffff;
+    text-align: center;
+    margin: 0 0 20px 0;
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.3), 0 0 20px rgba(199, 146, 234, 0.8);
+}
+
+.main-display-box img {
+    width: 100%;
+    border-radius: 4px;
+    border: 1px solid #333;
+}
+
+.footer {
+    text-align: right;
+    margin-top: auto;
+    font-size: 0.9em;
+    color: #777;
+}
