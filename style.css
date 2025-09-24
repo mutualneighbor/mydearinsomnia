@@ -233,29 +233,48 @@ body {
     display: none;
 }
 
-/* ▼▼▼▼▼ [추가됨] 캐릭터 창 스타일 ▼▼▼▼▼ */
+/* --- 홈 화면 포스트 목록 스타일 --- */
+.gallery-content { display: grid; grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); gap: 10px; }
+.gallery-item { text-align: center; border: 1px solid #eee; padding: 5px; transition: transform 0.2s ease, box-shadow 0.2s ease; }
+.gallery-thumbnail {
+    width: 100%;
+    height: 100px;
+    background-color: #ede7f6;
+    margin-bottom: 5px;
+}
+.gallery-item p { font-size: 0.9em; color: #555; }
+.gallery-item-wrapper {
+    cursor: pointer;
+}
+.gallery-item-wrapper:hover .gallery-item {
+    transform: translateY(-3px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+/* ▼▼▼▼▼ [수정됨] 캐릭터 창 스타일 ▼▼▼▼▼ */
 .character-window .window-content {
     padding: 0;
     height: calc(100% - 28px);
+    background-color: #000; /* 이미지가 로드되기 전 검은 배경 */
 }
 .character-profile-img {
     width: 100%;
-    height: 100%;
-    object-fit: cover;
+    height: auto; /* 이미지 비율에 맞게 높이 자동 조절 */
+    display: block; /* 이미지 하단 여백 제거 */
 }
 #leona-window {
     top: 30px;
     left: 50px;
     width: 400px;
-    height: 500px;
-    z-index: 3;
+    height: auto; /* 이미지 높이에 따라 자동 조절 */
+    z-index: 4; /* 네아보다 위에 있도록 수정 */
 }
 #nea-window {
     top: 120px;
     left: 250px;
     width: 400px;
-    height: 500px;
-    z-index: 4;
+    height: 500px; /* 콘텐츠가 없으므로 높이 고정 */
+    z-index: 3; /* 레오나보다 아래에 있도록 수정 */
 }
 .window-box.maximized {
     top: 0 !important;
@@ -264,4 +283,4 @@ body {
     height: 100% !important;
     z-index: 50 !important;
 }
-/* ▲▲▲▲▲ [추가됨] 캐릭터 창 스타일 ▲▲▲▲▲ */
+/* ▲▲▲▲▲ [수정됨] 캐릭터 창 스타일 ▲▲▲▲▲ */
