@@ -1,14 +1,11 @@
 /* --- 기본 설정 및 폰트 --- */
 * { margin: 0; padding: 0; box-sizing: border-box; }
 body {
-    /* [수정] 기본 폰트를 Inter로 변경 */
     font-family: 'Inter', "Pretendard", sans-serif;
     color: #444;
     background-color: #f0eefc;
     min-height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    display: flex; justify-content: center; align-items: center;
     padding: 30px;
     background-image: linear-gradient(rgba(230, 230, 250, 0.7) 1px, transparent 1px), linear-gradient(90deg, rgba(230, 230, 250, 0.7) 1px, transparent 1px);
     background-size: 20px 20px;
@@ -20,169 +17,69 @@ body {
     background-color: #fafaff;
     border-radius: 8px;
     box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
-    display: flex;
-    position: relative;
+    display: flex; position: relative;
     overflow: hidden;
 }
 
 /* --- 왼쪽 사이드바 --- */
-.left-sidebar {
-    width: 250px;
-    background-color: #f0f0f8;
-    border-right: 1px solid #e0e0f0;
-    padding: 20px;
-    display: flex; flex-direction: column;
-}
-
-.profile-widget {
-    text-align: center;
-    padding-bottom: 20px;
-    border-bottom: 1px solid #ddd;
-    margin-bottom: 20px;
-}
-.profile-img {
-    /* [수정] 프로필 이미지 크기 증가 */
-    width: 120px; height: 120px;
-    border-radius: 8px; 
-    border: 3px solid #fff;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-    margin-bottom: 15px;
-    object-fit: cover;
-}
-.profile-name {
-    /* [수정] 제목 폰트 적용 */
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 1.8em; font-weight: 700; margin-bottom: 10px;
-}
-.profile-desc {
-    /* [수정] 설명 글씨 크기 감소 */
-    font-size: 0.8em; color: #777; line-height: 1.5;
-}
-
-/* [추가] D-Day 위젯 스타일 */
-.d-day-widget {
-    text-align: center;
-    padding-bottom: 20px;
-    margin-bottom: 20px;
-    border-bottom: 1px solid #ddd;
-}
-.d-day-title {
-    font-size: 0.8em;
-    color: #aaa;
-    letter-spacing: 1px;
-    margin-bottom: 5px;
-    text-transform: uppercase;
-}
-.d-day-count {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 2em;
-    font-weight: 700;
-    color: #8a2be2;
-}
-
-
+.left-sidebar { width: 250px; background-color: #f0f0f8; border-right: 1px solid #e0e0f0; padding: 20px; display: flex; flex-direction: column; }
+.profile-widget { text-align: center; padding-bottom: 20px; border-bottom: 1px solid #ddd; margin-bottom: 20px; }
+.profile-img { width: 120px; height: 120px; border-radius: 8px; border: 3px solid #fff; box-shadow: 0 2px 5px rgba(0,0,0,0.1); margin-bottom: 15px; object-fit: cover; }
+.profile-name { font-family: 'Playfair Display', serif; font-size: 1.8em; font-weight: 700; margin-bottom: 10px; }
+.profile-desc { font-size: 0.75em; color: #888; line-height: 1.6; }
 .sidebar-menu { flex-grow: 1; }
-.sidebar-menu a {
-    display: flex; align-items: center;
-    padding: 12px 15px; margin-bottom: 10px;
-    text-decoration: none; border-radius: 8px;
-    font-weight: 500; color: #555;
-    background-color: #e9e9f4;
-    border: 1px solid #dcdcf0;
-    transition: all 0.2s ease;
-}
+.sidebar-menu a { display: flex; align-items: center; padding: 12px 15px; margin-bottom: 10px; text-decoration: none; border-radius: 8px; font-weight: 500; color: #555; background-color: #e9e9f4; border: 1px solid #dcdcf0; transition: all 0.2s ease; }
 .sidebar-menu a:hover { transform: translateY(-2px); box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
-.sidebar-menu a.active {
-    background-color: #8a2be2;
-    color: #fff; font-weight: 700;
-    border-color: #701ebd;
-}
+.sidebar-menu a.active { background-color: #8a2be2; color: #fff; font-weight: 700; border-color: #701ebd; }
 .sidebar-menu a i { width: 30px; }
-
 .sidebar-footer { margin-top: auto; }
-.sidebar-footer input {
-    width: 100%; padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-}
+.sidebar-footer input { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px; }
 
 /* --- 창(Window) 영역 --- */
 .windows-area { position: relative; flex-grow: 1; padding: 20px; }
-.window-box {
-    position: absolute;
-    background-color: #ffffff;
-    border: 1px solid #d0d0f0;
-    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
-    border-radius: 6px; overflow: hidden;
-}
-.window-header {
-    display: flex; justify-content: space-between; align-items: center;
-    background-color: #e0e0ff;
-    padding: 5px 10px;
-    border-bottom: 1px solid #d0d0f0; cursor: grab;
-}
-.window-title {
-    font-weight: 700; font-size: 0.9em; color: #555;
-}
-.window-buttons {
-    display: flex; align-items: center; gap: 12px;
-    font-size: 0.9em; color: #666;
-}
+.window-box { position: absolute; background-color: #ffffff; border: 1px solid #d0d0f0; box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1); border-radius: 6px; overflow: hidden; transition: box-shadow 0.2s, transform 0.2s; }
+.window-header { display: flex; justify-content: space-between; align-items: center; background-color: #e0e0ff; padding: 5px 10px; border-bottom: 1px solid #d0d0f0; cursor: grab; }
+.window-title { font-weight: 700; font-size: 0.9em; color: #555; }
+.window-buttons { display: flex; align-items: center; gap: 12px; font-size: 0.9em; color: #666; }
 .window-buttons i { cursor: pointer; transition: color 0.2s; }
 .window-buttons i:hover { color: #8a2be2; }
 .window-content { padding: 15px; }
 
 /* --- 개별 창 위치 및 크기 설정 --- */
 .calendar-window { top: 20px; left: 20px; width: 260px; z-index: 2; }
-/* [수정] 갤러리 창 위치 및 크기 재조정 */
-.gallery-window { top: 240px; left: 150px; width: 550px; height: 380px; z-index: 1; }
+.gallery-window { top: 240px; left: 200px; width: 500px; height: 380px; z-index: 1; }
+
+/* --- [추가] D-Day 팝업 스타일 --- */
+.d-day-popup {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background-color: #8a2be2;
+    color: white;
+    padding: 8px 15px;
+    border-radius: 30px;
+    font-family: 'Inter', sans-serif;
+    font-weight: 700;
+    font-size: 0.9em;
+    box-shadow: 0 4px 10px rgba(138, 43, 226, 0.4);
+    z-index: 20; /* 항상 위에 있도록 */
+}
 
 /* --- 달력 스타일 --- */
 .calendar-content { text-align: center; }
-.month-nav {
-    display: flex; justify-content: space-between; align-items: center;
-    font-size: 1.1em;
-    color: #8a2be2; margin-bottom: 10px;
-}
-#month-name {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 1.5em;
-    font-weight: 700;
-}
+.month-nav { display: flex; justify-content: space-between; align-items: center; font-size: 1.1em; color: #8a2be2; margin-bottom: 10px; }
+#month-name { font-family: 'Playfair Display', serif; font-size: 1.5em; font-weight: 700; }
 .arrow-btn { cursor: pointer; padding: 5px 10px; border-radius: 4px; transition: background-color 0.2s; }
 .arrow-btn:hover { background-color: #f0f0ff; }
-.days-of-week {
-    display: grid; grid-template-columns: repeat(7, 1fr);
-    font-size: 0.8em; margin-bottom: 5px; color: #888; font-weight: 500;
-}
-.dates-grid {
-    display: grid; grid-template-columns: repeat(7, 1fr);
-    font-size: 0.9em; row-gap: 5px;
-}
-.dates-grid div {
-    padding: 5px 0; border-radius: 4px;
-    transition: background-color 0.2s;
-    position: relative;
-}
+.days-of-week { display: grid; grid-template-columns: repeat(7, 1fr); font-size: 0.8em; margin-bottom: 5px; color: #888; font-weight: 500; }
+.dates-grid { display: grid; grid-template-columns: repeat(7, 1fr); font-size: 0.9em; row-gap: 5px; }
+.dates-grid div { padding: 5px 0; border-radius: 4px; transition: background-color 0.2s; position: relative; }
 .dates-grid div.prev-month, .dates-grid div.next-month { color: #ccc; }
-.dates-grid div.today {
-    background-color: #8a2be2;
-    color: #fff; font-weight: 700;
-}
-/* [추가] 생일 스타일 */
-.dates-grid div.birthday::after {
-    content: '';
-    position: absolute;
-    bottom: 2px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 4px;
-    height: 4px;
-    background-color: #ff6b81;
-    border-radius: 50%;
-}
+.dates-grid div.today { background-color: #8a2be2; color: #fff; font-weight: 700; }
+.dates-grid div.birthday::after { content: ''; position: absolute; bottom: 2px; left: 50%; transform: translateX(-50%); width: 4px; height: 4px; background-color: #ff6b81; border-radius: 50%; }
+/* [추가] 기념일 스타일 */
+.dates-grid div.anniversary::after { content: ''; position: absolute; bottom: 2px; left: 50%; transform: translateX(-50%); width: 4px; height: 4px; background-color: #4a90e2; border-radius: 50%; }
 .dates-grid div:not(.today):not(.prev-month):not(.next-month):hover { background-color: #f0f0ff; cursor: pointer; }
-
 
 /* --- 갤러리 스타일 --- */
 .gallery-content { display: grid; grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); gap: 10px; }
