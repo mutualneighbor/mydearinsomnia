@@ -83,6 +83,7 @@ body {
 .post-viewer-content {
     height: calc(100% - 28px);
     overflow-y: auto;
+    overflow-x: hidden; /* ◀◀◀ 옆으로 스크롤되는 문제 해결을 위해 추가 */
     padding: 20px;
 }
 .post-viewer-content h1,
@@ -149,8 +150,8 @@ body {
 
 /* --- 갤러리 그리드 스타일 --- */
 .gallery-grid-container {
-    column-count: 3; /* ◀◀◀ 세로 3줄로 고정하는 방식 변경 */
-    column-gap: 15px; /* ◀◀◀ 세로줄 사이 간격 */
+    column-count: 3;
+    column-gap: 15px;
 }
 
 .gallery-grid-container img {
@@ -158,8 +159,8 @@ body {
     height: auto;
     border-radius: 4px;
     box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-    margin-bottom: 15px; /* ◀◀◀ 이미지 상하 간격을 추가하여 모든 여백 통일 */
-    break-inside: avoid; /* ◀◀◀ 이미지가 줄 중간에 잘리는 현상 방지 */
+    margin-bottom: 15px;
+    break-inside: avoid;
 }
 
 /* --- 이미지 크게 보기 (모달) 스타일 --- */
