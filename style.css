@@ -22,7 +22,17 @@ body {
 /* --- 왼쪽 사이드바 --- */
 .left-sidebar { width: 250px; background-color: #f0f0f8; border-right: 1px solid #e0e0f0; padding: 20px; display: flex; flex-direction: column; }
 .profile-widget { text-align: center; padding-bottom: 20px; border-bottom: 1px solid #ddd; margin-bottom: 20px; }
-.profile-img { width: 130px; height: 130px; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); margin-bottom: 15px; object-fit: cover; }
+/* [수정] 프로필 이미지 크기 확대 및 그림자 제거 (강제 적용) */
+.profile-img { 
+    width: 150px; /* 크기 확대 */
+    height: 150px; /* 크기 확대 */
+    border-radius: 8px; 
+    box-shadow: none !important; /* 그림자 확실하게 제거 (다른 스타일 충돌 방지) */
+    outline: none; /* 혹시 모를 아웃라인 제거 */
+    border: none; /* 혹시 모를 테두리 제거 */
+    margin-bottom: 15px; 
+    object-fit: cover; 
+}
 .profile-name { font-family: 'Poppins', sans-serif; font-size: 1.3em; font-weight: 700; margin-bottom: 10px; color: #555; }
 .profile-desc { font-size: 0.75em; color: #888; line-height: 1.6; }
 .sidebar-menu { flex-grow: 1; }
@@ -46,11 +56,19 @@ body {
 .gallery-window { top: 240px; left: 210px; width: 500px; height: 380px; z-index: 1; }
 
 /* --- D-Day '외곽선' 스티커 --- */
-.d-day-sticker { position: absolute; top: 15px; right: 15px; z-index: 20; display: flex; align-items: center; gap: 4px; transform: rotate(3deg); transition: transform 0.2s ease; cursor: pointer; }
+.d-day-sticker { 
+    position: absolute; top: 15px; right: 15px; z-index: 20; 
+    display: flex; align-items: center; gap: 0px; 
+    transform: rotate(3deg); transition: transform 0.2s ease; cursor: pointer; 
+}
 .d-day-sticker:hover { transform: rotate(-2deg) scale(1.05); }
-.d-day-sticker i, .d-day-sticker .d-day-text { font-family: 'Poppins', sans-serif; font-weight: 700; font-size: 1.2em; text-shadow: -2px -2px 0 #fff, 2px -2px 0 #fff, -2px 2px 0 #fff, 2px 2px 0 #fff, -3px 0 0 #fff, 3px 0 0 #fff, 0 -3px 0 #fff, 0 3px 0 #fff; }
-.d-day-sticker i { color: #c487de; font-size: 1.1em; }
-.d-day-sticker .d-day-text { color: #8a2be2; }
+.d-day-sticker .d-day-text { 
+    font-family: 'Poppins', sans-serif; 
+    font-weight: 700; 
+    font-size: 1.2em; 
+    text-shadow: -2px -2px 0 #fff, 2px -2px 0 #fff, -2px 2px 0 #fff, 2px 2px 0 #fff, -3px 0 0 #fff, 3px 0 0 #fff, 0 -3px 0 #fff, 0 3px 0 #fff; 
+    color: #8a2be2; 
+}
 
 /* --- 달력 스타일 --- */
 .calendar-content { text-align: center; }
