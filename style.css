@@ -149,10 +149,8 @@ body {
 
 /* --- 갤러리 그리드 스타일 --- */
 .gallery-grid-container {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr); /* ◀◀◀ 이 부분을 수정했습니다 */
-    gap: 15px;
-    align-items: start;
+    column-count: 3; /* ◀◀◀ 세로 3줄로 고정하는 방식 변경 */
+    column-gap: 15px; /* ◀◀◀ 세로줄 사이 간격 */
 }
 
 .gallery-grid-container img {
@@ -160,6 +158,8 @@ body {
     height: auto;
     border-radius: 4px;
     box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    margin-bottom: 15px; /* ◀◀◀ 이미지 상하 간격을 추가하여 모든 여백 통일 */
+    break-inside: avoid; /* ◀◀◀ 이미지가 줄 중간에 잘리는 현상 방지 */
 }
 
 /* --- 이미지 크게 보기 (모달) 스타일 --- */
