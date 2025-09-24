@@ -1,22 +1,23 @@
 /* --- 기본 설정 및 폰트 --- */
 * { margin: 0; padding: 0; box-sizing: border-box; }
 body {
-    font-family: "Pretendard", sans-serif;
-    color: #333;
-    background-color: #e0e0ff;
+    /* [수정] 기본 폰트를 Inter로 변경 */
+    font-family: 'Inter', "Pretendard", sans-serif;
+    color: #444;
+    background-color: #f0eefc;
     min-height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
     padding: 30px;
-    background-image: linear-gradient(#e6e6fa 1px, transparent 1px), linear-gradient(90deg, #e6e6fa 1px, transparent 1px);
+    background-image: linear-gradient(rgba(230, 230, 250, 0.7) 1px, transparent 1px), linear-gradient(90deg, rgba(230, 230, 250, 0.7) 1px, transparent 1px);
     background-size: 20px 20px;
 }
 
 /* --- 전체 데스크탑 배경 --- */
 .desktop-background {
     width: 1000px; height: 650px;
-    background-color: #f7f7ff;
+    background-color: #fafaff;
     border-radius: 8px;
     box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
     display: flex;
@@ -27,53 +28,73 @@ body {
 /* --- 왼쪽 사이드바 --- */
 .left-sidebar {
     width: 250px;
-    background-color: #f0f0f0;
-    border-right: 1px solid #e0e0e0;
+    background-color: #f0f0f8;
+    border-right: 1px solid #e0e0f0;
     padding: 20px;
     display: flex; flex-direction: column;
 }
 
-/* [수정] 프로필 위젯 스타일 */
 .profile-widget {
     text-align: center;
-    padding: 10px 0 30px 0;
+    padding-bottom: 20px;
     border-bottom: 1px solid #ddd;
     margin-bottom: 20px;
 }
 .profile-img {
-    width: 100px; height: 100px;
-    /* [수정] 원형 -> 둥근 사각형으로 변경 */
+    /* [수정] 프로필 이미지 크기 증가 */
+    width: 120px; height: 120px;
     border-radius: 8px; 
     border: 3px solid #fff;
     box-shadow: 0 2px 5px rgba(0,0,0,0.1);
     margin-bottom: 15px;
-    object-fit: cover; /* 이미지가 꽉 차도록 */
+    object-fit: cover;
 }
-.profile-name { font-size: 1.2em; font-weight: 700; margin-bottom: 10px; }
-.profile-desc { font-size: 0.9em; color: #777; line-height: 1.5; }
+.profile-name {
+    /* [수정] 제목 폰트 적용 */
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.8em; font-weight: 700; margin-bottom: 10px;
+}
+.profile-desc {
+    /* [수정] 설명 글씨 크기 감소 */
+    font-size: 0.8em; color: #777; line-height: 1.5;
+}
 
-/* [수정] 사이드바 메뉴 버튼 스타일 */
+/* [추가] D-Day 위젯 스타일 */
+.d-day-widget {
+    text-align: center;
+    padding-bottom: 20px;
+    margin-bottom: 20px;
+    border-bottom: 1px solid #ddd;
+}
+.d-day-title {
+    font-size: 0.8em;
+    color: #aaa;
+    letter-spacing: 1px;
+    margin-bottom: 5px;
+    text-transform: uppercase;
+}
+.d-day-count {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2em;
+    font-weight: 700;
+    color: #8a2be2;
+}
+
+
 .sidebar-menu { flex-grow: 1; }
 .sidebar-menu a {
     display: flex; align-items: center;
-    padding: 12px 15px;
-    margin-bottom: 10px;
-    text-decoration: none;
-    border-radius: 8px;
-    font-weight: 500;
-    color: #555;
+    padding: 12px 15px; margin-bottom: 10px;
+    text-decoration: none; border-radius: 8px;
+    font-weight: 500; color: #555;
     background-color: #e9e9f4;
     border: 1px solid #dcdcf0;
     transition: all 0.2s ease;
 }
-.sidebar-menu a:hover {
-    background-color: #c7c7e0;
-    color: #333;
-}
+.sidebar-menu a:hover { transform: translateY(-2px); box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
 .sidebar-menu a.active {
     background-color: #8a2be2;
-    color: #fff;
-    font-weight: 700;
+    color: #fff; font-weight: 700;
     border-color: #701ebd;
 }
 .sidebar-menu a i { width: 30px; }
@@ -83,7 +104,6 @@ body {
     width: 100%; padding: 10px;
     border: 1px solid #ccc;
     border-radius: 4px;
-    font-family: 'IBM Plex Mono', monospace;
 }
 
 /* --- 창(Window) 영역 --- */
@@ -102,8 +122,7 @@ body {
     border-bottom: 1px solid #d0d0f0; cursor: grab;
 }
 .window-title {
-    font-family: 'IBM Plex Mono', monospace;
-    font-weight: 500; font-size: 0.9em; color: #666;
+    font-weight: 700; font-size: 0.9em; color: #555;
 }
 .window-buttons {
     display: flex; align-items: center; gap: 12px;
@@ -114,22 +133,27 @@ body {
 .window-content { padding: 15px; }
 
 /* --- 개별 창 위치 및 크기 설정 --- */
-.calendar-window { top: 20px; left: 20px; width: 250px; z-index: 2; }
-/* [수정] 갤러리 창 위치를 더 아래로 조정 */
-.gallery-window { top: 220px; left: 150px; width: 550px; z-index: 1; }
+.calendar-window { top: 20px; left: 20px; width: 260px; z-index: 2; }
+/* [수정] 갤러리 창 위치 및 크기 재조정 */
+.gallery-window { top: 240px; left: 150px; width: 550px; height: 380px; z-index: 1; }
 
 /* --- 달력 스타일 --- */
 .calendar-content { text-align: center; }
 .month-nav {
     display: flex; justify-content: space-between; align-items: center;
-    font-family: 'IBM Plex Mono', monospace; font-size: 1.1em;
-    color: #8a2be2; margin: -5px 0 10px 0;
+    font-size: 1.1em;
+    color: #8a2be2; margin-bottom: 10px;
 }
-.month-nav span { cursor: pointer; padding: 5px 10px; border-radius: 4px; }
-.month-nav span:hover { background-color: #f0f0ff; }
+#month-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.5em;
+    font-weight: 700;
+}
+.arrow-btn { cursor: pointer; padding: 5px 10px; border-radius: 4px; transition: background-color 0.2s; }
+.arrow-btn:hover { background-color: #f0f0ff; }
 .days-of-week {
     display: grid; grid-template-columns: repeat(7, 1fr);
-    font-size: 0.8em; margin-bottom: 5px; color: #666; font-weight: 500;
+    font-size: 0.8em; margin-bottom: 5px; color: #888; font-weight: 500;
 }
 .dates-grid {
     display: grid; grid-template-columns: repeat(7, 1fr);
@@ -138,13 +162,27 @@ body {
 .dates-grid div {
     padding: 5px 0; border-radius: 4px;
     transition: background-color 0.2s;
+    position: relative;
 }
 .dates-grid div.prev-month, .dates-grid div.next-month { color: #ccc; }
 .dates-grid div.today {
     background-color: #8a2be2;
     color: #fff; font-weight: 700;
 }
+/* [추가] 생일 스타일 */
+.dates-grid div.birthday::after {
+    content: '';
+    position: absolute;
+    bottom: 2px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 4px;
+    height: 4px;
+    background-color: #ff6b81;
+    border-radius: 50%;
+}
 .dates-grid div:not(.today):not(.prev-month):not(.next-month):hover { background-color: #f0f0ff; cursor: pointer; }
+
 
 /* --- 갤러리 스타일 --- */
 .gallery-content { display: grid; grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); gap: 10px; }
