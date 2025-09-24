@@ -6,6 +6,7 @@ body {
     background-color: #f0eefc;
     min-height: 100vh;
     display: flex; justify-content: center; align-items: center;
+    padding: 30px; /* ▼▼▼▼▼ [추가됨] 페이지 전체에 상하좌우 여백 추가 ▼▼▼▼▼ */
 }
 .page-wrapper { position: relative; }
 
@@ -128,11 +129,10 @@ body {
 /* --- 갤러리 스타일 --- */
 .gallery-content { display: grid; grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); gap: 10px; }
 .gallery-item { text-align: center; border: 1px solid #eee; padding: 5px; transition: transform 0.2s ease, box-shadow 0.2s ease; }
-
 .gallery-thumbnail {
     width: 100%;
     height: 100px;
-    background-color: #ede7f6; /* ▼▼▼▼▼ [수정됨] 더 연한 보라색으로 변경 ▼▼▼▼▼ */
+    background-color: #ede7f6;
     margin-bottom: 5px;
 }
 .gallery-item p { font-size: 0.9em; color: #555; }
