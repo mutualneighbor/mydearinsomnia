@@ -5,61 +5,92 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My Dear Insomnia</title>
     <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;700&family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
 </head>
 <body>
-    <div class="main-wrapper">
-        <aside class="sidebar">
-            <div class="profile">
-                <img src="https://via.placeholder.com/100" alt="프로필 이미지">
-                <h3>L.K. & D.</h3>
+
+    <div class="desktop-background">
+        <h1 class="desktop-title">TEST 3</h1> <aside class="left-sidebar">
+            <div class="sidebar-header">
+                <h3>_ My Page _</h3>
             </div>
-            <nav class="menu">
-                <a href="#"><i class="fa-solid fa-image"></i> GALLERY</a>
-                <a href="#"><i class="fa-solid fa-pen-to-square"></i> POSTING</a>
-                <a href="#"><i class="fa-solid fa-clock"></i> TIMELINE</a>
-                <a href="#"><i class="fa-solid fa-calendar-days"></i> CALENDAR</a>
-                <a href="#"><i class="fa-solid fa-comments"></i> GUEST</a>
+            <nav class="sidebar-menu">
+                <a href="#"><span class="menu-num">01</span> ABOUT</a>
+                <a href="#"><span class="menu-num">02</span> GALLERY</a>
+                <a href="#"><span class="menu-num">03</span> LOG</a>
+                <a href="#"><span class="menu-num">04</span> GUEST</a>
             </nav>
             <div class="sidebar-footer">
-                <i class="fa-solid fa-bell"></i>
-                <i class="fa-solid fa-gear"></i>
+                <input type="text" placeholder="#search">
+                <div class="icon-group">
+                    <button><i class="fa-solid fa-magnifying-glass"></i></button>
+                    <button><i class="fa-solid fa-gear"></i></button>
+                    <button><i class="fa-solid fa-bell"></i></button>
+                </div>
             </div>
         </aside>
 
-        <main class="content-area">
-            <header class="content-header">
-                <div class="window-buttons">
-                    <span></span><span></span><span></span>
-                </div>
-                <div class="header-title">
-                    <span>OUR STORY</span>
-                </div>
-            </header>
-            <div class="content-body">
-                <div class="main-visual">
-                    <img src="https://via.placeholder.com/550x300" alt="메인 이미지">
-                </div>
-                <div class="widgets-container">
-                    <div class="widget latest-posts">
-                        <h4>LATEST</h4>
-                        <ul>
-                            <li>게시글 제목입니다.</li>
-                            <li>두 번째 게시글 제목입니다.</li>
-                            <li>세 번째 게시글입니다.</li>
-                        </ul>
+        <div class="windows-area">
+            <div class="window-box calendar-window">
+                <div class="window-header">
+                    <span class="window-title">Mar</span>
+                    <div class="window-buttons">
+                        <span class="min">_</span><span class="max">□</span><span class="close">x</span>
                     </div>
-                    <div class="widget profile-widget">
-                        <img src="https://via.placeholder.com/50" alt="작은 프로필">
-                        <div class="profile-info">
-                            <strong>Leona K.</strong>
-                            <span>Last updated: 2025-09-24</span>
-                        </div>
+                </div>
+                <div class="window-content calendar-content">
+                    <div class="month-nav"><span>&lt;</span> March <span>&gt;</span></div>
+                    <div class="days-of-week"><span>Su</span><span>Mo</span><span>Tu</span><span>We</span><span>Th</span><span>Fr</span><span>Sa</span></div>
+                    <div class="dates-grid">
+                        <span></span><span></span><span></span><span></span><span></span><span>1</span><span>2</span>
+                        <span>3</span><span>4</span><span>5</span><span>6</span><span>7</span><span>8</span><span>9</span>
+                        <span>10</span><span>11</span><span>12</span><span>13</span><span>14</span><span>15</span><span>16</span>
+                        <span>17</span><span>18</span><span>19</span><span>20</span><span>21</span><span>22</span><span>23</span>
+                        <span>24</span><span>25</span><span>26</span><span>27</span><span>28</span><span>29</span><span>30</span>
+                        <span>31</span><span></span><span></span><span></span><span></span><span></span><span></span>
                     </div>
                 </div>
             </div>
-        </main>
+
+            <div class="window-box gallery-window">
+                <div class="window-header">
+                    <span class="window-title">GALLERY</span>
+                    <div class="window-buttons">
+                        <span class="min">_</span><span class="max">□</span><span class="close">x</span>
+                    </div>
+                </div>
+                <div class="window-content gallery-content">
+                    <div class="gallery-item">
+                        <img src="https://via.placeholder.com/150x200/d7e0ff" alt="이미지 1">
+                        <p>ACLA</p>
+                    </div>
+                    <div class="gallery-item">
+                        <img src="https://via.placeholder.com/150x200/c7d3ff" alt="이미지 2">
+                        <p>ACLA</p>
+                    </div>
+                    <div class="gallery-item">
+                        <img src="https://via.placeholder.com/150x200/e0eaff" alt="이미지 3">
+                        <p>ACLA</p>
+                    </div>
+                    <div class="gallery-item">
+                        <img src="https://via.placeholder.com/150x200/b0c3ff" alt="이미지 4">
+                        <p>ACLA</p>
+                    </div>
+                    <div class="gallery-item">
+                        <img src="https://via.placeholder.com/150x200/a0b0ff" alt="이미지 5">
+                        <p>ACLA</p>
+                    </div>
+                    <div class="gallery-item">
+                        <img src="https://via.placeholder.com/150x200/c0d0ff" alt="이미지 6">
+                        <p>ACLA</p>
+                    </div>
+                </div>
+            </div>
+            
+            </div>
     </div>
+
 </body>
 </html>
