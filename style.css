@@ -243,17 +243,4 @@ body {
 .nav-button.hidden {
     display: none;
 }
-
-.viewer-close-button {
-    position: absolute;
-    top: -10px;
-    right: -10px;
-    font-size: 1.5em;
-    color: #666;
-    cursor: pointer;
-    transition: color 0.2s;
-}
-.viewer-close-button:hover {
-    color: #8a2be2;
-}
 /* ▲▲▲▲▲ [수정됨] 창 내부 이미지 뷰어 스타일 ▲▲▲▲▲ */
