@@ -142,6 +142,7 @@
                 loadPosts();
             }
 
+            // ▼▼▼▼▼ [수정됨] 스크롤 문제를 해결하기 위해 HTML 구조 변경 ▼▼▼▼▼
             function showGalleryPage() {
                 clearPage();
                 const galleryWindowHTML = `
@@ -149,13 +150,16 @@
                         <div class="window-header">
                             <span class="window-title">gallery</span>
                         </div>
-                        <div class="window-content post-viewer-content gallery-grid-container" id="gallery-container">
-                            </div>
+                        <div class="window-content post-viewer-content">
+                            <div class="gallery-grid-container" id="gallery-container">
+                                </div>
+                        </div>
                     </div>
                 `;
                 windowsArea.innerHTML = galleryWindowHTML;
                 loadGalleryImages();
             }
+            // ▲▲▲▲▲ [수정됨] 스크롤 문제를 해결하기 위해 HTML 구조 변경 ▲▲▲▲▲
 
             function loadGalleryImages() {
                 const galleryContainer = document.getElementById('gallery-container');
