@@ -2,7 +2,7 @@
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=1000">
     <title>My Dear Insomnia</title>
     <link rel="stylesheet" href="style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -81,16 +81,14 @@
                         </div>
                 </div>`;
             
-            // ▼▼▼▼▼ [수정됨] 포스트 내용만 추출하도록 변경 ▼▼▼▼▼
             function showPost(postUrl, postTitle) {
                 windowsArea.innerHTML = ''; 
                 fetch(postUrl)
                     .then(response => response.text())
                     .then(htmlString => {
-                        // 가져온 HTML 문자열을 파싱해서 body 안의 내용만 추출합니다.
                         const parser = new DOMParser();
                         const doc = parser.parseFromString(htmlString, 'text/html');
-                        const postContentHTML = doc.body.innerHTML; // body 태그 안의 내용만 가져옵니다.
+                        const postContentHTML = doc.body.innerHTML;
 
                         const postViewerHTML = `
                             <div class="window-box post-viewer-window">
