@@ -74,7 +74,79 @@
     </div>
 
     <script>
-        // 스크립트 코드가 들어갈 자리
+        // 달력 관련 DOM 요소 가져오기
+const monthYearElement = document.getElementById('calendar-month-year');
+const datesGridElement = document.getElementById('dates-grid');
+const prevMonthButton = document.getElementById('prev-month');
+const nextMonthButton = document.getElementById('next-month');
+
+// 현재 날짜를 기준으로 달력 상태 관리
+let currentDate = new Date();
+
+// 달력을 그리는 함수
+function renderCalendar() {
+    const year = currentDate.getFullYear();
+    const month = currentDate.getMonth();
+
+    // 헤더에 년도와 월 표시 (MM. YYYY 형식)
+    monthYearElement.textContent = `${String(month + 1).padStart(2, '0')}. ${year}`;
+
+    // 이번 달의 첫날과 마지막 날 구하기
+    const firstDayOfMonth = new Date(year, month, 1).getDay(); // 0: Sun, 1: Mon, ...
+    const lastDateOfMonth = new Date(year, month + 1, 0).getDate();
+    
+    // 지난 달의 마지막 날 구하기
+    const lastDateOfPrevMonth = new Date(year, month, 0).getDate();
+
+    // 달력 내용 초기화
+    datesGridElement.innerHTML = '';
+
+    // 1. 지난 달 날짜 채우기
+    for (let i = firstDayOfMonth; i > 0; i--) {
+        const dateElement = document.createElement('div');
+        dateElement.classList.add('prev-month');
+        dateElement.textContent = lastDateOfPrevMonth - i + 1;
+        datesGridElement.appendChild(dateElement);
+    }
+
+    // 2. 이번 달 날짜 채우기
+    for (let i = 1; i <= lastDateOfMonth; i++) {
+        const dateElement = document.createElement('div');
+        dateElement.textContent = i;
+        
+        // 오늘 날짜인지 확인
+        const today = new Date();
+        if (year === today.getFullYear() && month === today.getMonth() && i === today.getDate()) {
+            dateElement.classList.add('today');
+        }
+        datesGridElement.appendChild(dateElement);
+    }
+    
+    // 3. 다음 달 날짜 채우기 (42칸을 채우기 위함)
+    const totalCells = datesGridElement.children.length;
+    const remainingCells = 42 - totalCells;
+    for (let i = 1; i <= remainingCells; i++) {
+        const dateElement = document.createElement('div');
+        dateElement.classList.add('next-month');
+        dateElement.textContent = i;
+        datesGridElement.appendChild(dateElement);
+    }
+}
+
+// 이전 달 버튼 클릭 이벤트
+prevMonthButton.addEventListener('click', () => {
+    currentDate.setMonth(currentDate.getMonth() - 1);
+    renderCalendar();
+});
+
+// 다음 달 버튼 클릭 이벤트
+nextMonthButton.addEventListener('click', () => {
+    currentDate.setMonth(currentDate.getMonth() + 1);
+    renderCalendar();
+});
+
+// 페이지 로드 시 달력 바로 그리기
+renderCalendar();
     </script>
 </body>
 </html>
