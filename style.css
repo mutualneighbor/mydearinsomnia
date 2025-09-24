@@ -23,12 +23,6 @@ body {
     position: relative;
     overflow: hidden;
 }
-.desktop-title {
-    position: absolute; top: 20px; left: 280px;
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 2.5em; color: #b0a0e0;
-    text-shadow: 1px 1px 0 #fff; z-index: 10;
-}
 
 /* --- 왼쪽 사이드바 --- */
 .left-sidebar {
@@ -39,7 +33,7 @@ body {
     display: flex; flex-direction: column;
 }
 
-/* [추가] 프로필 위젯 스타일 */
+/* [수정] 프로필 위젯 스타일 */
 .profile-widget {
     text-align: center;
     padding: 10px 0 30px 0;
@@ -47,14 +41,16 @@ body {
     margin-bottom: 20px;
 }
 .profile-img {
-    width: 80px; height: 80px;
-    border-radius: 50%;
+    width: 100px; height: 100px;
+    /* [수정] 원형 -> 둥근 사각형으로 변경 */
+    border-radius: 8px; 
     border: 3px solid #fff;
     box-shadow: 0 2px 5px rgba(0,0,0,0.1);
     margin-bottom: 15px;
+    object-fit: cover; /* 이미지가 꽉 차도록 */
 }
-.profile-name { font-size: 1.2em; font-weight: 700; margin-bottom: 5px; }
-.profile-desc { font-size: 0.9em; color: #777; }
+.profile-name { font-size: 1.2em; font-weight: 700; margin-bottom: 10px; }
+.profile-desc { font-size: 0.9em; color: #777; line-height: 1.5; }
 
 /* [수정] 사이드바 메뉴 버튼 스타일 */
 .sidebar-menu { flex-grow: 1; }
@@ -119,8 +115,8 @@ body {
 
 /* --- 개별 창 위치 및 크기 설정 --- */
 .calendar-window { top: 20px; left: 20px; width: 250px; z-index: 2; }
-/* [수정] 갤러리 창 위치 조정 */
-.gallery-window { top: 150px; left: 180px; width: 500px; z-index: 1; }
+/* [수정] 갤러리 창 위치를 더 아래로 조정 */
+.gallery-window { top: 220px; left: 150px; width: 550px; z-index: 1; }
 
 /* --- 달력 스타일 --- */
 .calendar-content { text-align: center; }
@@ -129,7 +125,8 @@ body {
     font-family: 'IBM Plex Mono', monospace; font-size: 1.1em;
     color: #8a2be2; margin: -5px 0 10px 0;
 }
-.month-nav span { cursor: pointer; padding: 5px 10px; }
+.month-nav span { cursor: pointer; padding: 5px 10px; border-radius: 4px; }
+.month-nav span:hover { background-color: #f0f0ff; }
 .days-of-week {
     display: grid; grid-template-columns: repeat(7, 1fr);
     font-size: 0.8em; margin-bottom: 5px; color: #666; font-weight: 500;
@@ -143,12 +140,11 @@ body {
     transition: background-color 0.2s;
 }
 .dates-grid div.prev-month, .dates-grid div.next-month { color: #ccc; }
-/* [추가] 오늘 날짜 스타일 */
 .dates-grid div.today {
     background-color: #8a2be2;
     color: #fff; font-weight: 700;
 }
-.dates-grid div:not(.today):not(.prev-month):not(.next-month):hover { background-color: #f0f0ff; }
+.dates-grid div:not(.today):not(.prev-month):not(.next-month):hover { background-color: #f0f0ff; cursor: pointer; }
 
 /* --- 갤러리 스타일 --- */
 .gallery-content { display: grid; grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); gap: 10px; }
