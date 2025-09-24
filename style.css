@@ -56,9 +56,18 @@ body {
 .window-content { padding: 15px; }
 
 /* --- 개별 창 위치 및 크기 설정 --- */
-/* [수정] Post 창을 달력 위로 배치 */
-.calendar-window { top: 20px; left: 20px; width: 260px; z-index: 1; } /* 달력 z-index 낮춤 */
-.gallery-window { top: 100px; left: 180px; width: 500px; height: 380px; z-index: 2; } /* Post 창 z-index 높임 및 위치 조정 */
+.calendar-window { top: 20px; left: 20px; width: 260px; z-index: 1; }
+
+/* ▼▼▼▼▼▼▼▼▼▼ 이 부분이 수정되었습니다 ▼▼▼▼▼▼▼▼▼▼ */
+.gallery-window { 
+    bottom: 20px;
+    right: 20px;
+    width: 500px; 
+    height: 380px; 
+    z-index: 2; 
+}
+/* ▲▲▲▲▲▲▲▲▲▲ 여기까지 수정되었습니다 ▲▲▲▲▲▲▲▲▲▲ */
+
 
 /* --- D-Day '외곽선' 스티커 --- */
 .d-day-sticker { 
