@@ -52,9 +52,6 @@
                 <div class="window-box calendar-window">
                     <div class="window-header">
                         <span class="window-title" id="calendar-year">YYYY</span>
-                        <div class="window-buttons">
-                            <i class="fa-solid fa-minus"></i> <i class="fa-regular fa-square"></i> <i class="fa-solid fa-xmark"></i>
-                        </div>
                     </div>
                     <div class="window-content calendar-content">
                         <div class="month-nav">
@@ -73,9 +70,6 @@
                 <div class="window-box gallery-window">
                     <div class="window-header">
                         <span class="window-title">Post</span>
-                        <div class="window-buttons">
-                            <i class="fa-solid fa-minus"></i> <i class="fa-regular fa-square"></i> <i class="fa-solid fa-xmark"></i>
-                        </div>
                     </div>
                     <div class="window-content gallery-content" id="post-list-container">
                         </div>
@@ -120,10 +114,11 @@
                     .then(posts => {
                         let htmlContent = '';
                         posts.forEach(post => {
+                            // ▼▼▼▼▼ [수정됨] img 태그 대신 div 태그 사용 ▼▼▼▼▼
                             htmlContent += `
                                 <div class="gallery-item-wrapper" onclick="showPost('${post.url}', '${post.title}')">
                                     <div class="gallery-item">
-                                        <img src="${post.thumbnail}" alt="${post.title}">
+                                        <div class="gallery-thumbnail"></div>
                                         <p>${post.title}</p>
                                     </div>
                                 </div>
