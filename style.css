@@ -54,13 +54,10 @@ body {
 .window-buttons i:hover { color: #8a2be2; }
 .window-content { padding: 15px; }
 
-/* ▼▼▼▼▼ [새로 추가] 달력/포스트 목록 창 버튼 제거 ▼▼▼▼▼ */
 .calendar-window .window-buttons,
 .gallery-window .window-buttons {
     display: none;
 }
-/* ▲▲▲▲▲ 여기까지 새로 추가 ▲▲▲▲▲ */
-
 
 /* --- 개별 창 위치 및 크기 설정 --- */
 .calendar-window { top: 20px; left: 20px; width: 260px; z-index: 1; }
@@ -75,7 +72,7 @@ body {
 .post-viewer-window {
     top: 20px;
     left: 20px;
-    right: 20px; /* ▼▼▼▼▼ [수정됨] 오른쪽 여백을 20px로 다시 설정 ▼▼▼▼▼ */
+    right: 20px;
     bottom: 20px;
     width: auto;
     height: auto;
@@ -97,7 +94,6 @@ body {
     line-height: 1.7;
     margin-bottom: 15px;
 }
-
 
 /* --- D-Day '외곽선' 스티커 --- */
 .d-day-sticker { 
@@ -144,3 +140,5 @@ body {
 
 /* --- 데스크탑 커서 아이콘 --- */
 .desktop-cursor { position: absolute; bottom: -15px; right: -10px; font-size: 2.5em; color: #ffffff; text-shadow: -1.5px 0 #000, 0 1.5px #000, 1.5px 0 #000, 0 -1.5px #000; z-index: 20; }
+
+/* 이전에 추가했던 @media 반응형 코드는 모두 삭제되었습니다. */
