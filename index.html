@@ -39,6 +39,9 @@
     </div>
     
     <script>
+        // 전역 스코프에서 showHomePage를 접근할 수 있도록 window 객체에 할당합니다.
+        window.showHomePage = showHomePage;
+
         document.addEventListener('DOMContentLoaded', function() {
             const windowsArea = document.getElementById('windows-area');
             const menuLinks = document.querySelectorAll('.sidebar-menu a');
@@ -81,28 +84,56 @@
                         </div>
                 </div>`;
 
-            // 포스트 목록을 불러와서 화면에 표시하는 함수
+            // ▼▼▼▼▼ [수정] 포스트 클릭 시 작동하는 새 함수 ▼▼▼▼▼
+            function showPost(postUrl, postTitle) {
+                windowsArea.innerHTML = ''; // 1. 데스크탑 영역을 깨끗하게 비웁니다.
+
+                // 2. 클릭한 포스트의 HTML 내용을 가져옵니다.
+                fetch(postUrl)
+                    .then(response => response.text())
+                    .then(postContentHTML => {
+                        // 3. 가져온 내용으로 새 창을 만듭니다.
+                        const postViewerHTML = `
+                            <div class="window-box post-viewer-window">
+                                <div class="window-header">
+                                    <span class="window-title">${postTitle}</span>
+                                    <div class="window-buttons">
+                                        <i class="fa-solid fa-xmark" onclick="window.showHomePage()"></i>
+                                    </div>
+                                </div>
+                                <div class="window-content post-viewer-content">
+                                    ${postContentHTML}
+                                </div>
+                            </div>
+                        `;
+                        windowsArea.innerHTML = postViewerHTML; // 4. 데스크탑 영역에 새 창을 표시합니다.
+                    })
+                    .catch(error => {
+                        console.error('포스트를 불러오는 중 오류 발생:', error);
+                        windowsArea.innerHTML = '<p>포스트를 불러올 수 없습니다. <a href="#" onclick="window.showHomePage()">홈으로 돌아가기</a></p>';
+                    });
+            }
+
+            // ▼▼▼▼▼ [수정] 포스트 목록 생성 방식 변경 ▼▼▼▼▼
             function loadPosts() {
                 const postContainer = document.getElementById('post-list-container');
                 if (!postContainer) return;
 
-                fetch('posts.json') // 1. posts.json 파일을 불러옵니다.
-                    .then(response => response.json()) // 2. 불러온 파일을 JSON 형태로 변환합니다.
-                    .then(posts => { // 3. 변환된 데이터(posts 배열)를 사용합니다.
+                fetch('posts.json')
+                    .then(response => response.json())
+                    .then(posts => {
                         let htmlContent = '';
                         posts.forEach(post => {
-                            // 4. 각 포스트 정보를 사용해 HTML 문자열을 만듭니다.
-                            // a 태그로 감싸서 클릭 가능하게 하고, 새 탭에서 열리도록 target="_blank" 추가
+                            // a 태그 대신 div로 바꾸고, onclick 이벤트를 추가합니다.
                             htmlContent += `
-                                <a href="${post.url}" target="_blank" style="text-decoration: none;">
+                                <div class="gallery-item-wrapper" onclick="showPost('${post.url}', '${post.title}')">
                                     <div class="gallery-item">
                                         <img src="${post.thumbnail}" alt="${post.title}">
                                         <p>${post.title}</p>
                                     </div>
-                                </a>
+                                </div>
                             `;
                         });
-                        // 5. 생성된 HTML을 컨테이너에 삽입합니다.
                         postContainer.innerHTML = htmlContent;
                     })
                     .catch(error => {
@@ -112,11 +143,15 @@
             }
 
             function showHomePage() {
+                // 홈 버튼을 활성화 상태로 만듭니다.
+                menuLinks.forEach(l => l.classList.remove('active'));
+                document.getElementById('menu-home').classList.add('active');
+
                 windowsArea.innerHTML = dDayStickerHTML + calendarWindowHTML + postWindowHTML;
                 runDday();
                 runCalendar();
                 runWindowFocus();
-                loadPosts(); // 홈 페이지가 보일 때 loadPosts 함수를 실행하도록 추가!
+                loadPosts();
             }
 
             function clearPage() {
@@ -150,18 +185,25 @@
             }
 
             function runDday() {
-                const dDayCounterPopup = document.getElementById('d-day-counter-popup').querySelector('.d-day-text');
+                const dDayText = document.querySelector('.d-day-text');
+                if(!dDayText) return;
                 const startDate = new Date('2025-06-23');
-                const todayForDday = new Date();
+                // 현재 날짜를 한국 시간 기준으로 설정합니다.
+                const now = new Date();
+                const todayForDday = new Date(now.toLocaleString("en-US", {timeZone: "Asia/Seoul"}));
+                
                 startDate.setHours(0,0,0,0);
                 todayForDday.setHours(0,0,0,0);
-                const diffTime = Math.abs(todayForDday - startDate);
-                const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-                dDayCounterPopup.textContent = `D + ${diffDays}`;
+
+                const diffTime = todayForDday - startDate; // 오늘 - 시작일
+                const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+                dDayText.textContent = `D + ${diffDays + 1}`; // 시작일 포함
             }
 
             function runCalendar() {
                 const monthYearElement = document.getElementById('calendar-year');
+                if(!monthYearElement) return;
+
                 const monthNameElement = document.getElementById('month-name');
                 const datesGridElement = document.getElementById('dates-grid');
                 const prevMonthButton = document.getElementById('prev-month');
