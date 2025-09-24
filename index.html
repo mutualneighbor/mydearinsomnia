@@ -5,75 +5,61 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My Dear Insomnia</title>
     <link rel="stylesheet" href="style.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic" crossorigin>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
 </head>
 <body>
-
-    <div class="container">
-
+    <div class="main-wrapper">
         <aside class="sidebar">
-            <div class="widget">
-                <h3 class="widget-title">Profile</h3>
-                <div class="profile-content">
-                    <img src="https://via.placeholder.com/80" alt="프로필 이미지">
-                    <div class="profile-text">
-                        <h4>L.K. & D.</h4>
-                        <p>Our little space for insomnia.</p>
+            <div class="profile">
+                <img src="https://via.placeholder.com/100" alt="프로필 이미지">
+                <h3>L.K. & D.</h3>
+            </div>
+            <nav class="menu">
+                <a href="#"><i class="fa-solid fa-image"></i> GALLERY</a>
+                <a href="#"><i class="fa-solid fa-pen-to-square"></i> POSTING</a>
+                <a href="#"><i class="fa-solid fa-clock"></i> TIMELINE</a>
+                <a href="#"><i class="fa-solid fa-calendar-days"></i> CALENDAR</a>
+                <a href="#"><i class="fa-solid fa-comments"></i> GUEST</a>
+            </nav>
+            <div class="sidebar-footer">
+                <i class="fa-solid fa-bell"></i>
+                <i class="fa-solid fa-gear"></i>
+            </div>
+        </aside>
+
+        <main class="content-area">
+            <header class="content-header">
+                <div class="window-buttons">
+                    <span></span><span></span><span></span>
+                </div>
+                <div class="header-title">
+                    <span>OUR STORY</span>
+                </div>
+            </header>
+            <div class="content-body">
+                <div class="main-visual">
+                    <img src="https://via.placeholder.com/550x300" alt="메인 이미지">
+                </div>
+                <div class="widgets-container">
+                    <div class="widget latest-posts">
+                        <h4>LATEST</h4>
+                        <ul>
+                            <li>게시글 제목입니다.</li>
+                            <li>두 번째 게시글 제목입니다.</li>
+                            <li>세 번째 게시글입니다.</li>
+                        </ul>
+                    </div>
+                    <div class="widget profile-widget">
+                        <img src="https://via.placeholder.com/50" alt="작은 프로필">
+                        <div class="profile-info">
+                            <strong>Leona K.</strong>
+                            <span>Last updated: 2025-09-24</span>
+                        </div>
                     </div>
                 </div>
             </div>
-            
-            <div class="widget">
-                <h3 class="widget-title">Menu</h3>
-                <nav class="menu">
-                    <a href="#">Record</a>
-                    <a href="#">Memory</a>
-                    <a href="#">Message</a>
-                </nav>
-            </div>
-
-            <div class="widget">
-                <h3 class="widget-title">Date</h3>
-                <p>2025. 09. 24 ~</p>
-            </div>
-
-            <footer class="sidebar-footer">
-                <p>My Dear Insomnia</p>
-            </footer>
-        </aside>
-
-        <main class="main-content">
-            <div class="gallery-grid">
-                <div class="card">
-                    <img src="https://via.placeholder.com/300x200" alt="게시물 이미지">
-                    <div class="card-caption">게시물 제목 1</div>
-                </div>
-                <div class="card">
-                    <img src="https://via.placeholder.com/300" alt="게시물 이미지">
-                    <div class="card-caption">게시물 제목 2</div>
-                </div>
-                <div class="card">
-                    <img src="https://via.placeholder.com/300x400" alt="게시물 이미지">
-                    <div class="card-caption">게시물 제목 3</div>
-                </div>
-                <div class="card">
-                    <img src="https://via.placeholder.com/300x250" alt="게시물 이미지">
-                    <div class="card-caption">게시물 제목 4</div>
-                </div>
-                <div class="card">
-                    <img src="https://via.placeholder.com/300x300" alt="게시물 이미지">
-                    <div class="card-caption">게시물 제목 5</div>
-                </div>
-                <div class="card">
-                    <img src="https://via.placeholder.com/300x180" alt="게시물 이미지">
-                    <div class="card-caption">게시물 제목 6</div>
-                </div>
-            </div>
         </main>
-
     </div>
-
 </body>
 </html>
