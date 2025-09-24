@@ -54,10 +54,8 @@
             const windowsArea = document.getElementById('windows-area');
             const menuLinks = document.querySelectorAll('.sidebar-menu a[id]');
 
-            // ▼▼▼▼▼ [추가/수정됨] 갤러리 상태 관리를 위한 변수 ▼▼▼▼▼
             let galleryImages = [];
             let currentIndex = 0;
-            // ▲▲▲▲▲ [추가/수정됨] 갤러리 상태 관리를 위한 변수 ▲▲▲▲▲
 
             const dDayStickerHTML = `
                 <div class="d-day-sticker" id="d-day-counter-popup">
@@ -194,43 +192,58 @@
                 const galleryContentWrapper = document.getElementById('gallery-content-wrapper');
                 if (!galleryContentWrapper) return;
 
-                let htmlContent = '<div class="gallery-grid-container" id="gallery-container">';
+                galleryContentWrapper.style.padding = '20px'; // 그리드 보기에만 패딩 적용
+                
+                let htmlContent = '<div class="gallery-grid-container">';
                 galleryImages.forEach((image, index) => {
-                    htmlContent += `<img src="${image.url}" alt="${image.alt}" style="cursor: pointer;" onclick="showImageViewer(${index})">`;
+                    htmlContent += `<img src="${image.url}" alt="${image.alt}" style="cursor: pointer;" data-index="${index}">`;
                 });
                 htmlContent += '</div>';
                 galleryContentWrapper.innerHTML = htmlContent;
+
+                // 그리드 이미지에 클릭 이벤트 추가
+                galleryContentWrapper.querySelector('.gallery-grid-container').addEventListener('click', (e) => {
+                    if (e.target.tagName === 'IMG') {
+                        const index = parseInt(e.target.dataset.index, 10);
+                        showImageViewer(index);
+                    }
+                });
             }
 
             function showImageViewer(index) {
                 currentIndex = index;
                 const galleryContentWrapper = document.getElementById('gallery-content-wrapper');
                 if (!galleryContentWrapper) return;
+                
+                galleryContentWrapper.style.padding = '0'; // 뷰어에서는 패딩 제거
 
                 const image = galleryImages[index];
                 const viewerHTML = `
                     <div class="image-viewer-wrapper">
-                        <div class="image-viewer-top-bar">
-                            <button class="back-to-grid-button" onclick="showGalleryGrid()">← 목록으로</button>
-                        </div>
-                        <div class="image-viewer-main">
-                            <div class="nav-button prev ${index === 0 ? 'hidden' : ''}" onclick="navigateGallery(-1)">&lt;</div>
-                            <img src="${image.url}" alt="${image.alt}" class="viewer-image">
-                            <div class="nav-button next ${index === galleryImages.length - 1 ? 'hidden' : ''}" onclick="navigateGallery(1)">&gt;</div>
-                        </div>
+                        <i class="fa-solid fa-xmark viewer-close-button" id="viewer-close-btn"></i>
+                        <img src="${image.url}" alt="${image.alt}" class="viewer-image">
+                        <div class="nav-button prev ${index === 0 ? 'hidden' : ''}" id="viewer-prev-btn"><i class="fa-solid fa-chevron-left"></i></div>
+                        <div class="nav-button next ${index === galleryImages.length - 1 ? 'hidden' : ''}" id="viewer-next-btn"><i class="fa-solid fa-chevron-right"></i></div>
                     </div>
                 `;
                 galleryContentWrapper.innerHTML = viewerHTML;
-            }
 
-            window.navigateGallery = function(direction) {
+                // 버튼에 이벤트 리스너 추가
+                document.getElementById('viewer-close-btn').addEventListener('click', showGalleryGrid);
+                if (index > 0) {
+                    document.getElementById('viewer-prev-btn').addEventListener('click', () => navigateGallery(-1));
+                }
+                if (index < galleryImages.length - 1) {
+                    document.getElementById('viewer-next-btn').addEventListener('click', () => navigateGallery(1));
+                }
+            }
+            
+            function navigateGallery(direction) {
                 const newIndex = currentIndex + direction;
                 if (newIndex >= 0 && newIndex < galleryImages.length) {
                     showImageViewer(newIndex);
                 }
             }
-            window.showImageViewer = showImageViewer;
-            window.showGalleryGrid = showGalleryGrid;
             // ▲▲▲▲▲ [수정됨] 갤러리 관련 함수 전체 변경 ▲▲▲▲▲
 
             window.showHomePage = showHomePage;
