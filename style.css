@@ -21,15 +21,19 @@ body {
 
 /* --- 왼쪽 사이드바 --- */
 .left-sidebar { width: 250px; background-color: #f0f0f8; border-right: 1px solid #e0e0f0; padding: 20px; display: flex; flex-direction: column; }
-.profile-widget { text-align: center; padding-bottom: 20px; border-bottom: 1px solid #ddd; margin-bottom: 20px; }
-/* [수정] 프로필 이미지 크기 확대 및 그림자 제거 (강제 적용) */
+/* [수정] profile-widget 그림자 제거 */
+.profile-widget { 
+    text-align: center; padding-bottom: 20px; border-bottom: 1px solid #ddd; 
+    margin-bottom: 20px; 
+    box-shadow: none; /* 이전에 남아있던 그림자 제거 */
+}
 .profile-img { 
-    width: 150px; /* 크기 확대 */
-    height: 150px; /* 크기 확대 */
+    width: 150px; 
+    height: 150px; 
     border-radius: 8px; 
-    box-shadow: none !important; /* 그림자 확실하게 제거 (다른 스타일 충돌 방지) */
-    outline: none; /* 혹시 모를 아웃라인 제거 */
-    border: none; /* 혹시 모를 테두리 제거 */
+    box-shadow: none !important; 
+    outline: none; 
+    border: none; 
     margin-bottom: 15px; 
     object-fit: cover; 
 }
@@ -52,8 +56,9 @@ body {
 .window-content { padding: 15px; }
 
 /* --- 개별 창 위치 및 크기 설정 --- */
-.calendar-window { top: 20px; left: 20px; width: 260px; z-index: 2; }
-.gallery-window { top: 240px; left: 210px; width: 500px; height: 380px; z-index: 1; }
+/* [수정] Post 창을 달력 위로 배치 */
+.calendar-window { top: 20px; left: 20px; width: 260px; z-index: 1; } /* 달력 z-index 낮춤 */
+.gallery-window { top: 100px; left: 180px; width: 500px; height: 380px; z-index: 2; } /* Post 창 z-index 높임 및 위치 조정 */
 
 /* --- D-Day '외곽선' 스티커 --- */
 .d-day-sticker { 
