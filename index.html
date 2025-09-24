@@ -153,7 +153,7 @@
                 runDday();
                 runCalendar();
                 runWindowFocus();
-                loadPosts();
+                loadPosts(); 
             }
             
             function showGalleryPage() {
@@ -240,7 +240,6 @@
                 }
             }
             
-            // ▼▼▼▼▼ [추가됨] 캐릭터 페이지 및 창 최대화 기능 ▼▼▼▼▼
             function showCharacterPage() {
                 clearPage();
                 const characterWindowsHTML = `
@@ -263,7 +262,7 @@
                             </div>
                         </div>
                         <div class="window-content">
-                            </div>
+                        </div>
                     </div>
                 `;
                 windowsArea.innerHTML = characterWindowsHTML;
@@ -275,18 +274,15 @@
                 const button = windowEl.querySelector('.maximize-btn');
                 
                 if (windowEl.classList.contains('maximized')) {
-                    // 복원
                     windowEl.classList.remove('maximized');
                     button.classList.remove('fa-window-restore');
                     button.classList.add('fa-square');
                 } else {
-                    // 최대화
                     windowEl.classList.add('maximized');
                     button.classList.remove('fa-square');
                     button.classList.add('fa-window-restore');
                 }
             }
-            // ▲▲▲▲▲ [추가됨] 캐릭터 페이지 및 창 최대화 기능 ▲▲▲▲▲
 
             window.showHomePage = showHomePage;
             window.showPost = showPost;
@@ -302,8 +298,7 @@
 
                     menuLinks.forEach(l => l.classList.remove('active'));
                     this.classList.add('active');
-
-                    // CHARACTER 메뉴를 클릭하면 하위메뉴가 열리던 기존 로직 제거
+                    
                     if (this.id === 'menu-home') {
                         showHomePage();
                     } else if (this.id === 'menu-gallery') {
@@ -316,17 +311,22 @@
                 });
             });
 
-            // 창 제어 버튼(최대화 등)을 위한 이벤트 리스너
             windowsArea.addEventListener('click', function(e) {
                 if (e.target.classList.contains('maximize-btn')) {
                     const windowEl = e.target.closest('.window-box');
                     toggleMaximize(windowEl);
                 }
             });
-
+            
+            // ▼▼▼▼▼ [수정됨] z-index 계산 로직 안정성 강화 ▼▼▼▼▼
             function runWindowFocus() {
                 const windows = document.querySelectorAll('.window-box');
-                let highestZIndex = windows.length > 0 ? Math.max(...Array.from(windows).map(w => parseInt(w.style.zIndex || 0))) : 0;
+                let highestZIndex = windows.length > 0 ? 
+                    Math.max(...Array.from(windows).map(w => {
+                        const z = parseInt(getComputedStyle(w).zIndex);
+                        return isNaN(z) ? 0 : z;
+                    })) : 0;
+
                 windows.forEach(window => {
                     window.addEventListener('mousedown', () => {
                         if (window.classList.contains('maximized')) return;
@@ -335,6 +335,7 @@
                     });
                 });
             }
+            // ▲▲▲▲▲ [수정됨] z-index 계산 로직 안정성 강화 ▲▲▲▲▲
 
             function runDday() {
                 const dDayText = document.querySelector('.d-day-text');
