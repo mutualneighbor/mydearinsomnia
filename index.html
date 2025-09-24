@@ -156,22 +156,31 @@
                 loadPosts();
             }
             
+            // ▼▼▼▼▼ [수정됨] 갤러리 창 생성 시 헤더에 닫기 버튼 추가 ▼▼▼▼▼
             function showGalleryPage() {
                 clearPage();
                 const galleryWindowHTML = `
                     <div class="window-box post-viewer-window">
                         <div class="window-header">
                             <span class="window-title">gallery</span>
+                            <div class="window-buttons">
+                                <i class="fa-solid fa-xmark" id="gallery-close-btn"></i>
+                            </div>
                         </div>
                         <div class="window-content post-viewer-content" id="gallery-content-wrapper">
                             </div>
                     </div>
                 `;
                 windowsArea.innerHTML = galleryWindowHTML;
+                
+                // 갤러리 창의 닫기 버튼은 항상 그리드 보기로 돌아가도록 설정
+                document.getElementById('gallery-close-btn').addEventListener('click', showGalleryGrid);
+
                 loadGalleryImages();
             }
+            // ▲▲▲▲▲ [수정됨] 갤러리 창 생성 시 헤더에 닫기 버튼 추가 ▲▲▲▲▲
 
-            // ▼▼▼▼▼ [수정됨] 갤러리 관련 함수 전체 변경 ▼▼▼▼▼
+
             function loadGalleryImages() {
                 const galleryContentWrapper = document.getElementById('gallery-content-wrapper');
                 if (!galleryContentWrapper) return;
@@ -192,7 +201,7 @@
                 const galleryContentWrapper = document.getElementById('gallery-content-wrapper');
                 if (!galleryContentWrapper) return;
 
-                galleryContentWrapper.style.padding = '20px'; // 그리드 보기에만 패딩 적용
+                galleryContentWrapper.style.padding = '20px';
                 
                 let htmlContent = '<div class="gallery-grid-container">';
                 galleryImages.forEach((image, index) => {
@@ -201,7 +210,6 @@
                 htmlContent += '</div>';
                 galleryContentWrapper.innerHTML = htmlContent;
 
-                // 그리드 이미지에 클릭 이벤트 추가
                 galleryContentWrapper.querySelector('.gallery-grid-container').addEventListener('click', (e) => {
                     if (e.target.tagName === 'IMG') {
                         const index = parseInt(e.target.dataset.index, 10);
@@ -210,17 +218,17 @@
                 });
             }
 
+            // ▼▼▼▼▼ [수정됨] 이미지 뷰어 생성 시 자체 닫기 버튼 제거 ▼▼▼▼▼
             function showImageViewer(index) {
                 currentIndex = index;
                 const galleryContentWrapper = document.getElementById('gallery-content-wrapper');
                 if (!galleryContentWrapper) return;
                 
-                galleryContentWrapper.style.padding = '0'; // 뷰어에서는 패딩 제거
+                galleryContentWrapper.style.padding = '0';
 
                 const image = galleryImages[index];
                 const viewerHTML = `
                     <div class="image-viewer-wrapper">
-                        <i class="fa-solid fa-xmark viewer-close-button" id="viewer-close-btn"></i>
                         <img src="${image.url}" alt="${image.alt}" class="viewer-image">
                         <div class="nav-button prev ${index === 0 ? 'hidden' : ''}" id="viewer-prev-btn"><i class="fa-solid fa-chevron-left"></i></div>
                         <div class="nav-button next ${index === galleryImages.length - 1 ? 'hidden' : ''}" id="viewer-next-btn"><i class="fa-solid fa-chevron-right"></i></div>
@@ -228,8 +236,6 @@
                 `;
                 galleryContentWrapper.innerHTML = viewerHTML;
 
-                // 버튼에 이벤트 리스너 추가
-                document.getElementById('viewer-close-btn').addEventListener('click', showGalleryGrid);
                 if (index > 0) {
                     document.getElementById('viewer-prev-btn').addEventListener('click', () => navigateGallery(-1));
                 }
@@ -237,6 +243,7 @@
                     document.getElementById('viewer-next-btn').addEventListener('click', () => navigateGallery(1));
                 }
             }
+            // ▲▲▲▲▲ [수정됨] 이미지 뷰어 생성 시 자체 닫기 버튼 제거 ▲▲▲▲▲
             
             function navigateGallery(direction) {
                 const newIndex = currentIndex + direction;
@@ -244,7 +251,6 @@
                     showImageViewer(newIndex);
                 }
             }
-            // ▲▲▲▲▲ [수정됨] 갤러리 관련 함수 전체 변경 ▲▲▲▲▲
 
             window.showHomePage = showHomePage;
             window.showPost = showPost;
