@@ -81,12 +81,17 @@
                         </div>
                 </div>`;
             
-            // ▼▼▼▼▼ [수정] showPost 함수를 먼저 선언 ▼▼▼▼▼
+            // ▼▼▼▼▼ [수정됨] 포스트 내용만 추출하도록 변경 ▼▼▼▼▼
             function showPost(postUrl, postTitle) {
                 windowsArea.innerHTML = ''; 
                 fetch(postUrl)
                     .then(response => response.text())
-                    .then(postContentHTML => {
+                    .then(htmlString => {
+                        // 가져온 HTML 문자열을 파싱해서 body 안의 내용만 추출합니다.
+                        const parser = new DOMParser();
+                        const doc = parser.parseFromString(htmlString, 'text/html');
+                        const postContentHTML = doc.body.innerHTML; // body 태그 안의 내용만 가져옵니다.
+
                         const postViewerHTML = `
                             <div class="window-box post-viewer-window">
                                 <div class="window-header">
@@ -145,8 +150,6 @@
                 loadPosts();
             }
 
-            // ▼▼▼▼▼ [수정] window 객체에 함수를 할당하는 위치를 여기로 옮겼습니다 ▼▼▼▼▼
-            // 함수들이 모두 선언된 이후에 전역 스코프에 할당해야 오류가 나지 않습니다.
             window.showHomePage = showHomePage;
             window.showPost = showPost;
 
@@ -232,7 +235,7 @@
                 renderCalendar();
             }
             
-            showHomePage(); // 페이지 로딩 시 홈 화면 표시
+            showHomePage();
         });
     </script>
 </body>
