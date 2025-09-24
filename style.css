@@ -1,128 +1,219 @@
-/* --- 기본 설정 및 레트로 폰트 --- */
+/* --- 기본 설정 및 폰트 --- */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
 body {
-    background-color: #008080; /* Windows 98 클래식 바탕화면 색 */
-    font-family: 'VT323', 'Noto Sans KR', monospace; /* 픽셀 폰트 우선 적용 */
-    font-size: 18px; /* 픽셀 폰트는 약간 커야 잘 보임 */
-    /* 픽셀 폰트가 흐릿해지지 않도록 안티앨리어싱 제거 */
-    -webkit-font-smoothing: none;
-    font-smooth: never;
+    /* [수정] 기본 폰트를 Pretendard로 변경 */
+    font-family: "Pretendard", -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+    color: #333;
+    background-color: #e0e0ff; /* 연한 보라색 배경 */
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 30px;
+    background-image: linear-gradient(#e6e6fa 1px, transparent 1px),
+                      linear-gradient(90deg, #e6e6fa 1px, transparent 1px);
+    background-size: 20px 20px;
 }
 
-/* --- 바탕화면 --- */
-.desktop {
+/* --- 전체 데스크탑 배경 --- */
+.desktop-background {
+    width: 1000px;
+    height: 650px;
+    background-color: #f7f7ff;
+    border-radius: 8px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+    display: flex;
     position: relative;
-    width: 100vw;
-    height: 100vh;
     overflow: hidden;
 }
 
-/* --- 창(Window) 공통 스타일 --- */
-.window-box {
+.desktop-title {
     position: absolute;
-    background-color: #c0c0c0; /* 클래식 회색 */
-    border: 2px solid;
-    /* 베벨(Bevel) 효과: 창이 튀어나와 보이게 함 */
-    border-color: #ffffff #808080 #808080 #ffffff;
-    padding: 2px;
+    top: 20px;
+    left: 280px;
+    /* [수정] UI 폰트를 IBM Plex Mono로 변경 */
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 2.5em;
+    color: #b0a0e0;
+    text-shadow: 1px 1px 0 #fff;
+    z-index: 10;
 }
 
-/* 창 상단 타이틀 바 */
-.title-bar {
-    background-color: #000080; /* 클래식 파란색 */
-    color: #ffffff;
-    padding: 3px 5px;
+/* --- 왼쪽 사이드바 --- */
+.left-sidebar {
+    width: 250px;
+    background-color: #f0f0f0;
+    border-right: 1px solid #e0e0e0;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+.sidebar-header h3 {
+    /* [수정] UI 폰트 */
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 1.2em;
+    color: #8a2be2;
+    margin-bottom: 30px;
+    text-align: center;
+}
+
+.sidebar-menu { flex-grow: 1; }
+.sidebar-menu a {
+    display: block;
+    padding: 10px 0;
+    color: #555;
+    text-decoration: none;
+    border-bottom: 1px solid #eee;
+    transition: background-color 0.2s;
+    /* [수정] UI 폰트 */
+    font-family: 'IBM Plex Mono', monospace;
+    font-weight: 500;
+}
+.sidebar-menu a:hover { background-color: #f0f0ff; color: #8a2be2; }
+.menu-num {
+    display: inline-block;
+    width: 25px;
+    color: #b0a0e0;
+}
+
+.sidebar-footer {
+    text-align: center;
+    margin-top: 20px;
+    padding-top: 20px;
+    border-top: 1px solid #eee;
+}
+.sidebar-footer input {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin-bottom: 10px;
+    /* [수정] UI 폰트 */
+    font-family: 'IBM Plex Mono', monospace;
+}
+.icon-group button {
+    background: none;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    padding: 6px 10px;
+    margin: 0 3px;
+    cursor: pointer;
+    color: #8a2be2;
+    transition: background-color 0.2s;
+}
+.icon-group button:hover { background-color: #e0e0ff; }
+
+/* --- 창(Window) 영역 --- */
+.windows-area {
+    position: relative;
+    flex-grow: 1;
+    padding: 20px;
+}
+
+.window-box {
+    position: absolute;
+    background-color: #ffffff;
+    border: 1px solid #d0d0f0;
+    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 6px;
+    overflow: hidden;
+}
+
+/* 각 창의 헤더 (창 상단 바) */
+.window-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    cursor: default; /* 드래그 느낌 */
+    background-color: #e0e0ff;
+    padding: 5px 10px;
+    border-bottom: 1px solid #d0d0f0;
+    cursor: grab;
+}
+.window-title {
+    /* [수정] UI 폰트 */
+    font-family: 'IBM Plex Mono', monospace;
+    font-weight: 500;
+    font-size: 0.9em;
+    color: #666;
 }
 
-.title-text {
-    font-weight: bold;
-    letter-spacing: 1px;
+/* --- [수정] 창 버튼 아이콘 스타일 --- */
+.window-buttons {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 0.9em;
+    color: #666;
 }
-
-/* 타이틀 바 버튼 (최소화, 최대화, 닫기) */
-.title-bar-buttons { display: flex; }
-.title-bar-buttons button {
-    background-color: #c0c0c0;
-    border: 1.5px solid;
-    border-color: #ffffff #808080 #808080 #ffffff; /* 튀어나온 버튼 */
-    width: 20px;
-    height: 20px;
-    margin-left: 2px;
-    font-family: 'Font Awesome 6 Free'; /* 아이콘 폰트 지정 */
-    font-weight: 900;
-    font-size: 12px;
+.window-buttons i {
     cursor: pointer;
+    transition: color 0.2s;
 }
-/* 버튼 눌렀을 때 들어간 것처럼 보이게 */
-.title-bar-buttons button:active {
-    border-color: #808080 #ffffff #ffffff #808080;
+.window-buttons i:hover {
+    color: #8a2be2; /* 호버 시 보라색으로 변경 */
+}
+/* -------------------------------- */
+
+
+.window-content { padding: 15px; }
+
+/* --- 개별 창 위치 및 크기 설정 --- */
+.calendar-window {
+    top: 20px;
+    left: 20px;
+    width: 250px;
+    height: 280px;
+    z-index: 2;
+}
+.gallery-window {
+    top: 100px;
+    left: 200px;
+    width: 500px;
+    height: 400px;
+    z-index: 1;
 }
 
-.window-content {
-    padding: 15px;
-    /* 컨텐츠 영역이 안으로 파인 것처럼 보이게 */
-    border: 2px inset #ffffff;
-    margin: 2px;
-}
-
-/* --- 개별 창 위치 및 스타일 --- */
-.profile-window {
-    top: 10%;
-    left: 15%;
-    width: 280px;
-}
-.profile-content {
-    text-align: center;
-}
-.profile-content img {
-    border: 2px inset #ffffff; /* 이미지도 파인 효과 */
-    padding: 2px;
-    background-color: #fff;
+/* --- 달력 스타일 --- */
+.calendar-content { text-align: center; }
+.month-nav {
+    /* [수정] UI 폰트 */
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 1.1em;
+    color: #8a2be2;
     margin-bottom: 10px;
 }
-.profile-content h3 { color: #000080; }
-.profile-content p { margin: 10px 0; }
-
-/* 레트로 버튼 */
-.retro-btn {
-    font-family: 'VT323', monospace;
-    font-size: 16px;
-    background-color: #c0c0c0;
-    border: 2px solid;
-    border-color: #ffffff #808080 #808080 #ffffff;
-    padding: 5px 15px;
-    margin: 5px;
-    cursor: pointer;
+.month-nav span { cursor: pointer; margin: 0 5px; }
+.days-of-week {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    font-size: 0.8em;
+    margin-bottom: 5px;
+    color: #666;
 }
-.retro-btn:active {
-    border-color: #808080 #ffffff #ffffff #808080;
+.dates-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    font-size: 0.9em;
+    line-height: 1.8;
 }
 
-.main-image-window {
-    top: 20%;
-    left: 40%;
-    width: 420px;
+/* --- 갤러리 스타일 --- */
+.gallery-content {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
 }
-.main-image {
+.gallery-item { text-align: center; border: 1px solid #eee; padding: 5px; }
+.gallery-item img {
     width: 100%;
+    height: 100px;
+    object-fit: cover;
     display: block;
+    margin-bottom: 5px;
 }
-
-.status-window {
-    top: 65%;
-    left: 35%;
-    width: 350px;
-}
-.status-content p { margin: 5px 0; }
-.progress-bar {
-    height: 25px;
-    border: 2px inset #ffffff;
-    padding: 2px;
-}
-.progress {
-    background-color: #000080;
-    height: 100%;
-}
+.gallery-item p { font-size: 0.9em; color: #555; }
