@@ -1,4 +1,4 @@
-// script.js
+// script.js (전체 코드)
 document.addEventListener('DOMContentLoaded', function() {
     const windowsArea = document.getElementById('windows-area');
     const menuLinks = document.querySelectorAll('.sidebar-menu a[id]');
@@ -39,7 +39,7 @@ document.addEventListener('DOMContentLoaded', function() {
             <div class="window-content gallery-content" id="post-list-container">
                 </div>
         </div>`;
-    
+
     // 창을 맨 앞으로 가져오는 함수
     function bringToFront(windowEl) {
         if (!windowEl) return;
@@ -89,9 +89,9 @@ document.addEventListener('DOMContentLoaded', function() {
         runDday();
         runCalendar();
         runWindowFocus();
-        loadPosts(); 
+        loadPosts();
     }
-    
+
     function showGalleryPage() {
         clearPage();
         const galleryWindowHTML = `<div class="window-box post-viewer-window"><div class="window-header"><span class="window-title">gallery</span><div class="window-buttons"><i class="fa-solid fa-xmark" id="gallery-close-btn"></i></div></div><div class="window-content post-viewer-content" id="gallery-content-wrapper"></div></div>`;
@@ -158,14 +158,14 @@ document.addEventListener('DOMContentLoaded', function() {
         prevBtn.classList.toggle('hidden', index === 0);
         nextBtn.classList.toggle('hidden', index === galleryImages.length - 1);
     }
-    
+
     function navigateGallery(direction) {
         const newIndex = currentIndex + direction;
         if (newIndex >= 0 && newIndex < galleryImages.length) {
             updateImageViewer(newIndex);
         }
     }
-    
+
     function showCharacterPage() {
         clearPage();
         const characterWindowsHTML = `
@@ -195,45 +195,80 @@ document.addEventListener('DOMContentLoaded', function() {
         windowsArea.innerHTML = characterWindowsHTML;
         runWindowFocus();
     }
-
+    
+    // ▼▼▼ [수정됨] 확대/축소 기능 함수 ▼▼▼
     function toggleMaximize(windowEl) {
         if (!windowEl) return;
         const button = windowEl.querySelector('.maximize-btn');
-        if (windowEl.classList.contains('maximized')) {
+        const isMaximized = windowEl.classList.contains('maximized');
+
+        // 다른 모든 창을 가져옴
+        const allWindows = document.querySelectorAll('.window-box');
+
+        if (isMaximized) {
+            // --- 창을 원래 크기로 복원 ---
             windowEl.classList.remove('maximized');
             windowEl.style.top = windowEl.dataset.originalTop;
             windowEl.style.left = windowEl.dataset.originalLeft;
             windowEl.style.width = windowEl.dataset.originalWidth;
-            windowEl.style.height = windowEl.dataset.originalHeight;
+            windowEl.style.height = 'auto'; // 높이는 다시 auto로
+            windowEl.style.zIndex = windowEl.dataset.originalZIndex;
+
             button.classList.remove('fa-window-restore');
             button.classList.add('fa-square');
+
+            // 숨겼던 다른 창들을 다시 보이게 함
+            allWindows.forEach(win => {
+                if (win !== windowEl) {
+                    win.style.display = ''; // display 속성을 원래대로 복원
+                }
+            });
+
         } else {
+            // --- 창을 최대로 확대 ---
             const windowRect = windowEl.getBoundingClientRect();
             const containerRect = windowsArea.getBoundingClientRect();
+
+            // 원래 위치, 크기, z-index 저장
             windowEl.dataset.originalTop = getComputedStyle(windowEl).top;
             windowEl.dataset.originalLeft = getComputedStyle(windowEl).left;
             windowEl.dataset.originalWidth = `${windowRect.width}px`;
-            windowEl.dataset.originalHeight = `${windowRect.height}px`;
-            const margin = 40;
+            windowEl.dataset.originalZIndex = getComputedStyle(windowEl).zIndex;
+
+            const margin = 40; // 화면 가장자리 여백
             const availableWidth = containerRect.width - margin;
             const availableHeight = containerRect.height - margin;
-            const windowRatio = windowRect.width / windowRect.height;
-            const containerRatio = availableWidth / availableHeight;
+
+            // 이미지 영역의 비율 (1200 / 810)
+            const contentAspectRatio = 1200 / 810;
+            const headerHeight = windowEl.querySelector('.window-header').offsetHeight;
+
             let newWidth, newHeight;
-            if (containerRatio > windowRatio) {
-                newHeight = availableHeight;
-                newWidth = newHeight * windowRatio;
-            } else {
+
+            // 사용 가능한 공간에 맞춰 최대 크기 계산 (비율 유지)
+            // (사용가능 높이 - 헤더높이) * 비율 vs 사용가능 너비
+            if (availableWidth / contentAspectRatio + headerHeight <= availableHeight) {
                 newWidth = availableWidth;
-                newHeight = newWidth / windowRatio;
+            } else {
+                newWidth = (availableHeight - headerHeight) * contentAspectRatio;
             }
+            
             windowEl.classList.add('maximized');
-            windowEl.style.top = `${(containerRect.height - newHeight) / 2}px`;
+            windowEl.style.top = `${(containerRect.height - (newWidth / contentAspectRatio + headerHeight)) / 2}px`;
             windowEl.style.left = `${(containerRect.width - newWidth) / 2}px`;
             windowEl.style.width = `${newWidth}px`;
-            windowEl.style.height = `${newHeight}px`;
+            windowEl.style.height = 'auto'; // 높이는 비율에 따라 자동 조절되도록
+            windowEl.style.zIndex = 9999; // 확대된 창을 최상위로
+
             button.classList.remove('fa-square');
             button.classList.add('fa-window-restore');
+
+            // 현재 창을 제외한 다른 모든 창을 숨김
+            allWindows.forEach(win => {
+                if (win !== windowEl) {
+                    win.style.display = 'none';
+                }
+            });
         }
     }
 
@@ -243,18 +278,18 @@ document.addEventListener('DOMContentLoaded', function() {
     function clearPage() {
         windowsArea.innerHTML = '';
     }
-    
+
     menuLinks.forEach(link => {
         link.addEventListener('click', function(e) {
             e.preventDefault();
             if (!this.id) return;
-            
+
             const characterSubmenu = document.getElementById('character-submenu');
-            
+
             if (this.id === 'menu-character') {
                 this.classList.toggle('active');
                 characterSubmenu.classList.toggle('open');
-                
+
                 if (this.classList.contains('active')) {
                     showCharacterPage();
                 } else {
@@ -268,7 +303,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 menuLinks.forEach(l => l.classList.remove('active'));
                 this.classList.add('active');
                 characterSubmenu.classList.remove('open');
-                
+
                 if (this.id === 'menu-home') {
                     showHomePage();
                 } else if (this.id === 'menu-gallery') {
@@ -280,36 +315,30 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    // script.js 파일에서 이 부분만 교체하세요
-
-    // ▼▼▼ [수정됨] 하위 메뉴 클릭 이벤트 ▼▼▼
     submenuLinks.forEach(link => {
         link.addEventListener('click', function(e) {
             e.preventDefault();
-            e.stopPropagation(); // 하위 메뉴 클릭 시 메뉴창이 접히지 않도록 함
+            e.stopPropagation();
 
-            // 캐릭터 메뉴의 active 상태를 해제
             document.getElementById('menu-character').classList.remove('active');
-
-            // 화면의 모든 창을 제거 (캐릭터 창 사라짐)
+            
             clearPage();
 
-            // 클릭된 하위 메뉴만 active 상태로 표시
             submenuLinks.forEach(l => l.classList.remove('active'));
             this.classList.add('active');
         });
     });
-    // ▲▲▲ [수정됨] 하위 메뉴 클릭 이벤트 ▲▲▲
+
     windowsArea.addEventListener('click', function(e) {
         if (e.target.classList.contains('maximize-btn')) {
             const windowEl = e.target.closest('.window-box');
             toggleMaximize(windowEl);
         }
     });
-    
+
     function runWindowFocus() {
         const windows = document.querySelectorAll('.window-box');
-        highestZIndex = windows.length > 0 ? 
+        highestZIndex = windows.length > 0 ?
             Math.max(...Array.from(windows).map(w => {
                 const z = parseInt(getComputedStyle(w).zIndex);
                 return isNaN(z) ? 0 : z;
