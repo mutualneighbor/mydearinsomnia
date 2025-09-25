@@ -245,6 +245,8 @@ body {
 
 /* style.css 파일에서 이 부분만 교체하세요 */
 
+/* style.css 파일에서 이 부분만 교체하세요 */
+
 /* ▼▼▼▼▼ [수정됨] 캐릭터 창 스타일 ▼▼▼▼▼ */
 .character-window .window-content {
     padding: 0;
@@ -257,20 +259,20 @@ body {
 .character-profile-img {
     width: 100%;
     height: 100%;
-    object-fit: contain; /* 이미지가 잘리지 않고, 비율에 맞춰 창 안에 표시됨 */
+    object-fit: contain; /* 이미지 비율을 유지하며, 잘리지 않게 표시 */
 }
 #leona-window {
-    top: 50px;
-    left: 80px;
-    width: 450px;
-    height: 253px; /* 16:9 비율에 맞춰 높이 수정 */
+    top: 20px;       /* 콘텐츠 영역 좌측 상단에 위치 */
+    left: 20px;      /* 콘텐츠 영역 좌측 상단에 위치 */
+    width: 480px;    /* 창 크기 대폭 증가 */
+    height: 571px;   /* 이미지 비율에 맞춰 높이 수정 */
     z-index: 4;
 }
 #nea-window {
-    top: 120px;
-    left: 180px;
-    width: 450px;
-    height: 253px; /* 16:9 비율에 맞춰 높이 수정 */
+    bottom: 20px;    /* 콘텐츠 영역 우측 하단에 위치 */
+    right: 20px;     /* 콘텐츠 영역 우측 하단에 위치 */
+    width: 480px;    /* 창 크기 대폭 증가 */
+    height: 571px;   /* 이미지 비율에 맞춰 높이 수정 */
     z-index: 3;
 }
 /* ▲▲▲▲▲ [수정됨] 캐릭터 창 스타일 ▲▲▲▲▲ */
