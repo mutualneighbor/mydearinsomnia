@@ -206,27 +206,24 @@ body {
     padding: 0;
     height: 100%;
     background-color: #222;
-    display: flex;
-    align-items: center;
-    justify-content: center;
 }
 .character-profile-img {
     width: 100%;
     height: 100%;
-    object-fit: cover; /* 이미지를 컨테이너에 꽉 채움 (비율 다를 시 잘릴 수 있음) */
+    object-fit: cover; /* 이미지가 잘리지 않게 하려면 JS에서 창 크기를 조절하므로 cover가 적합 */
 }
 #leona-window {
     top: 40px;
     left: 80px;
     width: 450px;
     z-index: 4;
-    min-height: 400px; /* 로딩 전 최소 높이 */
+    min-height: 400px;
 }
 #nea-window {
     top: 100px;
     left: 220px;
     width: 450px;
     z-index: 3;
-    min-height: 400px; /* 로딩 전 최소 높이 */
+    min-height: 400px;
 }
 /* ▲▲▲▲▲ [수정됨] 캐릭터 창 스타일 ▲▲▲▲▲ */
