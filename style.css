@@ -245,36 +245,31 @@ body {
 
 /* style.css 파일에서 이 부분만 교체하세요 */
 
-/* style.css 파일에서 이 부분만 교체하세요 */
-
-/* ▼▼▼▼▼ [최종-재수정] 캐릭터 창 스타일 - aspect-ratio로 정확한 비율 적용 ▼▼▼▼▼ */
+/* ▼▼▼▼▼ [진짜 최종 수정] 캐릭터 창 스타일 - 이미지 영역에 정확한 비율 적용 ▼▼▼▼▼ */
 .character-window .window-content {
     padding: 0;
-    height: 100%;
-    background-color: #222;
     display: flex;
-    align-items: center;
-    justify-content: center;
+    /* 핵심: 이미지 영역의 비율을 1200:810으로 정확하게 고정합니다. */
+    aspect-ratio: 1200 / 810;
+    height: auto; /* 높이는 비율에 따라 자동 계산됩니다. */
 }
 .character-profile-img {
     width: 100%;
     height: 100%;
     object-fit: contain; 
 }
+#leona-window, #nea-window {
+    width: 550px; /* 창의 전체 너비를 설정합니다. */
+    height: auto; /* 창의 전체 높이는 (제목 영역 + 비율이 적용된 이미지 영역)으로 자동 설정됩니다. */
+}
 #leona-window {
     top: 20px;
     left: 20px;
-    width: 550px;                 /* 기준이 될 너비 설정 */
-    aspect-ratio: 1200 / 810;     /* height를 직접 계산하는 대신, 브라우저가 1200:810 비율을 정확하게 계산하여 높이를 자동 설정 */
-    height: auto;                 /* aspect-ratio를 사용하기 위해 height는 auto로 설정 */
     z-index: 4;
 }
 #nea-window {
     bottom: 20px;
     right: 20px;
-    width: 550px;                 /* 레오나 창과 동일한 크기 */
-    aspect-ratio: 1200 / 810;     /* 레오나 창과 동일한 비율 */
-    height: auto;                 /* 레오나 창과 동일한 설정 */
     z-index: 3;
 }
-/* ▲▲▲▲▲ [최종-재수정] 캐릭터 창 스타일 - aspect-ratio로 정확한 비율 적용 ▲▲▲▲▲ */
+/* ▲▲▲▲▲ [진짜 최종 수정] 캐릭터 창 스타일 - 이미지 영역에 정확한 비율 적용 ▲▲▲▲▲ */
