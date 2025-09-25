@@ -1,4 +1,4 @@
-// script.js (전체 코드)
+// script.js (오류 수정 최종본)
 document.addEventListener('DOMContentLoaded', function() {
     const windowsArea = document.getElementById('windows-area');
     const menuLinks = document.querySelectorAll('.sidebar-menu a[id]');
@@ -6,7 +6,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     let galleryImages = [];
     let currentIndex = 0;
-    let highestZIndex = 0; // Z-index 관리를 위한 전역 변수
+    let highestZIndex = 0;
 
     const dDayStickerHTML = `
         <div class="d-day-sticker" id="d-day-counter-popup">
@@ -40,7 +40,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 </div>
         </div>`;
 
-    // 창을 맨 앞으로 가져오는 함수
     function bringToFront(windowEl) {
         if (!windowEl) return;
         highestZIndex++;
@@ -196,57 +195,45 @@ document.addEventListener('DOMContentLoaded', function() {
         runWindowFocus();
     }
     
-    // ▼▼▼ [수정됨] 확대/축소 기능 함수 ▼▼▼
     function toggleMaximize(windowEl) {
         if (!windowEl) return;
         const button = windowEl.querySelector('.maximize-btn');
         const isMaximized = windowEl.classList.contains('maximized');
-
-        // 다른 모든 창을 가져옴
         const allWindows = document.querySelectorAll('.window-box');
 
         if (isMaximized) {
-            // --- 창을 원래 크기로 복원 ---
             windowEl.classList.remove('maximized');
             windowEl.style.top = windowEl.dataset.originalTop;
             windowEl.style.left = windowEl.dataset.originalLeft;
             windowEl.style.width = windowEl.dataset.originalWidth;
-            windowEl.style.height = 'auto'; // 높이는 다시 auto로
+            windowEl.style.height = 'auto';
             windowEl.style.zIndex = windowEl.dataset.originalZIndex;
+            windowEl.style.transform = 'none';
 
             button.classList.remove('fa-window-restore');
             button.classList.add('fa-square');
 
-            // 숨겼던 다른 창들을 다시 보이게 함
             allWindows.forEach(win => {
                 if (win !== windowEl) {
-                    win.style.display = ''; // display 속성을 원래대로 복원
+                    win.style.display = '';
                 }
             });
 
         } else {
-            // --- 창을 최대로 확대 ---
-            const windowRect = windowEl.getBoundingClientRect();
             const containerRect = windowsArea.getBoundingClientRect();
-
-            // 원래 위치, 크기, z-index 저장
             windowEl.dataset.originalTop = getComputedStyle(windowEl).top;
             windowEl.dataset.originalLeft = getComputedStyle(windowEl).left;
-            windowEl.dataset.originalWidth = `${windowRect.width}px`;
+            windowEl.dataset.originalWidth = getComputedStyle(windowEl).width;
             windowEl.dataset.originalZIndex = getComputedStyle(windowEl).zIndex;
 
-            const margin = 40; // 화면 가장자리 여백
+            const margin = 40;
             const availableWidth = containerRect.width - margin;
             const availableHeight = containerRect.height - margin;
-
-            // 이미지 영역의 비율 (1200 / 810)
             const contentAspectRatio = 1200 / 810;
             const headerHeight = windowEl.querySelector('.window-header').offsetHeight;
+            
+            let newWidth;
 
-            let newWidth, newHeight;
-
-            // 사용 가능한 공간에 맞춰 최대 크기 계산 (비율 유지)
-            // (사용가능 높이 - 헤더높이) * 비율 vs 사용가능 너비
             if (availableWidth / contentAspectRatio + headerHeight <= availableHeight) {
                 newWidth = availableWidth;
             } else {
@@ -254,16 +241,18 @@ document.addEventListener('DOMContentLoaded', function() {
             }
             
             windowEl.classList.add('maximized');
-            windowEl.style.top = `${(containerRect.height - (newWidth / contentAspectRatio + headerHeight)) / 2}px`;
-            windowEl.style.left = `${(containerRect.width - newWidth) / 2}px`;
             windowEl.style.width = `${newWidth}px`;
-            windowEl.style.height = 'auto'; // 높이는 비율에 따라 자동 조절되도록
-            windowEl.style.zIndex = 9999; // 확대된 창을 최상위로
+            windowEl.style.height = 'auto';
+            
+            windowEl.style.top = '50%';
+            windowEl.style.left = '50%';
+            windowEl.style.transform = 'translate(-50%, -50%)';
+            
+            windowEl.style.zIndex = 9999;
 
             button.classList.remove('fa-square');
             button.classList.add('fa-window-restore');
 
-            // 현재 창을 제외한 다른 모든 창을 숨김
             allWindows.forEach(win => {
                 if (win !== windowEl) {
                     win.style.display = 'none';
@@ -279,38 +268,43 @@ document.addEventListener('DOMContentLoaded', function() {
         windowsArea.innerHTML = '';
     }
 
+    // ▼▼▼ [오류 수정] 메뉴 클릭 이벤트 로직 ▼▼▼
     menuLinks.forEach(link => {
         link.addEventListener('click', function(e) {
             e.preventDefault();
             if (!this.id) return;
 
             const characterSubmenu = document.getElementById('character-submenu');
+            const isActive = this.classList.contains('active');
 
             if (this.id === 'menu-character') {
-                this.classList.toggle('active');
+                // 캐릭터 메뉴를 클릭하면 하위 메뉴를 열고 닫습니다.
                 characterSubmenu.classList.toggle('open');
-
-                if (this.classList.contains('active')) {
+                
+                // 만약 캐릭터 메뉴가 이미 활성화된 상태가 아니라면, 활성화시키고 페이지를 보여줍니다.
+                if (!isActive) {
+                    menuLinks.forEach(l => l.classList.remove('active'));
+                    this.classList.add('active');
                     showCharacterPage();
-                } else {
-                    clearPage();
                 }
+                // 이미 활성화된 상태에서 또 누르면, 하위 메뉴만 열고 닫힐 뿐 화면은 그대로 유지됩니다.
 
-                if(this.classList.contains('active')) {
-                   menuLinks.forEach(l => { if(l.id !== 'menu-character') l.classList.remove('active'); });
-                }
             } else {
-                menuLinks.forEach(l => l.classList.remove('active'));
-                this.classList.add('active');
-                characterSubmenu.classList.remove('open');
+                // 다른 메뉴(홈, 갤러리 등)를 클릭한 경우
+                if (!isActive) { // 현재 활성화된 메뉴가 아니라면 내용 변경
+                    menuLinks.forEach(l => l.classList.remove('active'));
+                    this.classList.add('active');
+                    characterSubmenu.classList.remove('open'); // 다른 메뉴를 누르면 캐릭터 하위 메뉴는 닫힘
 
-                if (this.id === 'menu-home') {
-                    showHomePage();
-                } else if (this.id === 'menu-gallery') {
-                    showGalleryPage();
-                } else {
-                    clearPage();
+                    if (this.id === 'menu-home') {
+                        showHomePage();
+                    } else if (this.id === 'menu-gallery') {
+                        showGalleryPage();
+                    } else {
+                        clearPage();
+                    }
                 }
+                // 이미 활성화된 메뉴를 또 누르면 아무 작업도 하지 않습니다.
             }
         });
     });
@@ -319,11 +313,8 @@ document.addEventListener('DOMContentLoaded', function() {
         link.addEventListener('click', function(e) {
             e.preventDefault();
             e.stopPropagation();
-
             document.getElementById('menu-character').classList.remove('active');
-            
             clearPage();
-
             submenuLinks.forEach(l => l.classList.remove('active'));
             this.classList.add('active');
         });
