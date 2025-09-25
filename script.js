@@ -241,7 +241,7 @@ function runWindowFocus() {
 function runDday() {
     const dDayText = document.querySelector('.d-day-text');
     if(!dDayText) return;
-    const startDate = new Date('2025-09-25'); // D-Day 기준일을 오늘로 수정
+    const startDate = new Date('2025-06-23'); // 원래 날짜로 복구
     const now = new Date();
     const todayForDday = new Date(now.toLocaleString("en-US", {timeZone: "Asia/Seoul"}));
     startDate.setHours(0,0,0,0);
