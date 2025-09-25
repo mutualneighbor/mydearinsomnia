@@ -243,6 +243,8 @@ body {
 /* ▲▲▲▲▲ [추가됨] 활성화된 하위 메뉴 스타일 ▲▲▲▲▲ */
 
 
+/* style.css 파일에서 이 부분만 교체하세요 */
+
 /* ▼▼▼▼▼ [수정됨] 캐릭터 창 스타일 ▼▼▼▼▼ */
 .character-window .window-content {
     padding: 0;
@@ -259,16 +261,16 @@ body {
 }
 #leona-window {
     top: 50px;
-    left: 100px;
+    left: 80px;
     width: 450px;
-    height: 536px; /* 이미지 비율에 맞춰 높이 수정 */
+    height: 253px; /* 16:9 비율에 맞춰 높이 수정 */
     z-index: 4;
 }
 #nea-window {
-    top: 100px;
-    left: 200px;
+    top: 120px;
+    left: 180px;
     width: 450px;
-    height: 536px; /* 이미지 비율에 맞춰 높이 수정 */
+    height: 253px; /* 16:9 비율에 맞춰 높이 수정 */
     z-index: 3;
 }
 /* ▲▲▲▲▲ [수정됨] 캐릭터 창 스타일 ▲▲▲▲▲ */
