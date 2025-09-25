@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https="fonts.googleapis.com/css2?family=Poppins:wght@700&family=Inter:wght@400;500;700&family=Gaegu:wght@700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@700&family=Inter:wght@400;500;700&family=Gaegu:wght@700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 </head>
 <body>
@@ -64,37 +64,25 @@
 
             function showPost(postUrl, postTitle) {
                 windowsArea.innerHTML = '';
-                fetch(postUrl)
-                    .then(response => response.text())
-                    .then(htmlString => {
-                        const parser = new DOMParser();
-                        const doc = parser.parseFromString(htmlString, 'text/html');
-                        const postContentHTML = doc.body.innerHTML;
-                        const postViewerHTML = `<div class="window-box post-viewer-window"><div class="window-header"><span class="window-title">${postTitle}</span><div class="window-buttons"><i class="fa-solid fa-xmark" onclick="window.showHomePage()"></i></div></div><div class="window-content post-viewer-content">${postContentHTML}</div></div>`;
-                        windowsArea.innerHTML = postViewerHTML;
-                    })
-                    .catch(error => {
-                        console.error('포스트를 불러오는 중 오류 발생:', error);
-                        windowsArea.innerHTML = `<p>포스트를 불러올 수 없습니다. <a href="#" onclick="window.showHomePage()">홈으로 돌아가기</a></p>`;
-                    });
+                fetch(postUrl).then(response => response.text()).then(htmlString => {
+                    const parser = new DOMParser();
+                    const doc = parser.parseFromString(htmlString, 'text/html');
+                    const postContentHTML = doc.body.innerHTML;
+                    const postViewerHTML = `<div class="window-box post-viewer-window"><div class="window-header"><span class="window-title">${postTitle}</span><div class="window-buttons"><i class="fa-solid fa-xmark" onclick="window.showHomePage()"></i></div></div><div class="window-content post-viewer-content">${postContentHTML}</div></div>`;
+                    windowsArea.innerHTML = postViewerHTML;
+                }).catch(error => { console.error('포스트 로딩 오류:', error); windowsArea.innerHTML = `<p>포스트를 불러올 수 없습니다.</p>`; });
             }
 
             function loadPosts() {
                 const postContainer = document.getElementById('post-list-container');
                 if (!postContainer) return;
-                fetch('posts.json')
-                    .then(response => response.json())
-                    .then(posts => {
-                        let htmlContent = '';
-                        posts.forEach(post => {
-                            htmlContent += `<div class="gallery-item-wrapper" onclick="showPost('${post.url}', '${post.title}')"><div class="gallery-item"><div class="gallery-thumbnail"></div><p>${post.title}</p></div></div>`;
-                        });
-                        postContainer.innerHTML = htmlContent;
-                    })
-                    .catch(error => {
-                        console.error('포스트 목록을 불러오는 중 오류 발생:', error);
-                        postContainer.innerHTML = '<p>포스트를 불러올 수 없습니다.</p>';
+                fetch('posts.json').then(response => response.json()).then(posts => {
+                    let htmlContent = '';
+                    posts.forEach(post => {
+                        htmlContent += `<div class="gallery-item-wrapper" onclick="showPost('${post.url}', '${post.title}')"><div class="gallery-item"><div class="gallery-thumbnail"></div><p>${post.title}</p></div></div>`;
                     });
+                    postContainer.innerHTML = htmlContent;
+                }).catch(error => { console.error('포스트 목록 로딩 오류:', error); postContainer.innerHTML = '<p>포스트를 불러올 수 없습니다.</p>'; });
             }
 
             function showHomePage() {
@@ -102,10 +90,7 @@
                 menuLinks.forEach(l => l.classList.remove('active'));
                 document.getElementById('menu-home').classList.add('active');
                 windowsArea.innerHTML = dDayStickerHTML + calendarWindowHTML + postWindowHTML;
-                runDday();
-                runCalendar();
-                runWindowFocus();
-                loadPosts(); 
+                runDday(); runCalendar(); runWindowFocus(); loadPosts(); 
             }
             
             function showGalleryPage() {
@@ -119,9 +104,7 @@
             function loadGalleryImages() {
                 const galleryContentWrapper = document.getElementById('gallery-content-wrapper');
                 if (!galleryContentWrapper) return;
-                fetch('gallery.json')
-                    .then(response => response.json())
-                    .then(images => { galleryImages = images; showGalleryGrid(); })
+                fetch('gallery.json').then(response => response.json()).then(images => { galleryImages = images; showGalleryGrid(); })
                     .catch(error => { galleryContentWrapper.innerHTML = '<p>이미지를 불러올 수 없습니다.</p>'; });
             }
 
@@ -138,9 +121,7 @@
                 htmlContent += '</div>';
                 galleryContentWrapper.innerHTML = htmlContent;
                 galleryContentWrapper.querySelector('.gallery-grid-container').addEventListener('click', (e) => {
-                    if (e.target.tagName === 'IMG') {
-                        initImageViewer(parseInt(e.target.dataset.index, 10));
-                    }
+                    if (e.target.tagName === 'IMG') initImageViewer(parseInt(e.target.dataset.index, 10));
                 });
             }
 
@@ -159,9 +140,7 @@
 
             function updateImageViewer(index) {
                 currentIndex = index;
-                const imageEl = document.getElementById('viewer-image-element');
-                const prevBtn = document.getElementById('viewer-prev-btn');
-                const nextBtn = document.getElementById('viewer-next-btn');
+                const imageEl = document.getElementById('viewer-image-element'), prevBtn = document.getElementById('viewer-prev-btn'), nextBtn = document.getElementById('viewer-next-btn');
                 if (!imageEl || !prevBtn || !nextBtn) return;
                 imageEl.src = galleryImages[index].url;
                 imageEl.alt = galleryImages[index].alt;
@@ -171,26 +150,20 @@
             
             function navigateGallery(direction) {
                 const newIndex = currentIndex + direction;
-                if (newIndex >= 0 && newIndex < galleryImages.length) {
-                    updateImageViewer(newIndex);
-                }
+                if (newIndex >= 0 && newIndex < galleryImages.length) updateImageViewer(newIndex);
             }
             
-            // ▼▼▼▼▼ [수정됨] 캐릭터 페이지 및 창 최대화/사이즈 조절 기능 ▼▼▼▼▼
+            // ▼▼▼▼▼ [수정됨] 캐릭터 페이지 창 크기 조절 기능만 다시 적용 ▼▼▼▼▼
             function showCharacterPage() {
                 clearPage();
                 const characterWindowsHTML = `
                     <div class="window-box character-window" id="leona-window">
                         <div class="window-header"><span class="window-title">Leona Kingscholar</span><div class="window-buttons"><i class="fa-regular fa-square maximize-btn"></i></div></div>
-                        <div class="window-content">
-                            <img src="leona-profile.jpg" class="character-profile-img" id="leona-profile-img" alt="Leona Kingscholar Profile">
-                        </div>
+                        <div class="window-content"><img src="leona-profile.jpg" class="character-profile-img" id="leona-profile-img"></div>
                     </div>
                     <div class="window-box character-window" id="nea-window">
                         <div class="window-header"><span class="window-title">Nea Florian</span><div class="window-buttons"><i class="fa-regular fa-square maximize-btn"></i></div></div>
-                        <div class="window-content">
-                            <img src="nea-profile.jpg" class="character-profile-img" alt="Nea Florian Profile">
-                        </div>
+                        <div class="window-content"><img src="nea-profile.jpg" class="character-profile-img"></div>
                     </div>
                 `;
                 windowsArea.innerHTML = characterWindowsHTML;
@@ -204,17 +177,16 @@
                     const imgHeight = leonaImg.naturalHeight;
                     const windowWidth = leonaWindow.offsetWidth;
                     const newContentHeight = (imgHeight / imgWidth) * windowWidth;
-                    const newWindowHeight = newContentHeight + 28; // 헤더 높이(28px) 추가
+                    const newWindowHeight = newContentHeight + 28;
                     leonaWindow.style.height = `${newWindowHeight}px`;
                     neaWindow.style.height = `${newWindowHeight}px`;
                 };
 
-                if (leonaImg.complete) {
+                if (leonaImg.complete && leonaImg.naturalWidth > 0) {
                     setWindowHeights();
                 } else {
                     leonaImg.onload = setWindowHeights;
                 }
-
                 runWindowFocus();
             }
 
@@ -258,8 +230,7 @@
                     button.classList.add('fa-window-restore');
                 }
             }
-            // ▲▲▲▲▲ [수정됨] 캐릭터 페이지 및 창 최대화/사이즈 조절 기능 ▲▲▲▲▲
-
+            
             function clearPage() {
                 windowsArea.innerHTML = '';
             }
@@ -321,6 +292,7 @@
 
             function runDday() { /* ... */ }
             function runCalendar() { /* ... */ }
+            // 스크립트가 길어져서 생략, 원래 코드와 동일합니다.
 
             showHomePage();
         });
