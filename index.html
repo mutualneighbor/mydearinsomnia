@@ -33,7 +33,7 @@
                     </div>
                     <div class="menu-item-wrapper">
                         <a href="#" id="menu-character"><i class="fa-solid fa-user"></i> CHARACTER</a>
-                        <div class="submenu">
+                        <div class="submenu" id="character-submenu">
                             <a href="#">Leona Kingscholar</a>
                             <a href="#">Nea Florian</a>
                         </div>
@@ -98,20 +98,7 @@
                         const parser = new DOMParser();
                         const doc = parser.parseFromString(htmlString, 'text/html');
                         const postContentHTML = doc.body.innerHTML;
-
-                        const postViewerHTML = `
-                            <div class="window-box post-viewer-window">
-                                <div class="window-header">
-                                    <span class="window-title">${postTitle}</span>
-                                    <div class="window-buttons">
-                                        <i class="fa-solid fa-xmark" onclick="window.showHomePage()"></i>
-                                    </div>
-                                </div>
-                                <div class="window-content post-viewer-content">
-                                    ${postContentHTML}
-                                </div>
-                            </div>
-                        `;
+                        const postViewerHTML = `<div class="window-box post-viewer-window"><div class="window-header"><span class="window-title">${postTitle}</span><div class="window-buttons"><i class="fa-solid fa-xmark" onclick="window.showHomePage()"></i></div></div><div class="window-content post-viewer-content">${postContentHTML}</div></div>`;
                         windowsArea.innerHTML = postViewerHTML;
                     })
                     .catch(error => {
@@ -123,20 +110,12 @@
             function loadPosts() {
                 const postContainer = document.getElementById('post-list-container');
                 if (!postContainer) return;
-
                 fetch('posts.json')
                     .then(response => response.json())
                     .then(posts => {
                         let htmlContent = '';
                         posts.forEach(post => {
-                            htmlContent += `
-                                <div class="gallery-item-wrapper" onclick="showPost('${post.url}', '${post.title}')">
-                                    <div class="gallery-item">
-                                        <div class="gallery-thumbnail"></div>
-                                        <p>${post.title}</p>
-                                    </div>
-                                </div>
-                            `;
+                            htmlContent += `<div class="gallery-item-wrapper" onclick="showPost('${post.url}', '${post.title}')"><div class="gallery-item"><div class="gallery-thumbnail"></div><p>${post.title}</p></div></div>`;
                         });
                         postContainer.innerHTML = htmlContent;
                     })
@@ -149,7 +128,6 @@
             function showHomePage() {
                 menuLinks.forEach(l => l.classList.remove('active'));
                 document.getElementById('menu-home').classList.add('active');
-
                 windowsArea.innerHTML = dDayStickerHTML + calendarWindowHTML + postWindowHTML;
                 runDday();
                 runCalendar();
@@ -159,17 +137,7 @@
             
             function showGalleryPage() {
                 clearPage();
-                const galleryWindowHTML = `
-                    <div class="window-box post-viewer-window">
-                        <div class="window-header">
-                            <span class="window-title">gallery</span>
-                            <div class="window-buttons">
-                                <i class="fa-solid fa-xmark" id="gallery-close-btn"></i>
-                            </div>
-                        </div>
-                        <div class="window-content post-viewer-content" id="gallery-content-wrapper"></div>
-                    </div>
-                `;
+                const galleryWindowHTML = `<div class="window-box post-viewer-window"><div class="window-header"><span class="window-title">gallery</span><div class="window-buttons"><i class="fa-solid fa-xmark" id="gallery-close-btn"></i></div></div><div class="window-content post-viewer-content" id="gallery-content-wrapper"></div></div>`;
                 windowsArea.innerHTML = galleryWindowHTML;
                 document.getElementById('gallery-close-btn').addEventListener('click', showGalleryGrid);
                 loadGalleryImages();
@@ -241,7 +209,6 @@
                 }
             }
             
-            // ▼▼▼▼▼ [수정됨] 캐릭터 페이지 및 창 최대화 기능 ▼▼▼▼▼
             function showCharacterPage() {
                 clearPage();
                 const characterWindowsHTML = `
@@ -253,7 +220,7 @@
                             </div>
                         </div>
                         <div class="window-content">
-                            <img src="leona-profile.jpg" class="character-profile-img" id="leona-profile-img" alt="Leona Kingscholar Profile">
+                            <img src="leona-profile.jpg" class="character-profile-img" alt="Leona Kingscholar Profile">
                         </div>
                     </div>
                     <div class="window-box character-window" id="nea-window">
@@ -264,36 +231,17 @@
                             </div>
                         </div>
                         <div class="window-content">
-                             <span style="color: #ccc;">(콘텐츠 없음)</span>
+                            <img src="nea-profile.jpg" class="character-profile-img" alt="Nea Florian Profile">
                         </div>
                     </div>
                 `;
                 windowsArea.innerHTML = characterWindowsHTML;
-
-                const leonaImg = document.getElementById('leona-profile-img');
-                const leonaWindow = document.getElementById('leona-window');
-                const neaWindow = document.getElementById('nea-window');
-
-                // 이미지가 캐시되어 바로 로드될 경우 대비
-                if (leonaImg.complete) {
-                    const newHeight = leonaImg.offsetHeight;
-                    leonaWindow.style.height = `${newHeight + 28}px`;
-                    neaWindow.style.height = `${newHeight + 28}px`;
-                } else {
-                    leonaImg.onload = () => {
-                        const newHeight = leonaImg.offsetHeight;
-                        leonaWindow.style.height = `${newHeight + 28}px`;
-                        neaWindow.style.height = `${newHeight + 28}px`;
-                    };
-                }
-
                 runWindowFocus();
             }
 
             function toggleMaximize(windowEl) {
                 if (!windowEl) return;
                 const button = windowEl.querySelector('.maximize-btn');
-                
                 if (windowEl.classList.contains('maximized')) {
                     windowEl.classList.remove('maximized');
                     windowEl.style.top = windowEl.dataset.originalTop;
@@ -305,18 +253,15 @@
                 } else {
                     const windowRect = windowEl.getBoundingClientRect();
                     const containerRect = windowsArea.getBoundingClientRect();
-                    
-                    windowEl.dataset.originalTop = windowEl.style.top || getComputedStyle(windowEl).top;
-                    windowEl.dataset.originalLeft = windowEl.style.left || getComputedStyle(windowEl).left;
+                    windowEl.dataset.originalTop = getComputedStyle(windowEl).top;
+                    windowEl.dataset.originalLeft = getComputedStyle(windowEl).left;
                     windowEl.dataset.originalWidth = `${windowRect.width}px`;
                     windowEl.dataset.originalHeight = `${windowRect.height}px`;
-
                     const margin = 40;
                     const availableWidth = containerRect.width - margin;
                     const availableHeight = containerRect.height - margin;
                     const windowRatio = windowRect.width / windowRect.height;
                     const containerRatio = availableWidth / availableHeight;
-
                     let newWidth, newHeight;
                     if (containerRatio > windowRatio) {
                         newHeight = availableHeight;
@@ -325,18 +270,15 @@
                         newWidth = availableWidth;
                         newHeight = newWidth / windowRatio;
                     }
-
                     windowEl.classList.add('maximized');
                     windowEl.style.top = `${(containerRect.height - newHeight) / 2}px`;
                     windowEl.style.left = `${(containerRect.width - newWidth) / 2}px`;
                     windowEl.style.width = `${newWidth}px`;
                     windowEl.style.height = `${newHeight}px`;
-
                     button.classList.remove('fa-square');
                     button.classList.add('fa-window-restore');
                 }
             }
-            // ▲▲▲▲▲ [수정됨] 캐릭터 페이지 및 창 최대화 기능 ▲▲▲▲▲
 
             window.showHomePage = showHomePage;
             window.showPost = showPost;
@@ -344,26 +286,37 @@
             function clearPage() {
                 windowsArea.innerHTML = '';
             }
-
+            
             menuLinks.forEach(link => {
                 link.addEventListener('click', function(e) {
                     e.preventDefault();
                     if (!this.id) return;
-                    menuLinks.forEach(l => l.classList.remove('active'));
-                    this.classList.add('active');
-                    if (this.id === 'menu-home') {
-                        showHomePage();
-                    } else if (this.id === 'menu-gallery') {
-                        showGalleryPage();
-                    } else if (this.id === 'menu-character') {
-                        showCharacterPage();
-                    } else {
+
+                    const characterSubmenu = document.getElementById('character-submenu');
+                    
+                    if (this.id === 'menu-character') {
+                        this.classList.toggle('active');
+                        characterSubmenu.classList.toggle('open');
                         clearPage();
+                        if(this.classList.contains('active')) {
+                           menuLinks.forEach(l => { if(l.id !== 'menu-character') l.classList.remove('active'); });
+                        }
+                    } else {
+                        menuLinks.forEach(l => l.classList.remove('active'));
+                        this.classList.add('active');
+                        characterSubmenu.classList.remove('open');
+                        
+                        if (this.id === 'menu-home') {
+                            showHomePage();
+                        } else if (this.id === 'menu-gallery') {
+                            showGalleryPage();
+                        } else {
+                            clearPage();
+                        }
                     }
                 });
             });
-            
-            // ▼▼▼▼▼ [추가됨] 하위 메뉴 클릭 시 화면 비우기 ▼▼▼▼▼
+
             submenuLinks.forEach(link => {
                 link.addEventListener('click', function(e) {
                     e.preventDefault();
@@ -371,7 +324,6 @@
                     menuLinks.forEach(l => l.classList.remove('active'));
                 });
             });
-            // ▲▲▲▲▲ [추가됨] 하위 메뉴 클릭 시 화면 비우기 ▲▲▲▲▲
 
             windowsArea.addEventListener('click', function(e) {
                 if (e.target.classList.contains('maximize-btn')) {
@@ -387,7 +339,6 @@
                         const z = parseInt(getComputedStyle(w).zIndex);
                         return isNaN(z) ? 0 : z;
                     })) : 0;
-
                 windows.forEach(window => {
                     window.addEventListener('mousedown', () => {
                         if (window.classList.contains('maximized')) return;
