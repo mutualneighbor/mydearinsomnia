@@ -1,4 +1,4 @@
-// script.js (오류 수정 최종본)
+// script.js (전체 코드 - 최종 수정)
 document.addEventListener('DOMContentLoaded', function() {
     const windowsArea = document.getElementById('windows-area');
     const menuLinks = document.querySelectorAll('.sidebar-menu a[id]');
@@ -8,6 +8,7 @@ document.addEventListener('DOMContentLoaded', function() {
     let currentIndex = 0;
     let highestZIndex = 0;
 
+    // --- (HTML 템플릿 코드는 이전과 동일) ---
     const dDayStickerHTML = `
         <div class="d-day-sticker" id="d-day-counter-popup">
             <span class="d-day-text">D + 0</span>
@@ -46,6 +47,7 @@ document.addEventListener('DOMContentLoaded', function() {
         windowEl.style.zIndex = highestZIndex;
     }
 
+    // --- (페이지 로드 및 표시 관련 함수들은 이전과 동일) ---
     function showPost(postUrl, postTitle) {
         windowsArea.innerHTML = '';
         fetch(postUrl)
@@ -56,11 +58,9 @@ document.addEventListener('DOMContentLoaded', function() {
                 const postContentHTML = doc.body.innerHTML;
                 const postViewerHTML = `<div class="window-box post-viewer-window"><div class="window-header"><span class="window-title">${postTitle}</span><div class="window-buttons"><i class="fa-solid fa-xmark" onclick="window.showHomePage()"></i></div></div><div class="window-content post-viewer-content">${postContentHTML}</div></div>`;
                 windowsArea.innerHTML = postViewerHTML;
+                initDraggableWindows(); // 창 드래그 기능 초기화
             })
-            .catch(error => {
-                console.error('포스트를 불러오는 중 오류 발생:', error);
-                windowsArea.innerHTML = '<p>포스트를 불러올 수 없습니다. <a href="#" onclick="window.showHomePage()">홈으로 돌아가기</a></p>';
-            });
+            .catch(error => console.error('포스트를 불러오는 중 오류 발생:', error));
     }
 
     function loadPosts() {
@@ -75,10 +75,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 });
                 postContainer.innerHTML = htmlContent;
             })
-            .catch(error => {
-                console.error('포스트 목록을 불러오는 중 오류 발생:', error);
-                postContainer.innerHTML = '<p>포스트를 불러올 수 없습니다.</p>';
-            });
+            .catch(error => console.error('포스트 목록을 불러오는 중 오류 발생:', error));
     }
 
     function showHomePage() {
@@ -87,7 +84,7 @@ document.addEventListener('DOMContentLoaded', function() {
         windowsArea.innerHTML = dDayStickerHTML + calendarWindowHTML + postWindowHTML;
         runDday();
         runCalendar();
-        runWindowFocus();
+        initDraggableWindows();
         loadPosts();
     }
 
@@ -97,6 +94,7 @@ document.addEventListener('DOMContentLoaded', function() {
         windowsArea.innerHTML = galleryWindowHTML;
         document.getElementById('gallery-close-btn').addEventListener('click', showGalleryGrid);
         loadGalleryImages();
+        initDraggableWindows();
     }
 
     function loadGalleryImages() {
@@ -108,9 +106,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 galleryImages = images;
                 showGalleryGrid();
             })
-            .catch(error => {
-                galleryContentWrapper.innerHTML = '<p>이미지를 불러올 수 없습니다.</p>';
-            });
+            .catch(error => console.error('이미지를 불러올 수 없습니다.', error));
     }
 
     function showGalleryGrid() {
@@ -157,7 +153,7 @@ document.addEventListener('DOMContentLoaded', function() {
         prevBtn.classList.toggle('hidden', index === 0);
         nextBtn.classList.toggle('hidden', index === galleryImages.length - 1);
     }
-
+    
     function navigateGallery(direction) {
         const newIndex = currentIndex + direction;
         if (newIndex >= 0 && newIndex < galleryImages.length) {
@@ -192,7 +188,7 @@ document.addEventListener('DOMContentLoaded', function() {
             </div>
         `;
         windowsArea.innerHTML = characterWindowsHTML;
-        runWindowFocus();
+        initDraggableWindows();
     }
     
     function toggleMaximize(windowEl) {
@@ -226,7 +222,7 @@ document.addEventListener('DOMContentLoaded', function() {
             windowEl.dataset.originalWidth = getComputedStyle(windowEl).width;
             windowEl.dataset.originalZIndex = getComputedStyle(windowEl).zIndex;
 
-            const margin = 40;
+            const margin = 20; // 여백을 줄여서 더 크게 보이도록 수정
             const availableWidth = containerRect.width - margin;
             const availableHeight = containerRect.height - margin;
             const contentAspectRatio = 1200 / 810;
@@ -268,7 +264,6 @@ document.addEventListener('DOMContentLoaded', function() {
         windowsArea.innerHTML = '';
     }
 
-    // ▼▼▼ [오류 수정] 메뉴 클릭 이벤트 로직 ▼▼▼
     menuLinks.forEach(link => {
         link.addEventListener('click', function(e) {
             e.preventDefault();
@@ -278,23 +273,17 @@ document.addEventListener('DOMContentLoaded', function() {
             const isActive = this.classList.contains('active');
 
             if (this.id === 'menu-character') {
-                // 캐릭터 메뉴를 클릭하면 하위 메뉴를 열고 닫습니다.
                 characterSubmenu.classList.toggle('open');
-                
-                // 만약 캐릭터 메뉴가 이미 활성화된 상태가 아니라면, 활성화시키고 페이지를 보여줍니다.
                 if (!isActive) {
                     menuLinks.forEach(l => l.classList.remove('active'));
                     this.classList.add('active');
                     showCharacterPage();
                 }
-                // 이미 활성화된 상태에서 또 누르면, 하위 메뉴만 열고 닫힐 뿐 화면은 그대로 유지됩니다.
-
             } else {
-                // 다른 메뉴(홈, 갤러리 등)를 클릭한 경우
-                if (!isActive) { // 현재 활성화된 메뉴가 아니라면 내용 변경
+                if (!isActive) {
                     menuLinks.forEach(l => l.classList.remove('active'));
                     this.classList.add('active');
-                    characterSubmenu.classList.remove('open'); // 다른 메뉴를 누르면 캐릭터 하위 메뉴는 닫힘
+                    characterSubmenu.classList.remove('open');
 
                     if (this.id === 'menu-home') {
                         showHomePage();
@@ -304,7 +293,6 @@ document.addEventListener('DOMContentLoaded', function() {
                         clearPage();
                     }
                 }
-                // 이미 활성화된 메뉴를 또 누르면 아무 작업도 하지 않습니다.
             }
         });
     });
@@ -327,21 +315,68 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
-    function runWindowFocus() {
+    // ▼▼▼ [새로 추가/수정됨] 창 드래그 기능 및 z-index 관리 ▼▼▼
+    function initDraggableWindows() {
         const windows = document.querySelectorAll('.window-box');
-        highestZIndex = windows.length > 0 ?
-            Math.max(...Array.from(windows).map(w => {
-                const z = parseInt(getComputedStyle(w).zIndex);
-                return isNaN(z) ? 0 : z;
-            })) : 0;
-        windows.forEach(window => {
-            window.addEventListener('mousedown', () => {
+        highestZIndex = windows.length;
+        
+        windows.forEach((window, index) => {
+            const header = window.querySelector('.window-header');
+            // 초기 z-index 설정
+            window.style.zIndex = index + 1;
+
+            if (!header) return;
+
+            header.addEventListener('mousedown', (e) => {
+                // 확대 버튼 클릭 시에는 드래그 안 함
+                if (e.target.classList.contains('maximize-btn') || e.target.parentElement.classList.contains('maximize-btn')) return;
+
+                // 확대된 상태에서는 드래그 안 함
                 if (window.classList.contains('maximized')) return;
+
+                e.preventDefault();
+                window.classList.add('dragging');
                 bringToFront(window);
+
+                const startX = e.clientX;
+                const startY = e.clientY;
+                const startLeft = window.offsetLeft;
+                const startTop = window.offsetTop;
+
+                const containerRect = windowsArea.getBoundingClientRect();
+
+                function onMouseMove(moveEvent) {
+                    const newLeft = startLeft + moveEvent.clientX - startX;
+                    const newTop = startTop + moveEvent.clientY - startY;
+                    
+                    // 데스크탑 영역 밖으로 나가지 않도록 위치 제한
+                    const maxLeft = containerRect.width - window.offsetWidth;
+                    const maxTop = containerRect.height - window.offsetHeight;
+
+                    window.style.left = `${Math.max(0, Math.min(newLeft, maxLeft))}px`;
+                    window.style.top = `${Math.max(0, Math.min(newTop, maxTop))}px`;
+                }
+
+                function onMouseUp() {
+                    window.classList.remove('dragging');
+                    document.removeEventListener('mousemove', onMouseMove);
+                    document.removeEventListener('mouseup', onMouseUp);
+                }
+
+                document.addEventListener('mousemove', onMouseMove);
+                document.addEventListener('mouseup', onMouseUp);
+            });
+
+            // 창 자체를 클릭했을 때도 앞으로 오도록 함
+            window.addEventListener('mousedown', () => {
+                if (!window.classList.contains('maximized')) {
+                    bringToFront(window);
+                }
             });
         });
     }
 
+    // --- (달력 및 D-Day 함수는 이전과 동일) ---
     function runDday() {
         const dDayText = document.querySelector('.d-day-text');
         if(!dDayText) return;
@@ -389,6 +424,8 @@ document.addEventListener('DOMContentLoaded', function() {
         nextMonthButton.addEventListener('click', () => { currentDate.setMonth(currentDate.getMonth() + 1); renderCalendar(); });
         renderCalendar();
     }
-
+    
+    // 초기 페이지 로드
     showHomePage();
 });
+
