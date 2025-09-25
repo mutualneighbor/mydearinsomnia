@@ -45,7 +45,7 @@ body {
 .sidebar-menu a.active { background-color: #8a2be2; color: #fff; font-weight: 700; border-color: #701ebd; }
 .sidebar-menu a i { width: 30px; }
 
-/* ▼▼▼▼▼ [수정됨] 사이드바 하위 메뉴 스타일 (클릭 방식) ▼▼▼▼▼ */
+/* --- 사이드바 하위 메뉴 스타일 (클릭 방식) --- */
 .menu-item-wrapper {
     margin-bottom: 10px;
 }
@@ -79,8 +79,6 @@ body {
     transform: none !important;
     box-shadow: none !important;
 }
-/* ▲▲▲▲▲ [수정됨] 사이드바 하위 메뉴 스타일 (클릭 방식) ▲▲▲▲▲ */
-
 
 /* --- 창(Window) 영역 --- */
 .windows-area { position: relative; flex-grow: 1; padding: 20px; }
@@ -106,7 +104,6 @@ body {
     height: 380px;
     z-index: 2;
 }
-
 .post-viewer-window {
     top: 20px;
     left: 20px;
@@ -116,22 +113,11 @@ body {
     height: auto;
     z-index: 10;
 }
-
 .post-viewer-content {
     height: calc(100% - 28px);
     overflow-y: auto;
     overflow-x: hidden;
     padding: 20px;
-}
-.post-viewer-content h1,
-.post-viewer-content h2 {
-    margin-bottom: 15px;
-    border-bottom: 1px solid #eee;
-    padding-bottom: 10px;
-}
-.post-viewer-content p {
-    line-height: 1.7;
-    margin-bottom: 15px;
 }
 
 /* --- D-Day '외곽선' 스티커 --- */
@@ -148,21 +134,6 @@ body {
     text-shadow: -2px -2px 0 #fff, 2px -2px 0 #fff, -2px 2px 0 #fff, 2px 2px 0 #fff, -3px 0 0 #fff, 3px 0 0 #fff, 0 -3px 0 #fff, 0 3px 0 #fff;
     color: #8a2be2;
 }
-
-/* --- 달력 스타일 --- */
-.calendar-content { text-align: center; }
-.month-nav { display: flex; justify-content: space-between; align-items: center; font-size: 1.1em; color: #8a2be2; margin-bottom: 10px; }
-#month-name { font-family: 'Poppins', sans-serif; font-size: 1.4em; font-weight: 700; }
-.arrow-btn { cursor: pointer; padding: 5px 10px; border-radius: 4px; transition: background-color 0.2s; }
-.arrow-btn:hover { background-color: #f0f0ff; }
-.days-of-week { display: grid; grid-template-columns: repeat(7, 1fr); font-size: 0.8em; margin-bottom: 5px; color: #888; font-weight: 500; }
-.dates-grid { display: grid; grid-template-columns: repeat(7, 1fr); font-size: 0.9em; row-gap: 5px; }
-.dates-grid div { padding: 5px 0; border-radius: 4px; transition: background-color 0.2s; position: relative; }
-.dates-grid div.prev-month, .dates-grid div.next-month { color: #ccc; }
-.dates-grid div.today { background-color: #8a2be2; color: #fff; font-weight: 700; }
-.dates-grid div.birthday::after { content: ''; position: absolute; bottom: 2px; left: 50%; transform: translateX(-50%); width: 4px; height: 4px; background-color: #ff6b81; border-radius: 50%; }
-.dates-grid div.anniversary::after { content: ''; position: absolute; bottom: 2px; left: 50%; transform: translateX(-50%); width: 4px; height: 4px; background-color: #4a90e2; border-radius: 50%; }
-.dates-grid div:not(.today):not(.prev-month):not(.next-month):hover { background-color: #f0f0ff; cursor: pointer; }
 
 /* --- 갤러리 그리드 스타일 --- */
 .gallery-grid-container {
@@ -209,9 +180,7 @@ body {
     transition: background-color 0.2s;
     user-select: none;
 }
-.nav-button:hover {
-    background-color: rgba(0, 0, 0, 0.5);
-}
+.nav-button:hover { background-color: rgba(0, 0, 0, 0.5); }
 .nav-button.prev { left: 10px; }
 .nav-button.next { right: 10px; }
 .nav-button.hidden { display: none; }
@@ -236,7 +205,7 @@ body {
 .character-window .window-content {
     padding: 0;
     height: 100%;
-    background-color: #222; /* 이미지 로딩 중 배경색 */
+    background-color: #222;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -244,20 +213,20 @@ body {
 .character-profile-img {
     width: 100%;
     height: 100%;
-    object-fit: contain; /* 이미지가 잘리지 않고, 비율에 맞춰 창 안에 표시됨 */
+    object-fit: cover; /* 이미지를 컨테이너에 꽉 채움 (비율 다를 시 잘릴 수 있음) */
 }
 #leona-window {
-    top: 50px;
-    left: 100px;
+    top: 40px;
+    left: 80px;
     width: 450px;
-    height: 570px; /* 고정 크기 */
     z-index: 4;
+    min-height: 400px; /* 로딩 전 최소 높이 */
 }
 #nea-window {
     top: 100px;
-    left: 200px;
+    left: 220px;
     width: 450px;
-    height: 570px; /* 고정 크기 */
     z-index: 3;
+    min-height: 400px; /* 로딩 전 최소 높이 */
 }
 /* ▲▲▲▲▲ [수정됨] 캐릭터 창 스타일 ▲▲▲▲▲ */
