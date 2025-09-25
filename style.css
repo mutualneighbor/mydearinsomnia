@@ -272,4 +272,12 @@ body {
     right: 20px;
     z-index: 3;
 }
+/* style.css 파일 맨 아래에 이 코드를 추가하세요 */
+
+/* ▼▼▼▼▼ [추가] 확대된 창 스타일 ▼▼▼▼▼ */
+.window-box.maximized {
+    /* 확대/축소 시 부드러운 전환 효과를 위해 추가 */
+    transition: top 0.3s ease, left 0.3s ease, width 0.3s ease, height 0.3s ease;
+}
+/* ▲▲▲▲▲ [추가] 확대된 창 스타일 ▲▲▲▲▲ */
 /* ▲▲▲▲▲ [진짜 최종 수정] 캐릭터 창 스타일 - 이미지 영역에 정확한 비율 적용 ▲▲▲▲▲ */
