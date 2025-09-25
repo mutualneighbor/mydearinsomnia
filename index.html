@@ -291,13 +291,20 @@
                 link.addEventListener('click', function(e) {
                     e.preventDefault();
                     if (!this.id) return;
-
+                    
                     const characterSubmenu = document.getElementById('character-submenu');
                     
                     if (this.id === 'menu-character') {
                         this.classList.toggle('active');
                         characterSubmenu.classList.toggle('open');
-                        clearPage();
+                        
+                        // 캐릭터 메뉴를 누르면 창이 뜨도록 수정
+                        if (this.classList.contains('active')) {
+                            showCharacterPage();
+                        } else {
+                            clearPage();
+                        }
+
                         if(this.classList.contains('active')) {
                            menuLinks.forEach(l => { if(l.id !== 'menu-character') l.classList.remove('active'); });
                         }
@@ -322,6 +329,9 @@
                     e.preventDefault();
                     clearPage();
                     menuLinks.forEach(l => l.classList.remove('active'));
+                    // 하위 메뉴 클릭 시 character 메뉴도 비활성화
+                    document.getElementById('menu-character').classList.remove('active');
+                    document.getElementById('character-submenu').classList.remove('open');
                 });
             });
 
