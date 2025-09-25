@@ -280,31 +280,26 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
+    // script.js 파일에서 이 부분만 교체하세요
+
     // ▼▼▼ [수정됨] 하위 메뉴 클릭 이벤트 ▼▼▼
     submenuLinks.forEach(link => {
         link.addEventListener('click', function(e) {
             e.preventDefault();
-            e.stopPropagation(); // 이벤트 전파를 막아 상위 메뉴가 닫히는 것을 방지
+            e.stopPropagation(); // 하위 메뉴 클릭 시 메뉴창이 접히지 않도록 함
 
-            // 다른 하위 메뉴의 active 클래스는 제거하고, 현재 클릭한 메뉴에 추가
+            // 캐릭터 메뉴의 active 상태를 해제
+            document.getElementById('menu-character').classList.remove('active');
+
+            // 화면의 모든 창을 제거 (캐릭터 창 사라짐)
+            clearPage();
+
+            // 클릭된 하위 메뉴만 active 상태로 표시
             submenuLinks.forEach(l => l.classList.remove('active'));
             this.classList.add('active');
-
-            // 클릭한 이름에 따라 해당 캐릭터 창을 앞으로 가져옴
-            const characterName = this.textContent;
-            let targetWindow;
-            if (characterName.includes('Leona')) {
-                targetWindow = document.getElementById('leona-window');
-            } else if (characterName.includes('Nea')) {
-                targetWindow = document.getElementById('nea-window');
-            }
-            if (targetWindow) {
-                bringToFront(targetWindow);
-            }
         });
     });
     // ▲▲▲ [수정됨] 하위 메뉴 클릭 이벤트 ▲▲▲
-
     windowsArea.addEventListener('click', function(e) {
         if (e.target.classList.contains('maximize-btn')) {
             const windowEl = e.target.closest('.window-box');
