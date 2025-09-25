@@ -1,18 +1,29 @@
+/* style.css (전체 코드) */
+
 /* --- 기본 설정 및 폰트 --- */
-* { margin: 0; padding: 0; box-sizing: border-box; }
+* { 
+    margin: 0; 
+    padding: 0; 
+    box-sizing: border-box; 
+}
 body {
     font-family: 'Inter', "Pretendard", sans-serif;
     color: #444;
     background-color: #f0eefc;
     min-height: 100vh;
-    display: flex; justify-content: center; align-items: center;
+    display: flex; 
+    justify-content: center; 
+    align-items: center;
     padding: 30px;
 }
-.page-wrapper { position: relative; }
+.page-wrapper { 
+    position: relative; 
+}
 
 /* --- 전체 데스크탑 배경 --- */
 .desktop-background {
-    width: 1000px; height: 650px;
+    width: 1000px; 
+    height: 650px;
     background-color: #fafaff;
     border-radius: 8px;
     box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
@@ -21,9 +32,18 @@ body {
 }
 
 /* --- 왼쪽 사이드바 --- */
-.left-sidebar { width: 250px; background-color: #f0f0f8; border-right: 1px solid #e0e0f0; padding: 20px; display: flex; flex-direction: column; }
+.left-sidebar { 
+    width: 250px; 
+    background-color: #f0f0f8; 
+    border-right: 1px solid #e0e0f0; 
+    padding: 20px; 
+    display: flex; 
+    flex-direction: column; 
+}
 .profile-widget {
-    text-align: center; padding-bottom: 20px; border-bottom: 1px solid #ddd;
+    text-align: center; 
+    padding-bottom: 20px; 
+    border-bottom: 1px solid #ddd;
     margin-bottom: 20px;
     box-shadow: none;
 }
@@ -37,15 +57,48 @@ body {
     margin-bottom: 15px;
     object-fit: cover;
 }
-.profile-name { font-family: 'Poppins', sans-serif; font-size: 1.3em; font-weight: 700; margin-bottom: 10px; color: #555; }
-.profile-desc { font-size: 0.75em; color: #888; line-height: 1.6; }
-.sidebar-menu { flex-grow: 1; }
-.sidebar-menu a { display: flex; align-items: center; padding: 12px 15px; text-decoration: none; border-radius: 8px; font-weight: 500; color: #555; background-color: #e9e9f4; border: 1px solid #dcdcf0; transition: all 0.2s ease; }
-.sidebar-menu a:hover { transform: translateY(-2px); box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
-.sidebar-menu a.active { background-color: #8a2be2; color: #fff; font-weight: 700; border-color: #701ebd; }
-.sidebar-menu a i { width: 30px; }
+.profile-name { 
+    font-family: 'Poppins', sans-serif; 
+    font-size: 1.3em; 
+    font-weight: 700; 
+    margin-bottom: 10px; 
+    color: #555; 
+}
+.profile-desc { 
+    font-size: 0.75em; 
+    color: #888; 
+    line-height: 1.6; 
+}
+.sidebar-menu { 
+    flex-grow: 1; 
+}
+.sidebar-menu a { 
+    display: flex; 
+    align-items: center; 
+    padding: 12px 15px; 
+    text-decoration: none; 
+    border-radius: 8px; 
+    font-weight: 500; 
+    color: #555; 
+    background-color: #e9e9f4; 
+    border: 1px solid #dcdcf0; 
+    transition: all 0.2s ease; 
+}
+.sidebar-menu a:hover { 
+    transform: translateY(-2px); 
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05); 
+}
+.sidebar-menu a.active { 
+    background-color: #8a2be2; 
+    color: #fff; 
+    font-weight: 700; 
+    border-color: #701ebd; 
+}
+.sidebar-menu a i { 
+    width: 30px; 
+}
 
-/* ▼▼▼▼▼ [수정됨] 사이드바 하위 메뉴 스타일 (클릭 방식) ▼▼▼▼▼ */
+/* --- 사이드바 하위 메뉴 스타일 --- */
 .menu-item-wrapper {
     margin-bottom: 10px;
 }
@@ -79,18 +132,67 @@ body {
     transform: none !important;
     box-shadow: none !important;
 }
-/* ▲▲▲▲▲ [수정됨] 사이드바 하위 메뉴 스타일 (클릭 방식) ▲▲▲▲▲ */
-
+.submenu a.active {
+    background-color: #e0e0ff !important;
+    color: #8a2be2 !important;
+    font-weight: 700 !important;
+}
 
 /* --- 창(Window) 영역 --- */
-.windows-area { position: relative; flex-grow: 1; padding: 20px; }
-.window-box { position: absolute; background-color: #ffffff; border: 1px solid #d0d0f0; box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1); border-radius: 6px; overflow: hidden; transition: box-shadow 0.2s, transform 0.2s, top 0.3s, left 0.3s, width 0.3s, height 0.3s; }
-.window-header { display: flex; justify-content: space-between; align-items: center; background-color: #e0e0ff; padding: 5px 10px; border-bottom: 1px solid #d0d0f0; cursor: grab; }
-.window-title { font-weight: 700; font-size: 0.9em; color: #555; font-family: 'Poppins', sans-serif; }
-.window-buttons { display: flex; align-items: center; gap: 12px; font-size: 0.9em; color: #666; }
-.window-buttons i { cursor: pointer; transition: color 0.2s; }
-.window-buttons i:hover { color: #8a2be2; }
-.window-content { padding: 15px; }
+.windows-area { 
+    position: relative; 
+    flex-grow: 1; 
+    padding: 20px; 
+}
+.window-box { 
+    position: absolute; 
+    background-color: #ffffff; 
+    border: 1px solid #d0d0f0; 
+    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1); 
+    border-radius: 6px; 
+    overflow: hidden; 
+    /* [수정] 애니메이션 효과를 좀 더 부드럽게 변경 */
+    transition: transform 0.25s ease-out, opacity 0.25s ease-out, width 0.25s ease-out, height 0.25s ease-out;
+}
+.window-header { 
+    display: flex; 
+    justify-content: space-between; 
+    align-items: center; 
+    background-color: #e0e0ff; 
+    padding: 5px 10px; 
+    border-bottom: 1px solid #d0d0f0; 
+    cursor: grab; 
+}
+.window-title { 
+    font-weight: 700; 
+    font-size: 0.9em; 
+    color: #555; 
+    font-family: 'Poppins', sans-serif; 
+}
+.window-buttons { 
+    display: flex; 
+    align-items: center; 
+    gap: 12px; 
+    font-size: 0.9em; 
+    color: #666; 
+}
+.window-buttons i { 
+    cursor: pointer; 
+    transition: color 0.2s; 
+}
+.window-buttons i:hover { 
+    color: #8a2be2; 
+}
+
+/* [추가/수정] 확대된 창 및 드래그 중인 창 스타일 */
+.window-box.maximized {
+    transition: top 0.25s ease-out, left 0.25s ease-out, width 0.25s ease-out, height 0.25s ease-out;
+}
+.window-box.dragging {
+    /* 드래그 중에는 애니메이션 효과를 잠시 제거하여 부드럽게 움직이도록 함 */
+    transition: none;
+    box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.2); /* 드래그 중임을 나타내는 그림자 효과 */
+}
 
 .calendar-window .window-buttons,
 .gallery-window .window-buttons {
@@ -98,13 +200,16 @@ body {
 }
 
 /* --- 개별 창 위치 및 크기 설정 --- */
-.calendar-window { top: 20px; left: 20px; width: 260px; z-index: 1; }
+.calendar-window { 
+    top: 20px; 
+    left: 20px; 
+    width: 260px; 
+}
 .gallery-window {
     bottom: 20px;
     right: 20px;
     width: 500px;
     height: 380px;
-    z-index: 2;
 }
 
 .post-viewer-window {
@@ -136,11 +241,20 @@ body {
 
 /* --- D-Day '외곽선' 스티커 --- */
 .d-day-sticker {
-    position: absolute; top: 15px; right: 15px; z-index: 20;
-    display: flex; align-items: center; gap: 0px;
-    transform: rotate(3deg); transition: transform 0.2s ease; cursor: pointer;
+    position: absolute; 
+    top: 15px; 
+    right: 15px; 
+    z-index: 20;
+    display: flex; 
+    align-items: center; 
+    gap: 0px;
+    transform: rotate(3deg); 
+    transition: transform 0.2s ease; 
+    cursor: pointer;
 }
-.d-day-sticker:hover { transform: rotate(-2deg) scale(1.05); }
+.d-day-sticker:hover { 
+    transform: rotate(-2deg) scale(1.05); 
+}
 .d-day-sticker .d-day-text {
     font-family: 'Poppins', sans-serif;
     font-weight: 700;
@@ -150,19 +264,85 @@ body {
 }
 
 /* --- 달력 스타일 --- */
-.calendar-content { text-align: center; }
-.month-nav { display: flex; justify-content: space-between; align-items: center; font-size: 1.1em; color: #8a2be2; margin-bottom: 10px; }
-#month-name { font-family: 'Poppins', sans-serif; font-size: 1.4em; font-weight: 700; }
-.arrow-btn { cursor: pointer; padding: 5px 10px; border-radius: 4px; transition: background-color 0.2s; }
-.arrow-btn:hover { background-color: #f0f0ff; }
-.days-of-week { display: grid; grid-template-columns: repeat(7, 1fr); font-size: 0.8em; margin-bottom: 5px; color: #888; font-weight: 500; }
-.dates-grid { display: grid; grid-template-columns: repeat(7, 1fr); font-size: 0.9em; row-gap: 5px; }
-.dates-grid div { padding: 5px 0; border-radius: 4px; transition: background-color 0.2s; position: relative; }
-.dates-grid div.prev-month, .dates-grid div.next-month { color: #ccc; }
-.dates-grid div.today { background-color: #8a2be2; color: #fff; font-weight: 700; }
-.dates-grid div.birthday::after { content: ''; position: absolute; bottom: 2px; left: 50%; transform: translateX(-50%); width: 4px; height: 4px; background-color: #ff6b81; border-radius: 50%; }
-.dates-grid div.anniversary::after { content: ''; position: absolute; bottom: 2px; left: 50%; transform: translateX(-50%); width: 4px; height: 4px; background-color: #4a90e2; border-radius: 50%; }
-.dates-grid div:not(.today):not(.prev-month):not(.next-month):hover { background-color: #f0f0ff; cursor: pointer; }
+.calendar-content { 
+    text-align: center; 
+}
+.month-nav { 
+    display: flex; 
+    justify-content: space-between; 
+    align-items: center; 
+    font-size: 1.1em; 
+    color: #8a2be2; 
+    margin-bottom: 10px; 
+}
+#month-name { 
+    font-family: 'Poppins', sans-serif; 
+    font-size: 1.4em; 
+    font-weight: 700; 
+}
+.arrow-btn { 
+    cursor: pointer; 
+    padding: 5px 10px; 
+    border-radius: 4px; 
+    transition: background-color 0.2s; 
+}
+.arrow-btn:hover { 
+    background-color: #f0f0ff; 
+}
+.days-of-week { 
+    display: grid; 
+    grid-template-columns: repeat(7, 1fr); 
+    font-size: 0.8em; 
+    margin-bottom: 5px; 
+    color: #888; 
+    font-weight: 500; 
+}
+.dates-grid { 
+    display: grid; 
+    grid-template-columns: repeat(7, 1fr); 
+    font-size: 0.9em; 
+    row-gap: 5px; 
+}
+.dates-grid div { 
+    padding: 5px 0; 
+    border-radius: 4px; 
+    transition: background-color 0.2s; 
+    position: relative; 
+}
+.dates-grid div.prev-month, .dates-grid div.next-month { 
+    color: #ccc; 
+}
+.dates-grid div.today { 
+    background-color: #8a2be2; 
+    color: #fff; 
+    font-weight: 700; 
+}
+.dates-grid div.birthday::after { 
+    content: ''; 
+    position: absolute; 
+    bottom: 2px; 
+    left: 50%; 
+    transform: translateX(-50%); 
+    width: 4px; 
+    height: 4px; 
+    background-color: #ff6b81; 
+    border-radius: 50%; 
+}
+.dates-grid div.anniversary::after { 
+    content: ''; 
+    position: absolute; 
+    bottom: 2px; 
+    left: 50%; 
+    transform: translateX(-50%); 
+    width: 4px; 
+    height: 4px; 
+    background-color: #4a90e2; 
+    border-radius: 50%; 
+}
+.dates-grid div:not(.today):not(.prev-month):not(.next-month):hover { 
+    background-color: #f0f0ff; 
+    cursor: pointer; 
+}
 
 /* --- 갤러리 그리드 스타일 --- */
 .gallery-grid-container {
@@ -217,41 +397,41 @@ body {
 .nav-button.hidden { display: none; }
 
 /* --- 홈 화면 포스트 목록 스타일 --- */
-.gallery-content { display: grid; grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); gap: 10px; }
-.gallery-item { text-align: center; border: 1px solid #eee; padding: 5px; transition: transform 0.2s ease, box-shadow 0.2s ease; }
+.gallery-content { 
+    display: grid; 
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); 
+    gap: 10px; 
+}
+.gallery-item { 
+    text-align: center; 
+    border: 1px solid #eee; 
+    padding: 5px; 
+    transition: transform 0.2s ease, box-shadow 0.2s ease; 
+}
 .gallery-thumbnail {
     width: 100%;
     height: 100px;
     background-color: #ede7f6;
     margin-bottom: 5px;
 }
-.gallery-item p { font-size: 0.9em; color: #555; }
-.gallery-item-wrapper { cursor: pointer; }
+.gallery-item p { 
+    font-size: 0.9em; 
+    color: #555; 
+}
+.gallery-item-wrapper { 
+    cursor: pointer; 
+}
 .gallery-item-wrapper:hover .gallery-item {
     transform: translateY(-3px);
     box-shadow: 0 4px 8px rgba(0,0,0,0.1);
 }
 
-/* style.css 파일에서 이 부분만 수정 또는 추가하세요 */
-
-/* ▼▼▼▼▼ [추가됨] 활성화된 하위 메뉴 스타일 ▼▼▼▼▼ */
-.submenu a.active {
-    background-color: #e0e0ff !important;
-    color: #8a2be2 !important;
-    font-weight: 700 !important;
-}
-/* ▲▲▲▲▲ [추가됨] 활성화된 하위 메뉴 스타일 ▲▲▲▲▲ */
-
-
-/* style.css 파일에서 이 부분만 교체하세요 */
-
-/* ▼▼▼▼▼ [진짜 최종 수정] 캐릭터 창 스타일 - 이미지 영역에 정확한 비율 적용 ▼▼▼▼▼ */
+/* --- 캐릭터 창 스타일 --- */
 .character-window .window-content {
     padding: 0;
     display: flex;
-    /* 핵심: 이미지 영역의 비율을 1200:810으로 정확하게 고정합니다. */
     aspect-ratio: 1200 / 810;
-    height: auto; /* 높이는 비율에 따라 자동 계산됩니다. */
+    height: auto;
 }
 .character-profile-img {
     width: 100%;
@@ -259,25 +439,14 @@ body {
     object-fit: contain; 
 }
 #leona-window, #nea-window {
-    width: 550px; /* 창의 전체 너비를 설정합니다. */
-    height: auto; /* 창의 전체 높이는 (제목 영역 + 비율이 적용된 이미지 영역)으로 자동 설정됩니다. */
+    width: 550px;
+    height: auto;
 }
 #leona-window {
     top: 20px;
     left: 20px;
-    z-index: 4;
 }
 #nea-window {
     bottom: 20px;
     right: 20px;
-    z-index: 3;
 }
-/* style.css 파일 맨 아래에 이 코드를 추가하세요 */
-
-/* ▼▼▼▼▼ [추가] 확대된 창 스타일 ▼▼▼▼▼ */
-.window-box.maximized {
-    /* 확대/축소 시 부드러운 전환 효과를 위해 추가 */
-    transition: top 0.3s ease, left 0.3s ease, width 0.3s ease, height 0.3s ease;
-}
-/* ▲▲▲▲▲ [추가] 확대된 창 스타일 ▲▲▲▲▲ */
-/* ▲▲▲▲▲ [진짜 최종 수정] 캐릭터 창 스타일 - 이미지 영역에 정확한 비율 적용 ▲▲▲▲▲ */
