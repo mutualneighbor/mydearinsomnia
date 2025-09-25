@@ -210,18 +210,18 @@ body {
 .character-profile-img {
     width: 100%;
     height: 100%;
-    object-fit: cover; /* 이미지가 잘리지 않게 하려면 JS에서 창 크기를 조절하므로 cover가 적합 */
+    object-fit: cover;
 }
 #leona-window {
-    top: 40px;
-    left: 80px;
+    top: 50px;
+    left: 100px;
     width: 450px;
     z-index: 4;
     min-height: 400px;
 }
 #nea-window {
-    top: 100px;
-    left: 220px;
+    top: 110px;
+    left: 210px;
     width: 450px;
     z-index: 3;
     min-height: 400px;
