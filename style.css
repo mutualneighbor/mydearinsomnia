@@ -232,6 +232,17 @@ body {
     box-shadow: 0 4px 8px rgba(0,0,0,0.1);
 }
 
+/* style.css 파일에서 이 부분만 수정 또는 추가하세요 */
+
+/* ▼▼▼▼▼ [추가됨] 활성화된 하위 메뉴 스타일 ▼▼▼▼▼ */
+.submenu a.active {
+    background-color: #e0e0ff !important;
+    color: #8a2be2 !important;
+    font-weight: 700 !important;
+}
+/* ▲▲▲▲▲ [추가됨] 활성화된 하위 메뉴 스타일 ▲▲▲▲▲ */
+
+
 /* ▼▼▼▼▼ [수정됨] 캐릭터 창 스타일 ▼▼▼▼▼ */
 .character-window .window-content {
     padding: 0;
@@ -250,14 +261,14 @@ body {
     top: 50px;
     left: 100px;
     width: 450px;
-    height: 570px; /* 고정 크기 */
+    height: 536px; /* 이미지 비율에 맞춰 높이 수정 */
     z-index: 4;
 }
 #nea-window {
     top: 100px;
     left: 200px;
     width: 450px;
-    height: 570px; /* 고정 크기 */
+    height: 536px; /* 이미지 비율에 맞춰 높이 수정 */
     z-index: 3;
 }
 /* ▲▲▲▲▲ [수정됨] 캐릭터 창 스타일 ▲▲▲▲▲ */
