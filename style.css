@@ -1,4 +1,4 @@
-/* style.css (전체 코드 - 최종 수정) */
+/* style.css (전체 코드) */
 
 /* --- 기본 설정 및 폰트 --- */
 * { 
@@ -15,7 +15,6 @@ body {
     justify-content: center; 
     align-items: center;
     padding: 30px;
-    overflow: hidden; /* 스크롤바 방지 */
 }
 .page-wrapper { 
     position: relative; 
@@ -40,18 +39,21 @@ body {
     padding: 20px; 
     display: flex; 
     flex-direction: column; 
-    user-select: none; /* 텍스트 선택 방지 */
 }
 .profile-widget {
     text-align: center; 
     padding-bottom: 20px; 
     border-bottom: 1px solid #ddd;
     margin-bottom: 20px;
+    box-shadow: none;
 }
 .profile-img {
     width: 150px;
     height: 150px;
     border-radius: 8px;
+    box-shadow: none !important;
+    outline: none;
+    border: none;
     margin-bottom: 15px;
     object-fit: cover;
 }
@@ -96,9 +98,12 @@ body {
     width: 30px; 
 }
 
-/* --- 사이드바 하위 메뉴 --- */
+/* --- 사이드바 하위 메뉴 스타일 --- */
 .menu-item-wrapper {
     margin-bottom: 10px;
+}
+.menu-item-wrapper:last-child {
+    margin-bottom: 0;
 }
 .submenu {
     display: none;
@@ -112,13 +117,25 @@ body {
     padding: 8px 15px !important;
     margin-bottom: 5px !important;
     font-size: 0.9em;
+    font-weight: 500 !important;
+    color: #555 !important;
+    background-color: rgba(233, 233, 244, 0.7) !important;
+    border: 1px solid rgba(220, 220, 240, 0.9) !important;
+    transition: background-color 0.2s, color 0.2s;
+}
+.submenu a:last-child {
+    margin-bottom: 0 !important;
 }
 .submenu a:hover {
-    background-color: #e0e0ff !important;
+    background-color: #e9e9f4 !important;
+    color: #8a2be2 !important;
+    transform: none !important;
+    box-shadow: none !important;
 }
 .submenu a.active {
-    font-weight: 700 !important;
+    background-color: #e0e0ff !important;
     color: #8a2be2 !important;
+    font-weight: 700 !important;
 }
 
 /* --- 창(Window) 영역 --- */
@@ -126,17 +143,16 @@ body {
     position: relative; 
     flex-grow: 1; 
     padding: 20px; 
-    user-select: none;
 }
 .window-box { 
     position: absolute; 
     background-color: #ffffff; 
     border: 1px solid #d0d0f0; 
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); 
+    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1); 
     border-radius: 6px; 
     overflow: hidden; 
-    /* [수정] 부드러운 애니메이션 */
-    transition: all 0.25s ease-in-out;
+    /* [수정] 애니메이션 효과를 좀 더 부드럽게 변경 */
+    transition: transform 0.25s ease-out, opacity 0.25s ease-out, width 0.25s ease-out, height 0.25s ease-out;
 }
 .window-header { 
     display: flex; 
@@ -151,10 +167,14 @@ body {
     font-weight: 700; 
     font-size: 0.9em; 
     color: #555; 
+    font-family: 'Poppins', sans-serif; 
 }
 .window-buttons { 
     display: flex; 
+    align-items: center; 
     gap: 12px; 
+    font-size: 0.9em; 
+    color: #666; 
 }
 .window-buttons i { 
     cursor: pointer; 
@@ -164,29 +184,253 @@ body {
     color: #8a2be2; 
 }
 
-/* [수정] 드래그 및 확대 상태 스타일 */
+/* [추가/수정] 확대된 창 및 드래그 중인 창 스타일 */
 .window-box.maximized {
-    transition: top 0.25s ease-in-out, left 0.25s ease-in-out, width 0.25s ease-in-out, height 0.25s ease-in-out;
+    transition: top 0.25s ease-out, left 0.25s ease-out, width 0.25s ease-out, height 0.25s ease-out;
 }
 .window-box.dragging {
-    transition: none; /* 드래그 중에는 애니메이션 비활성화 */
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
-    opacity: 0.95;
-}
-.window-header:active {
-    cursor: grabbing; /* 드래그 중 커서 변경 */
+    /* 드래그 중에는 애니메이션 효과를 잠시 제거하여 부드럽게 움직이도록 함 */
+    transition: none;
+    box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.2); /* 드래그 중임을 나타내는 그림자 효과 */
 }
 
-/* --- 개별 창 스타일 --- */
-.calendar-window { top: 20px; left: 20px; width: 260px; }
-.gallery-window { bottom: 20px; right: 20px; width: 500px; height: 380px; }
-.post-viewer-window { top: 20px; left: 20px; right: 20px; bottom: 20px; width: auto; height: auto; }
+.calendar-window .window-buttons,
+.gallery-window .window-buttons {
+    display: none;
+}
+
+/* --- 개별 창 위치 및 크기 설정 --- */
+.calendar-window { 
+    top: 20px; 
+    left: 20px; 
+    width: 260px; 
+}
+.gallery-window {
+    bottom: 20px;
+    right: 20px;
+    width: 500px;
+    height: 380px;
+}
+
+.post-viewer-window {
+    top: 20px;
+    left: 20px;
+    right: 20px;
+    bottom: 20px;
+    width: auto;
+    height: auto;
+    z-index: 10;
+}
+
+.post-viewer-content {
+    height: calc(100% - 28px);
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding: 20px;
+}
+.post-viewer-content h1,
+.post-viewer-content h2 {
+    margin-bottom: 15px;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 10px;
+}
+.post-viewer-content p {
+    line-height: 1.7;
+    margin-bottom: 15px;
+}
+
+/* --- D-Day '외곽선' 스티커 --- */
+.d-day-sticker {
+    position: absolute; 
+    top: 15px; 
+    right: 15px; 
+    z-index: 20;
+    display: flex; 
+    align-items: center; 
+    gap: 0px;
+    transform: rotate(3deg); 
+    transition: transform 0.2s ease; 
+    cursor: pointer;
+}
+.d-day-sticker:hover { 
+    transform: rotate(-2deg) scale(1.05); 
+}
+.d-day-sticker .d-day-text {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 700;
+    font-size: 1.2em;
+    text-shadow: -2px -2px 0 #fff, 2px -2px 0 #fff, -2px 2px 0 #fff, 2px 2px 0 #fff, -3px 0 0 #fff, 3px 0 0 #fff, 0 -3px 0 #fff, 0 3px 0 #fff;
+    color: #8a2be2;
+}
+
+/* --- 달력 스타일 --- */
+.calendar-content { 
+    text-align: center; 
+}
+.month-nav { 
+    display: flex; 
+    justify-content: space-between; 
+    align-items: center; 
+    font-size: 1.1em; 
+    color: #8a2be2; 
+    margin-bottom: 10px; 
+}
+#month-name { 
+    font-family: 'Poppins', sans-serif; 
+    font-size: 1.4em; 
+    font-weight: 700; 
+}
+.arrow-btn { 
+    cursor: pointer; 
+    padding: 5px 10px; 
+    border-radius: 4px; 
+    transition: background-color 0.2s; 
+}
+.arrow-btn:hover { 
+    background-color: #f0f0ff; 
+}
+.days-of-week { 
+    display: grid; 
+    grid-template-columns: repeat(7, 1fr); 
+    font-size: 0.8em; 
+    margin-bottom: 5px; 
+    color: #888; 
+    font-weight: 500; 
+}
+.dates-grid { 
+    display: grid; 
+    grid-template-columns: repeat(7, 1fr); 
+    font-size: 0.9em; 
+    row-gap: 5px; 
+}
+.dates-grid div { 
+    padding: 5px 0; 
+    border-radius: 4px; 
+    transition: background-color 0.2s; 
+    position: relative; 
+}
+.dates-grid div.prev-month, .dates-grid div.next-month { 
+    color: #ccc; 
+}
+.dates-grid div.today { 
+    background-color: #8a2be2; 
+    color: #fff; 
+    font-weight: 700; 
+}
+.dates-grid div.birthday::after { 
+    content: ''; 
+    position: absolute; 
+    bottom: 2px; 
+    left: 50%; 
+    transform: translateX(-50%); 
+    width: 4px; 
+    height: 4px; 
+    background-color: #ff6b81; 
+    border-radius: 50%; 
+}
+.dates-grid div.anniversary::after { 
+    content: ''; 
+    position: absolute; 
+    bottom: 2px; 
+    left: 50%; 
+    transform: translateX(-50%); 
+    width: 4px; 
+    height: 4px; 
+    background-color: #4a90e2; 
+    border-radius: 50%; 
+}
+.dates-grid div:not(.today):not(.prev-month):not(.next-month):hover { 
+    background-color: #f0f0ff; 
+    cursor: pointer; 
+}
+
+/* --- 갤러리 그리드 스타일 --- */
+.gallery-grid-container {
+    column-count: 3;
+    column-gap: 15px;
+}
+.gallery-grid-container img {
+    width: 100%;
+    height: auto;
+    border-radius: 4px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    margin-bottom: 15px;
+    break-inside: avoid;
+}
+
+/* --- 창 내부 이미지 뷰어 스타일 --- */
+.image-viewer-wrapper {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.viewer-image {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+}
+.nav-button {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 40px;
+    height: 40px;
+    background-color: rgba(0, 0, 0, 0.2);
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.2em;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    user-select: none;
+}
+.nav-button:hover {
+    background-color: rgba(0, 0, 0, 0.5);
+}
+.nav-button.prev { left: 10px; }
+.nav-button.next { right: 10px; }
+.nav-button.hidden { display: none; }
+
+/* --- 홈 화면 포스트 목록 스타일 --- */
+.gallery-content { 
+    display: grid; 
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); 
+    gap: 10px; 
+}
+.gallery-item { 
+    text-align: center; 
+    border: 1px solid #eee; 
+    padding: 5px; 
+    transition: transform 0.2s ease, box-shadow 0.2s ease; 
+}
+.gallery-thumbnail {
+    width: 100%;
+    height: 100px;
+    background-color: #ede7f6;
+    margin-bottom: 5px;
+}
+.gallery-item p { 
+    font-size: 0.9em; 
+    color: #555; 
+}
+.gallery-item-wrapper { 
+    cursor: pointer; 
+}
+.gallery-item-wrapper:hover .gallery-item {
+    transform: translateY(-3px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
 
 /* --- 캐릭터 창 스타일 --- */
 .character-window .window-content {
     padding: 0;
     display: flex;
-    aspect-ratio: 1200 / 810; /* 네아, 레오나 창 모두에 적용 */
+    aspect-ratio: 1200 / 810;
     height: auto;
 }
 .character-profile-img {
@@ -198,20 +442,11 @@ body {
     width: 550px;
     height: auto;
 }
-#leona-window { top: 20px; left: 20px; }
-#nea-window { bottom: 20px; right: 20px; }
-
-/* ... (나머지 스타일은 이전과 동일) ... */
-.post-viewer-content { height: calc(100% - 28px); overflow-y: auto; padding: 20px; }
-.d-day-sticker { position: absolute; top: 15px; right: 15px; z-index: 50; transform: rotate(3deg); transition: transform 0.2s ease; cursor: pointer; }
-.d-day-sticker:hover { transform: rotate(-2deg) scale(1.05); }
-.d-day-text { font-family: 'Poppins', sans-serif; font-weight: 700; font-size: 1.2em; text-shadow: -2px -2px 0 #fff, 2px -2px 0 #fff, -2px 2px 0 #fff, 2px 2px 0 #fff, -3px 0 0 #fff, 3px 0 0 #fff, 0 -3px 0 #fff, 0 3px 0 #fff; color: #8a2be2; }
-.calendar-content { text-align: center; }
-.month-nav { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
-#month-name { font-family: 'Poppins', sans-serif; font-size: 1.4em; font-weight: 700; }
-.arrow-btn { cursor: pointer; padding: 5px 10px; border-radius: 4px; transition: background-color 0.2s; }
-.arrow-btn:hover { background-color: #f0f0ff; }
-.days-of-week { display: grid; grid-template-columns: repeat(7, 1fr); font-size: 0.8em; margin-bottom: 5px; color: #888; }
-.dates-grid { display: grid; grid-template-columns: repeat(7, 1fr); font-size: 0.9em; row-gap: 5px; }
-.gallery-content { display: grid; grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); gap: 10px; }
-
+#leona-window {
+    top: 20px;
+    left: 20px;
+}
+#nea-window {
+    bottom: 20px;
+    right: 20px;
+}
